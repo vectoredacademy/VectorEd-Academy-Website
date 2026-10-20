@@ -1,0 +1,3452 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VectorEd Academy | Global STEM &amp; Engineering Education Authority</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Montserrat:wght@700;800;900&amp;family=Roboto+Mono:wght@400;600&amp;family=Lora:ital,wght@0,600;1,400&amp;display=swap" rel="stylesheet">
+
+  <!-- FontAwesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$']],
+        processEscapes: true
+      },
+      options: {
+        ignoreHtmlClass: 'tex2jax_ignore',
+        processHtmlClass: 'tex2jax_process'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navyDark: '#0B192C',
+              navy: '#1C2D4A',
+              navyCard: '#152238',
+              gold: '#F5A623',
+              goldHover: '#E09216',
+              accentRed: '#FF6500',
+              cream: '#FFFDF6',
+              borderDark: '#253A5E'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Montserrat', 'sans-serif'],
+            serif: ['Lora', 'serif'],
+            mono: ['Roboto Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0B192C;
+      color: #F8F9FA;
+      overflow-x: hidden;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .gold-glow {
+      box-shadow: 0 0 25px rgba(245, 166, 35, 0.25);
+    }
+    .stem-grid-bg {
+      background-image: radial-gradient(rgba(245, 166, 35, 0.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .glass-panel {
+      background: rgba(28, 45, 74, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(245, 166, 35, 0.25);
+    }
+    .toast-msg {
+      transform: translateY(100%);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+    .toast-msg.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Mobile formula scroll wrapper */
+    .math-scroll-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
+    }
+
+    /* Admin Controls: Hidden unless body has .admin-mode-on */
+    .edit-card-controls {
+      display: none !important;
+    }
+    body.admin-mode-on .edit-card-controls {
+      display: flex !important;
+    }
+
+    /* Highlight editable fields when Admin Mode is ON & Support Paragraph Spacing */
+    body.admin-editable-active [contenteditable="true"] {
+      outline: 2px dashed #F5A623 !important;
+      outline-offset: 4px;
+      cursor: text;
+      background-color: rgba(245, 166, 35, 0.12);
+      border-radius: 6px;
+      padding: 4px 6px;
+      transition: all 0.2s ease;
+      min-height: 1.5rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    body.admin-editable-active [contenteditable="true"]:focus {
+      outline: 2px solid #38BDF8 !important;
+      background-color: rgba(56, 189, 248, 0.18);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+    }
+
+    /* Professional paragraph spacing, line height, and text formatting */
+    [contenteditable="true"] p, .editable-text-block p, .review-quote-text p {
+      margin-bottom: 0.85rem;
+      line-height: 1.8;
+    }
+    [contenteditable="true"] p:last-child {
+      margin-bottom: 0;
+    }
+    .review-quote-text, .subject-desc-text, .hero-sub-text {
+      line-height: 1.8;
+      letter-spacing: 0.01em;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+  <!-- ADMIN EDIT MODE TOOLBAR (Hidden by default) -->
+  <div id="adminToolbar" class="sticky top-0 z-50 bg-gradient-to-r from-amber-600 via-brand-gold to-amber-600 text-brand-navyDark px-3 py-2 shadow-2xl flex flex-wrap items-center justify-between gap-2 text-xs font-extrabold border-b border-amber-300 hidden">
+    <div class="flex items-center gap-2 sm:gap-3">
+      <span class="bg-brand-navyDark text-brand-gold px-2.5 py-1 rounded-lg font-mono text-[11px] animate-pulse shrink-0">
+        <i class="fa-solid fa-lock-open"></i> ADMIN CMS ACTIVE
+      </span>
+      <span class="hidden md:inline">Click any text to edit. Rearrange reviews &amp; subjects based on strategy!</span>
+    </div>
+
+    <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+      <div class="bg-brand-navyDark/20 p-1 rounded-lg flex items-center gap-1">
+        <button onclick="applyFormat('bold')" class="px-2 py-1 bg-white/20 hover:bg-white/40 rounded text-slate-900 font-bold" title="Bold"><i class="fa-solid fa-bold"></i></button>
+        <button onclick="applyFormat('italic')" class="px-2 py-1 bg-white/20 hover:bg-white/40 rounded text-slate-900 italic" title="Italic"><i class="fa-solid fa-italic"></i></button>
+        <button onclick="applyFormat('underline')" class="px-2 py-1 bg-white/20 hover:bg-white/40 rounded text-slate-900 underline" title="Underline"><i class="fa-solid fa-underline"></i></button>
+        <button onclick="applyFormat('justifyLeft')" class="px-2 py-1 bg-white/20 hover:bg-white/40 rounded text-slate-900" title="Align Left"><i class="fa-solid fa-align-left"></i></button>
+        <button onclick="applyFormat('justifyFull')" class="px-2 py-1 bg-white/20 hover:bg-white/40 rounded text-slate-900" title="Justify Text"><i class="fa-solid fa-align-justify"></i></button>
+        <button onclick="insertParagraphBreak()" class="px-2.5 py-1 bg-white/25 hover:bg-white/45 rounded text-slate-900 font-bold" title="Insert New Paragraph"><i class="fa-solid fa-paragraph"></i> Paragraph</button>
+      </div>
+
+      <button onclick="toggleInlineEditMode()" id="btnToggleInline" class="bg-brand-navyDark text-white px-2.5 py-1 rounded-lg hover:bg-slate-800 transition">
+        <i class="fa-solid fa-pen-to-square"></i> <span id="lblInlineEdit">Inline Edit: ON</span>
+      </button>
+
+      <button onclick="openAdminTzModal()" class="bg-indigo-950 hover:bg-indigo-900 text-brand-gold border border-indigo-700/80 px-2.5 py-1 rounded-lg transition flex items-center gap-1">
+        <i class="fa-solid fa-globe"></i> Timezones
+      </button>
+
+      <button onclick="openPasswordModal()" class="bg-amber-900 hover:bg-slate-900 text-white px-2.5 py-1 rounded-lg transition">
+        <i class="fa-solid fa-key"></i> Passwords
+      </button>
+
+      <button onclick="saveAllChangesToStorage()" class="bg-emerald-800 hover:bg-emerald-900 text-white px-3 py-1 rounded-lg shadow-md transition flex items-center gap-1">
+        <i class="fa-solid fa-floppy-disk"></i> Save CMS
+      </button>
+
+      <button onclick="logoutAdmin()" class="bg-red-700 hover:bg-red-800 text-white px-2.5 py-1 rounded-lg transition" title="Logout">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </div>
+  </div>
+
+  <nav class="bg-brand-navy/95 backdrop-blur-md border-b border-brand-borderDark sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <a href="#" class="flex items-center gap-3 group">
+        <img src="https://iili.io/ndL8PQj.png" alt="VectorEd Emblem" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition duration-300">
+        <div>
+          <span class="font-heading font-black text-base sm:text-xl text-white tracking-tight block leading-none">
+            VECTOR<span class="text-brand-gold">ED</span> ACADEMY
+          </span>
+          <span class="text-[9px] sm:text-[10px] text-slate-400 tracking-widest uppercase font-semibold">Global STEM &amp; Engineering Authority</span>
+        </div>
+      </a>
+
+      <div class="hidden lg:flex items-center gap-6 text-xs sm:text-sm font-semibold text-slate-300">
+        <a href="#services" class="hover:text-brand-gold transition flex items-center gap-1.5"><i class="fa-solid fa-cubes text-xs text-brand-gold"></i> Programs</a>
+        <a href="#proof" class="hover:text-brand-gold transition flex items-center gap-1.5"><i class="fa-solid fa-square-root-variable text-xs text-brand-gold"></i> Proof &amp; Vaults</a>
+        <a href="#reviews" class="hover:text-brand-gold transition flex items-center gap-1.5"><i class="fa-solid fa-award text-xs text-brand-gold"></i> Verified Reviews</a>
+        <a href="#pricing" class="hover:text-brand-gold transition flex items-center gap-1.5"><i class="fa-solid fa-graduation-cap text-xs text-brand-gold"></i> Packages</a>
+        <a href="#booking" class="hover:text-brand-gold transition flex items-center gap-1.5"><i class="fa-solid fa-calendar-check text-xs text-brand-gold"></i> Schedule Class</a>
+      </div>
+
+      <div class="hidden sm:flex items-center gap-3">
+        <button id="adminLoginBtn" onclick="openAdminAuthModal()" class="bg-brand-navyDark hover:bg-slate-800 text-brand-gold border border-brand-gold/40 hover:border-brand-gold font-bold px-3.5 py-2.5 rounded-xl text-xs transition flex items-center gap-1.5 min-h-[44px]">
+          <i class="fa-solid fa-user-gear"></i>
+          <span>Admin Access</span>
+        </button>
+
+        <a href="#booking" onclick="revealFormB()" class="bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-extrabold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition shadow-lg hover:shadow-brand-gold/20 flex items-center gap-2 min-h-[44px]">
+          <i class="fa-solid fa-calendar-plus text-sm"></i>
+          <span>Book Free Trial</span>
+        </a>
+      </div>
+
+      <button onclick="toggleMobileMenu()" class="lg:hidden text-slate-300 hover:text-white text-2xl p-2 focus:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Toggle Navigation Menu">
+        <i class="fa-solid fa-bars" id="mobileMenuIcon"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-brand-navyDark border-b border-brand-borderDark px-4 pt-3 pb-6 space-y-3">
+      <a href="#services" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-brand-gold font-medium">Programs &amp; Subjects</a>
+      <a href="#proof" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-brand-gold font-medium">Proof &amp; Derivation Vaults</a>
+      <a href="#reviews" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-brand-gold font-medium">Verified Reviews</a>
+      <a href="#pricing" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-brand-gold font-medium">Packages &amp; Plans</a>
+      <button onclick="toggleMobileMenu(); openAdminAuthModal();" class="w-full text-left py-2.5 text-brand-gold font-bold flex items-center gap-2">
+        <i class="fa-solid fa-user-gear"></i> Admin Access
+      </button>
+      <a href="https://www.facebook.com/VectorEd.Academy" target="_blank" rel="noopener noreferrer" class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-xs transition min-h-[44px]">
+        <i class="fa-brands fa-facebook text-base mr-1.5"></i> Connect on Facebook
+      </a>
+      <a href="#booking" onclick="toggleMobileMenu(); revealFormB();" class="block text-center bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl mt-2 min-h-[44px]">Book Free Trial Class</a>
+    </div>
+  </nav>
+
+  <section class="relative py-10 lg:py-20 overflow-hidden stem-grid-bg border-b border-brand-borderDark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+        
+        <div class="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 bg-brand-navy border border-brand-gold/40 px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold text-brand-gold shadow-lg">
+            <span class="animate-pulse text-base">🌍</span>
+            <span id="heroBadgeText">Serving STEM &amp; Engineering Students (Philippines, UAE, UK)</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-white tracking-tight leading-[1.15]" id="heroHeadline">Master Complex Engineering &amp; STEM Courses With <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-amber-300 to-amber-500">Elite 1-on-1 Guidance</span></h1>
+
+          <p class="text-slate-300 text-sm sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed hero-sub-text" id="heroSubheadline">
+            Behind in the race? We'll help you find your pace. Customized academic coaching for Engineering Undergraduates, SHS STEM, and high-stakes exam prep.
+          </p>
+
+          <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-4 flex-wrap">
+            <a href="#booking" onclick="revealFormB()" class="w-full sm:w-auto bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-extrabold px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl text-sm sm:text-base transition gold-glow flex items-center justify-center gap-2.5 min-h-[48px]">
+              <i class="fa-solid fa-rocket text-base sm:text-lg"></i>
+              <span>Book Free 20-Min Trial Class</span>
+            </a>
+
+            <!-- Facebook CTA Button -->
+            <a href="https://www.facebook.com/VectorEd.Academy" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto border border-blue-500/40 bg-blue-600/90 hover:bg-blue-600 text-white font-extrabold px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl text-sm sm:text-base transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 min-h-[48px]">
+              <i class="fa-brands fa-facebook text-lg sm:text-xl text-white"></i>
+              <span>Message Us on Facebook</span>
+            </a>
+            
+            <a href="https://diagnostics-students-archetype.netlify.app" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-white border border-brand-borderDark hover:border-brand-gold px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl text-sm sm:text-base font-bold transition flex items-center justify-center gap-2.5 min-h-[48px]">
+              <i class="fa-solid fa-clipboard-check text-brand-gold"></i>
+              <span>Take 60-Sec Diagnostic Quiz</span>
+            </a>
+          </div>
+
+          <div class="pt-6 border-t border-brand-borderDark/60 grid grid-cols-3 gap-3 sm:gap-4 text-center sm:text-left">
+            <div>
+              <span class="block font-heading font-black text-xl sm:text-3xl text-white" id="stat1Num">8+ Years</span>
+              <span class="text-[11px] sm:text-xs text-slate-400 font-medium" id="stat1Lbl"><b>Academic Authority</b></span>
+            </div>
+            <div>
+              <span class="block font-heading font-black text-xl sm:text-3xl text-brand-gold">40+ Students</span>
+              <span class="text-[11px] sm:text-xs text-slate-400 font-medium" id="stat2Lbl"><b>Students Served</b></span>
+            </div>
+            <div>
+              <span class="block font-heading font-black text-xl sm:text-3xl text-white">TBA</span>
+              <span class="text-[11px] sm:text-xs text-slate-400 font-medium" id="stat3Lbl"><b>Passing Rate</b></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="glass-panel p-4 sm:p-6 rounded-3xl relative shadow-2xl border border-brand-gold/30" id="ankiHeroWidget">
+            <div class="flex items-center justify-between pb-3 border-b border-brand-borderDark mb-3 sm:mb-4">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                <span class="text-xs font-mono text-slate-300 font-bold ml-1 flex items-center gap-1.5">
+                  <i class="fa-solid fa-layer-group text-brand-gold"></i> Anki Engineering Deck
+                </span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span id="ankiCardCounter" class="text-[10px] font-mono text-brand-gold bg-brand-gold/10 border border-brand-gold/30 px-2.5 py-0.5 rounded-full font-bold">Card 1 of 4</span>
+                <div class="edit-card-controls">
+                  <button onclick="openAnkiModal(-1)" class="bg-emerald-800 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold transition flex items-center gap-1">
+                    <i class="fa-solid fa-plus"></i> Add Card
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div id="ankiCardDisplay" class="space-y-4 font-mono"></div>
+
+            <div class="mt-4 pt-3 border-t border-brand-borderDark flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <button onclick="prevAnkiCard()" class="px-3 py-2 bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-brand-gold border border-brand-borderDark rounded-xl text-xs font-bold transition flex items-center gap-1 min-h-[40px]">
+                  <i class="fa-solid fa-chevron-left text-[10px]"></i> Prev Formula
+                </button>
+                <button onclick="nextAnkiCard()" class="px-3 py-2 bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-brand-gold border border-brand-borderDark rounded-xl text-xs font-bold transition flex items-center gap-1 min-h-[40px]">
+                  Next Formula <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                </button>
+              </div>
+
+              <div class="edit-card-controls items-center gap-1.5">
+                <button onclick="moveAnkiCard(currentAnkiIndex, -1)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded-lg text-xs font-bold transition" title="Move Card Left/Up">
+                  <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <button onclick="moveAnkiCard(currentAnkiIndex, 1)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded-lg text-xs font-bold transition" title="Move Card Right/Down">
+                  <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button onclick="openAnkiModal(currentAnkiIndex)" class="bg-blue-900/60 hover:bg-blue-800 text-blue-200 px-2.5 py-1 rounded-lg text-xs font-bold transition">
+                  <i class="fa-solid fa-pen"></i> Edit Card
+                </button>
+                <button onclick="deleteAnkiCard(currentAnkiIndex)" class="bg-red-900/60 hover:bg-red-800 text-red-200 px-2.5 py-1 rounded-lg text-xs font-bold transition">
+                  <i class="fa-solid fa-trash"></i> Delete
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 sm:py-16 bg-brand-navyDark border-b border-brand-borderDark relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+        <span class="text-brand-gold font-bold text-xs uppercase tracking-widest block mb-2">Bridge The Engineering Gap</span>
+        <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-white" id="strugglesTitle">Why Bright STEM Students Get Stuck</h2>
+        <p class="text-slate-400 text-xs sm:text-base mt-2" id="strugglesDesc">Classroom lectures show simple standard setups. University finals present non-standard twists under severe time pressure.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+        <div class="lg:col-span-6">
+          <div class="bg-slate-950 p-3 sm:p-6 rounded-3xl border border-brand-gold/40 shadow-2xl relative">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3 sm:mb-4">
+              <span class="text-[11px] sm:text-xs font-mono text-brand-gold"><i class="fa-solid fa-laptop-code"></i> Live Tablet Workspace</span>
+              <span class="text-[9px] sm:text-[10px] bg-red-950 text-red-400 px-2.5 py-0.5 rounded-full border border-red-800 font-bold">● High-Speed Derivation</span>
+            </div>
+
+            <div class="bg-brand-navy rounded-2xl overflow-hidden border border-brand-borderDark relative aspect-video flex items-center justify-center">
+              <iframe class="w-full h-full rounded-2xl border-0" src="https://www.youtube.com/embed/Em-Ia7wHb8M?rel=0" title="VectorEd Problem Framing Demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 space-y-4 sm:space-y-6" id="strugglesContainer"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="services" class="py-12 sm:py-16 bg-brand-navy border-b border-brand-borderDark relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+        <div>
+          <span class="text-brand-gold font-bold text-xs uppercase tracking-widest block mb-2">Academic Coaching Architecture</span>
+          <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-white" id="servicesTitle">Targeted Subjects &amp; Specializations</h2>
+          <p class="text-slate-400 text-xs sm:text-base mt-2" id="servicesDesc">Filter our core coaching domains tailored for high school, SHS STEM, and university undergrads.</p>
+        </div>
+
+        <div class="edit-card-controls">
+          <button onclick="openAddSubjectModal()" class="bg-emerald-800 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow-lg min-h-[44px]">
+            <i class="fa-solid fa-plus-circle text-base"></i> Add New Subject
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8 sm:mb-10">
+        <button onclick="switchServiceTab('tab-math')" id="btn-tab-math" class="service-tab-btn font-extrabold px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm transition shadow-lg flex items-center gap-2 bg-brand-navyDark text-slate-300 min-h-[44px]">
+          <i class="fa-solid fa-calculator"></i> Engg Math &amp; Physics
+        </button>
+        <button onclick="switchServiceTab('tab-eng')" id="btn-tab-eng" class="service-tab-btn hover:text-white border border-brand-borderDark px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 bg-brand-gold text-brand-navyDark active min-h-[44px]">
+          <i class="fa-solid fa-gears"></i> Advanced Engineering
+        </button>
+        <button onclick="switchServiceTab('tab-gen')" id="btn-tab-gen" class="service-tab-btn bg-brand-navyDark text-slate-300 hover:text-white border border-brand-borderDark px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 min-h-[44px]">
+          <i class="fa-solid fa-pen-nib"></i> General Subjects
+        </button>
+        <button onclick="switchServiceTab('tab-tech')" id="btn-tab-tech" class="service-tab-btn bg-brand-navyDark text-slate-300 hover:text-white border border-brand-borderDark px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 min-h-[44px]">
+          <i class="fa-solid fa-laptop-code"></i> Tech &amp; Specialized
+        </button>
+      </div>
+
+      <div id="subjectsDynamicContainer"></div>
+
+    </div>
+  </section>
+
+  <section id="reviews" class="py-12 sm:py-16 bg-brand-navyDark border-b border-brand-borderDark relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-2 flex-wrap">
+            <span class="text-brand-gold font-bold text-xs uppercase tracking-widest block">Verified Social Proof</span>
+            <a href="https://www.facebook.com/VectorEd.Academy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] bg-blue-900/50 hover:bg-blue-800/80 text-blue-200 border border-blue-500/40 px-2.5 py-0.5 rounded-full font-semibold transition">
+              <i class="fa-brands fa-facebook text-blue-400"></i> VectorEd Academy FB
+            </a>
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-white" id="reviewsTitle">Proven Results Across Top Universities &amp; Global Programs</h2>
+          <p class="text-slate-400 text-xs sm:text-base mt-2" id="reviewsDesc">See how our 1-on-1 problem-solving framework converts academic friction into high percentile scores.</p>
+        </div>
+
+        <div class="edit-card-controls">
+          <button onclick="openAddReviewModal()" class="bg-blue-800 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow-lg min-h-[44px]">
+            <i class="fa-solid fa-plus-circle text-base"></i> Add New Review
+          </button>
+        </div>
+      </div>
+
+      <div id="reviewsDynamicContainer" class="space-y-8 sm:space-y-12"></div>
+
+    </div>
+  </section>
+
+  <section id="proof" class="py-12 sm:py-16 bg-brand-navy border-b border-brand-borderDark relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
+      
+      <div class="text-center max-w-3xl mx-auto">
+        <span class="text-brand-gold font-bold text-xs uppercase tracking-widest block mb-2">Proof Of Methodology</span>
+        <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-white" id="proofTitle">Interactive Material &amp; Derivation Vaults</h2>
+        <p class="text-slate-400 text-xs sm:text-base mt-2" id="proofDesc">Explore original lecture blueprints and real OneNote solution logs generated during student coaching.</p>
+      </div>
+
+      <!-- CAROUSEL 1 -->
+      <div class="bg-brand-navyDark p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-brand-borderDark shadow-2xl space-y-4 sm:space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-brand-borderDark">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-gold/20 text-brand-gold flex items-center justify-center font-bold text-base shrink-0">
+              <i class="fa-solid fa-book-open"></i>
+            </div>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-white">Carousel 1: Conceptual Lecture Guides &amp; Blueprint Sheets</h3>
+              <p class="text-xs text-slate-400">First-principles learning frameworks and formula reduction</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 flex-wrap">
+            <div class="edit-card-controls">
+              <button onclick="openAddCarouselModal(1)" class="bg-purple-800 hover:bg-purple-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 min-h-[40px]">
+                <i class="fa-solid fa-plus"></i> Add Slide
+              </button>
+            </div>
+            <span class="text-xs font-mono text-brand-gold bg-brand-navy px-3 py-1 rounded-full border border-brand-gold/30">VectorEd Original</span>
+          </div>
+        </div>
+
+        <div class="relative overflow-hidden rounded-2xl bg-slate-950 border border-brand-borderDark p-3 sm:p-6" id="carousel1Box"></div>
+      </div>
+
+      <!-- CAROUSEL 2 -->
+      <div class="bg-brand-navyDark p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-brand-borderDark shadow-2xl space-y-4 sm:space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-brand-borderDark">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-gold/20 text-brand-gold flex items-center justify-center font-bold text-base shrink-0">
+              <i class="fa-solid fa-pen-ruler"></i>
+            </div>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-white">Carousel 2: Real OneNote Solution Logs &amp; Step-by-Step Problem Sets</h3>
+              <p class="text-xs text-slate-400">Live color-coded derivations solved during student coaching sessions</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 flex-wrap">
+            <div class="edit-card-controls">
+              <button onclick="openAddCarouselModal(2)" class="bg-purple-800 hover:bg-purple-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 min-h-[40px]">
+                <i class="fa-solid fa-plus"></i> Add Slide
+              </button>
+            </div>
+            <span class="text-xs font-mono text-brand-gold bg-brand-navy px-3 py-1 rounded-full border border-brand-gold/30">Live Tutoring Logs</span>
+          </div>
+        </div>
+
+        <div class="relative overflow-hidden rounded-2xl bg-slate-950 border border-brand-borderDark p-3 sm:p-6" id="carousel2Box"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="pricing" class="py-12 sm:py-16 bg-brand-navyDark border-b border-brand-borderDark relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-brand-gold font-bold text-xs uppercase tracking-widest block mb-2">Transparent Coaching Packages</span>
+        <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-white" id="pricingTitle">Invest In Your Academic Excellence</h2>
+        <p class="text-slate-400 text-xs sm:text-base mt-2" id="pricingDesc">Flexible hour packages tailored for quick topic recovery or full-term grade boosting.</p>
+        
+        <div class="mt-6 inline-flex items-center bg-brand-navy p-1.5 rounded-2xl border border-brand-borderDark shadow-xl">
+          <span class="text-xs text-slate-400 font-bold px-3">Active Currency:</span>
+          <button id="currBtnPHP" onclick="switchCurrency('PHP')" class="px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-brand-gold text-brand-navyDark shadow-md min-h-[40px]">
+            🇵🇭 PHP (₱)
+          </button>
+          <button id="currBtnUSD" onclick="switchCurrency('USD')" class="px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-300 hover:text-white min-h-[40px]">
+            🇺🇸 USD ($)
+          </button>
+        </div>
+      </div>
+
+      <div id="packagesDynamicContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch"></div>
+
+    </div>
+  </section>
+
+  <section id="booking" class="py-12 sm:py-16 bg-brand-navy border-b border-brand-borderDark relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+        <span class="text-brand-gold font-bold text-xs uppercase tracking-widest block mb-2">Dual Intake Gateway</span>
+        <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-white">Inquire or Schedule Your Trial Class</h2>
+        <p class="text-slate-400 text-xs sm:text-base mt-2">Connected directly to VectorEd's Google Sheets database for real-time confirmation.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Form A: General Inquiry -->
+        <div class="lg:col-span-5 bg-brand-navyDark p-5 sm:p-8 rounded-3xl border border-brand-borderDark flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-10 h-10 rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center font-bold shrink-0">
+                <i class="fa-solid fa-paper-plane"></i>
+              </div>
+              <div>
+                <h3 class="text-base sm:text-lg font-bold text-white">Form A: General Inquiry</h3>
+                <p class="text-xs text-slate-400">Routes payload to Tab `Inquiries`</p>
+              </div>
+            </div>
+
+            <form onsubmit="handleInquirySubmit(event)" class="space-y-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name *</label>
+                <input type="text" id="inqName" required="" placeholder="e.g. Gabriel Gil" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition min-h-[44px]">
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address *</label>
+                <input type="email" id="inqEmail" required="" placeholder="gabriel@domain.com" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition min-h-[44px]">
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Cellphone Number (09XXXXXXXXX) *</label>
+                <input type="tel" id="inqPhone" required="" maxlength="11" pattern="09[0-9]{9}" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)" placeholder="09171234567" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition min-h-[44px]">
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">University / School</label>
+                <input type="text" id="inqUni" placeholder="e.g. Mapúa / DLSU / UST" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition min-h-[44px]">
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Select Timezone</label>
+                <select id="inqTimezone" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white outline-none transition min-h-[44px]"></select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Your Message / Target Subject *</label>
+                <textarea id="inqMessage" required="" rows="3" placeholder="Tell us about your active bottleneck or upcoming exam date..." class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition"></textarea>
+              </div>
+
+              <button type="submit" id="btnInqSubmit" class="w-full bg-brand-navy hover:bg-slate-800 text-brand-gold border border-brand-gold font-bold py-3.5 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-2 min-h-[48px]">
+                <span>Send General Inquiry</span>
+                <i class="fa-solid fa-paper-plane text-xs"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7" id="schedulerContainer">
+          <div id="schedulerGateCard" class="bg-brand-navyDark p-6 sm:p-12 rounded-3xl border border-brand-borderDark text-center flex flex-col items-center justify-center min-h-[420px] sm:min-h-[460px] space-y-6">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-brand-gold/20 text-brand-gold flex items-center justify-center text-2xl sm:text-3xl font-bold shadow-xl border border-brand-gold/30 animate-bounce shrink-0">
+              <i class="fa-solid fa-calendar-days"></i>
+            </div>
+
+            <div class="space-y-2 max-w-md">
+              <span class="text-xs font-bold text-brand-gold uppercase tracking-widest block">● Interactive Slot Reservation</span>
+              <h3 class="text-xl sm:text-3xl font-black text-white">Ready To Reserve Your Class?</h3>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                Choose your preferred schedule and lock in your 1-on-1 session directly on our calendar.
+              </p>
+            </div>
+
+            <div class="w-full max-w-md space-y-3">
+              <button onclick="revealFormB()" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black py-3.5 sm:py-4 px-5 rounded-2xl text-xs sm:text-base transition gold-glow flex items-center justify-center gap-2.5 shadow-2xl min-h-[48px]">
+                <i class="fa-solid fa-calendar-check text-base sm:text-lg"></i>
+                <span>Choose Between Free Trial or Consultation Class</span>
+              </button>
+
+              <button onclick="openCalendarModal()" type="button" class="w-full bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-white border border-brand-borderDark hover:border-brand-gold font-bold py-3 px-5 rounded-2xl text-xs sm:text-sm transition flex items-center justify-center gap-2.5 shadow-lg min-h-[44px]">
+                <i class="fa-solid fa-calendar-week text-brand-gold text-base"></i>
+                <span>View Live Weekly Class Calendar</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="formBWrapper" class="hidden bg-brand-navyDark p-4 sm:p-8 rounded-3xl border border-brand-borderDark relative shadow-2xl space-y-6">
+            <button onclick="hideFormB()" class="sm:hidden absolute top-4 right-4 bg-brand-navy border border-brand-borderDark text-slate-300 hover:text-white p-2 rounded-xl text-xs flex items-center gap-1.5 z-20 min-h-[36px]">
+              <i class="fa-solid fa-xmark text-sm"></i>
+              <span>Close</span>
+            </button>
+
+            <div class="flex items-center justify-between pb-3 border-b border-brand-borderDark">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center font-bold shrink-0">
+                  <i class="fa-solid fa-calendar-days"></i>
+                </div>
+                <div>
+                  <h3 class="text-base sm:text-lg font-bold text-white">Form B: Trial &amp; Consultation Scheduler</h3>
+                  <p class="text-xs text-slate-400">Real-time availability sync via Google Web App</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-3.5 sm:p-4 bg-brand-navy rounded-2xl border border-brand-gold/30 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
+              <div class="flex items-center gap-3 text-center sm:text-left">
+                <div class="w-9 h-9 rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-calendar-week text-base"></i>
+                </div>
+                <div>
+                  <span class="text-xs font-bold text-white block">Want to see our current live weekly classes?</span>
+                  <span class="text-[11px] text-slate-300">Check active class bookings and tutor availability in real time.</span>
+                </div>
+              </div>
+              <button type="button" onclick="openCalendarModal()" class="w-full sm:w-auto bg-brand-navyDark hover:bg-slate-800 text-brand-gold border border-brand-gold/40 hover:border-brand-gold px-4 py-2.5 rounded-xl text-xs font-extrabold transition flex items-center justify-center gap-2 shrink-0 min-h-[44px]">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                <span>View Live Class Calendar</span>
+              </button>
+            </div>
+
+            <form onsubmit="handleBookingSubmit(event)" class="space-y-5">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Select Timezone *</label>
+                <select id="bookTimezone" onchange="handleWebsiteTimezoneChange(this.value)" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white outline-none transition mb-3 min-h-[44px]"></select>
+              </div>
+
+              <div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                  <label class="block text-xs font-semibold text-slate-300">1. Select Class Date * (Monday to Saturday)</label>
+                  
+                  <div class="flex items-center gap-2 bg-brand-navy p-1 rounded-xl border border-brand-borderDark self-start sm:self-auto">
+                    <button type="button" onclick="changeSchedulerWeek(-1)" class="px-2.5 py-1 rounded-lg bg-brand-navyDark hover:bg-slate-800 text-brand-gold text-xs font-bold transition flex items-center gap-1 border border-brand-borderDark min-h-[36px]">
+                      <i class="fa-solid fa-chevron-left text-[10px]"></i> Prev
+                    </button>
+                    <span id="schedulerWeekRangeLabel" class="text-[11px] font-mono font-bold text-slate-200 px-1"></span>
+                    <button type="button" onclick="changeSchedulerWeek(1)" class="px-2.5 py-1 rounded-lg bg-brand-navyDark hover:bg-slate-800 text-brand-gold text-xs font-bold transition flex items-center gap-1 border border-brand-borderDark min-h-[36px]">
+                      Next <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center" id="datePills"></div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-2">2. Select Time Slot *</label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div class="bg-brand-navy p-3 rounded-2xl border border-brand-borderDark space-y-2">
+                    <div class="text-center pb-2 border-b border-brand-borderDark">
+                      <span class="text-[11px] font-bold text-brand-gold block">Morning</span>
+                    </div>
+                    <div class="space-y-1.5" id="slotsMorning"></div>
+                  </div>
+
+                  <div class="bg-brand-navy p-3 rounded-2xl border border-brand-borderDark space-y-2">
+                    <div class="text-center pb-2 border-b border-brand-borderDark">
+                      <span class="text-[11px] font-bold text-brand-gold block">Afternoon</span>
+                    </div>
+                    <div class="space-y-1.5" id="slotsAfternoon"></div>
+                  </div>
+
+                  <div class="bg-brand-navy p-3 rounded-2xl border border-brand-borderDark space-y-2">
+                    <div class="text-center pb-2 border-b border-brand-borderDark">
+                      <span class="text-[11px] font-bold text-brand-gold block">Evening</span>
+                    </div>
+                    <div class="space-y-1.5" id="slotsEvening"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-3 pt-3 border-t border-brand-borderDark">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name *</label>
+                    <input type="text" id="bookName" required="" placeholder="Your Full Name" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none min-h-[44px]">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address *</label>
+                    <input type="email" id="bookEmail" required="" placeholder="you@domain.com" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none min-h-[44px]">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Cellphone Number (09XXXXXXXXX) *</label>
+                  <input type="tel" id="bookPhone" required="" maxlength="11" pattern="09[0-9]{9}" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)" placeholder="09171234567" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none min-h-[44px]">
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <label class="block text-xs font-semibold text-slate-300">
+                      Subject <span class="text-brand-gold text-[10px]">(Check all subjects you want to inquire about)</span>
+                    </label>
+                    <div class="edit-card-controls">
+                      <button type="button" onclick="openManageChecklistModal()" class="bg-amber-800 hover:bg-amber-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold transition flex items-center gap-1 shadow">
+                        <i class="fa-solid fa-pen-to-square"></i> Edit Subjects List
+                      </button>
+                    </div>
+                  </div>
+
+                  <div id="bookingChecklistContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-brand-navy p-3.5 rounded-2xl border border-brand-borderDark max-h-64 overflow-y-auto"></div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">
+                    Additional Notes * <span class="text-brand-gold text-[10px]">(Please mention if Free Trial Class or Consultation)</span>
+                  </label>
+                  <textarea id="bookNotes" required="" rows="2" placeholder="Mention if Free Trial Class or Consultation Class..." class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition"></textarea>
+                </div>
+              </div>
+
+              <button type="submit" id="btnBookSubmit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black py-4 rounded-xl text-xs sm:text-sm transition gold-glow flex items-center justify-center gap-2 shadow-xl min-h-[48px]">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Confirm &amp; Reserve Class Slot</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-brand-navyDark border-t border-brand-borderDark py-12 text-slate-400 text-xs sm:text-sm mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <img src="https://iili.io/ndL8PQj.png" alt="VectorEd" class="h-8 w-auto">
+            <span class="font-heading font-black text-white text-base">VECTOR<span class="text-brand-gold">ED</span> ACADEMY</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Elite 1-on-1 STEM &amp; Engineering Academic Authority. High-yield coaching for university undergraduates and high-stakes exams.
+          </p>
+        </div>
+
+        <div>
+          <span class="font-bold text-white text-xs uppercase tracking-wider block mb-3">Headquarters</span>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Block 22 Lot 36, Sta. Marquita Pueblo,<br>
+            New Santa Rosa Homes, Brgy. Dita,<br>
+            Santa Rosa City, Laguna 4026 Philippines
+          </p>
+        </div>
+
+        <div>
+          <span class="font-bold text-white text-xs uppercase tracking-wider block mb-3">Direct Connect</span>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="https://www.facebook.com/VectorEd.Academy" target="_blank" rel="noopener noreferrer" class="hover:text-brand-gold transition flex items-center gap-1.5 py-0.5"><i class="fa-brands fa-facebook text-blue-400 text-sm"></i> Official VectorEd FB Page</a></li>
+            <li><a href="https://www.facebook.com/johnres.hipe.58/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-gold transition flex items-center gap-1.5 py-0.5"><i class="fa-solid fa-user-tie"></i> Engr. Johnres Hipe</a></li>
+            <li class="text-slate-400 py-0.5"><i class="fa-solid fa-phone"></i> 09934258900</li>
+          </ul>
+        </div>
+
+        <div>
+          <span class="font-bold text-white text-xs uppercase tracking-wider block mb-3">Accepted Payment Options</span>
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <span class="bg-brand-navy border border-brand-borderDark px-3 py-1 rounded-lg text-slate-200">Wise</span>
+            <span class="bg-brand-navy border border-brand-borderDark px-3 py-1 rounded-lg text-slate-200">PayPal</span>
+            <span class="bg-brand-navy border border-brand-borderDark px-3 py-1 rounded-lg text-slate-200">GCash</span>
+            <span class="bg-brand-navy border border-brand-borderDark px-3 py-1 rounded-lg text-slate-200">Bank Transfer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-brand-borderDark/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>© 2026 VectorEd Academy. All rights reserved. Registered STEM Educational Brand.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- LIVE CLASS CALENDAR MODAL -->
+  <div id="calendarModal" class="fixed inset-0 z-50 bg-brand-navyDark/90 backdrop-blur-md hidden items-center justify-center p-3 sm:p-5">
+    <div class="bg-brand-navy border border-brand-gold/50 max-w-5xl w-full rounded-3xl p-4 sm:p-6 shadow-2xl relative flex flex-col max-h-[92vh] space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-brand-borderDark">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-brand-gold/20 text-brand-gold flex items-center justify-center font-bold text-lg shrink-0">
+            <i class="fa-solid fa-calendar-week"></i>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-white">Live Weekly Class Calendar</h3>
+            <p class="text-xs text-slate-400">Real-time schedule &amp; class availability for VectorEd Academy</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="https://vectored-academy-calendar.netlify.app" target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-1.5 bg-brand-navyDark hover:bg-slate-800 text-brand-gold border border-brand-gold/40 px-3 py-1.5 rounded-xl text-xs font-bold transition">
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Open in New Tab
+          </a>
+          <button onclick="closeCalendarModal()" class="w-9 h-9 rounded-xl bg-brand-navyDark hover:bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-lg transition">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex-1 w-full overflow-hidden rounded-2xl border border-brand-borderDark bg-slate-950 min-h-[380px] sm:min-h-[550px]">
+        <iframe src="https://vectored-academy-calendar.netlify.app" class="w-full h-full min-h-[380px] sm:min-h-[550px] border-0 rounded-2xl" title="VectorEd Live Class Calendar" allowfullscreen=""></iframe>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 text-xs">
+        <span class="text-slate-400 text-center sm:text-left">
+          <i class="fa-solid fa-circle-info text-brand-gold mr-1"></i> Live schedule updates automatically in real time.
+        </span>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <a href="https://vectored-academy-calendar.netlify.app" target="_blank" rel="noopener noreferrer" class="sm:hidden flex-1 text-center bg-brand-navyDark hover:bg-slate-800 text-brand-gold border border-brand-gold/40 px-3 py-2.5 rounded-xl text-xs font-bold transition min-h-[40px] flex items-center justify-center gap-1">
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Open in New Tab
+          </a>
+          <button onclick="closeCalendarModal()" class="flex-1 sm:flex-none bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black px-5 py-2.5 rounded-xl transition min-h-[40px]">
+            Close Calendar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotification" class="toast-msg fixed bottom-5 right-5 z-50 bg-brand-navy border border-brand-gold text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 text-xs sm:text-sm">
+    <i class="fa-solid fa-circle-check text-brand-gold text-lg"></i>
+    <span id="toastText">✓ Central CMS State synchronized across all devices!</span>
+  </div>
+
+  <!-- ADMIN TIMEZONE MANAGER MODAL -->
+  <div id="adminTzModal" class="fixed inset-0 z-50 bg-brand-navyDark/90 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-brand-navy border border-brand-gold/50 max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative space-y-5 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAdminTzModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-brand-gold/20 text-brand-gold flex items-center justify-center font-bold">
+          <i class="fa-solid fa-globe"></i>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-white">Global Timezone Engine</h3>
+          <p class="text-xs text-slate-400">Add or remove active timezones for website booking forms</p>
+        </div>
+      </div>
+
+      <div class="bg-brand-navyDark p-3.5 rounded-2xl border border-brand-borderDark space-y-2">
+        <span class="text-xs font-bold text-brand-gold block uppercase tracking-wider"><i class="fa-solid fa-bolt mr-1"></i> Quick Select Preset Timezone:</span>
+        <select id="siteTzPresetSelect" onchange="applySiteTzPreset(this.value)" class="w-full bg-brand-navy border border-brand-borderDark rounded-xl p-2 text-xs text-white outline-none focus:border-brand-gold cursor-pointer">
+          <option value="">-- Select an International Preset --</option>
+          <option value="Asia/Tokyo|9|JST (UTC+9) - Tokyo / Seoul">JST (UTC+9) - Tokyo / Seoul</option>
+          <option value="Australia/Sydney|11|AEDT (UTC+11) - Sydney / Melbourne">AEDT (UTC+11) - Sydney / Melbourne</option>
+          <option value="Australia/Brisbane|10|AEST (UTC+10) - Brisbane">AEST (UTC+10) - Brisbane</option>
+          <option value="Asia/Singapore|8|SGT/PST (UTC+8) - Manila / Singapore">SGT/PST (UTC+8) - Manila / Singapore</option>
+          <option value="Asia/Bangkok|7|ICT (UTC+7) - Bangkok / Jakarta">ICT (UTC+7) - Bangkok / Jakarta</option>
+          <option value="Asia/Kolkata|5.5|IST (UTC+5.5) - New Delhi / India">IST (UTC+5.5) - New Delhi / India</option>
+          <option value="Asia/Dubai|4|GST (UTC+4) - Dubai / UAE">GST (UTC+4) - Dubai / UAE</option>
+          <option value="Europe/Moscow|3|MSK (UTC+3) - Moscow">MSK (UTC+3) - Moscow</option>
+          <option value="Europe/Paris|2|CEST (UTC+2) - Paris / Berlin / Rome">CEST (UTC+2) - Paris / Berlin / Rome</option>
+          <option value="Europe/London|0|GMT/BST (UTC+0) - London / UK">GMT/BST (UTC+0) - London / UK</option>
+          <option value="America/Sao_Paulo|-3|BRT (UTC-3) - São Paulo / Brazil">BRT (UTC-3) - São Paulo / Brazil</option>
+          <option value="America/New_York|-5|EST (UTC-5) - New York / Toronto">EST (UTC-5) - New York / Toronto</option>
+          <option value="America/Chicago|-6|CST (UTC-6) - Chicago / Mexico City">CST (UTC-6) - Chicago / Mexico City</option>
+          <option value="America/Denver|-7|MST (UTC-7) - Denver / Phoenix">MST (UTC-7) - Denver / Phoenix</option>
+          <option value="America/Los_Angeles|-8|PST (UTC-8) - Los Angeles / Vancouver">PST (UTC-8) - Los Angeles / Vancouver</option>
+          <option value="Pacific/Honolulu|-10|HST (UTC-10) - Honolulu / Hawaii">HST (UTC-10) - Honolulu / Hawaii</option>
+        </select>
+      </div>
+
+      <form onsubmit="handleAddSiteTimezone(event)" class="space-y-3 bg-brand-navyDark p-3.5 rounded-2xl border border-brand-borderDark text-xs">
+        <span class="text-xs font-bold text-white block uppercase tracking-wider"><i class="fa-solid fa-plus-circle text-brand-gold mr-1"></i> Add Custom Timezone</span>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div>
+            <label class="block text-[10px] font-semibold text-slate-300 mb-1">Display Label *</label>
+            <input type="text" id="siteTzLabelInput" required="" placeholder="e.g. JST (UTC+9) - Tokyo" class="w-full bg-brand-navy border border-brand-borderDark rounded-xl p-2 text-white outline-none focus:border-brand-gold">
+          </div>
+          <div>
+            <label class="block text-[10px] font-semibold text-slate-300 mb-1">UTC Offset (Hours) *</label>
+            <input type="number" step="0.5" id="siteTzOffsetInput" required="" placeholder="e.g. 9 or -5" class="w-full bg-brand-navy border border-brand-borderDark rounded-xl p-2 text-white outline-none focus:border-brand-gold">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[10px] font-semibold text-slate-300 mb-1">IANA Region String (Optional)</label>
+          <input type="text" id="siteTzIanaInput" placeholder="e.g. Asia/Tokyo" class="w-full bg-brand-navy border border-brand-borderDark rounded-xl p-2 text-white outline-none focus:border-brand-gold">
+        </div>
+
+        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 shadow min-h-[44px]">
+          <i class="fa-solid fa-plus"></i> Save &amp; Enable Timezone Option
+        </button>
+      </form>
+
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-200 block uppercase tracking-wider">Active Timezones List:</span>
+          <span id="siteTzCountBadge" class="text-[10px] font-bold text-brand-gold bg-brand-gold/10 border border-brand-gold/30 px-2 py-0.5 rounded-full">0 active</span>
+        </div>
+        <div id="adminSiteTzListContainer" class="max-h-48 overflow-y-auto space-y-2 pr-1"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN AUTH MODAL -->
+  <div id="adminAuthModal" class="fixed inset-0 z-50 bg-brand-navyDark/90 backdrop-blur-md items-center justify-center p-3 sm:p-4 hidden">
+    <div class="bg-brand-navy border border-brand-gold/50 max-w-md w-full rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl relative space-y-5 my-auto max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAdminAuthModal()" class="absolute top-4 right-4 w-10 h-10 rounded-xl bg-brand-navyDark/80 hover:bg-slate-800 text-slate-400 hover:text-white text-xl flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-3 pr-8">
+        <div class="w-10 h-10 rounded-xl bg-brand-gold/20 text-brand-gold flex items-center justify-center font-bold shrink-0">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-white">Admin CMS Authentication</h3>
+          <p class="text-[11px] text-slate-400">Unlock live inline editing &amp; reordering controls</p>
+        </div>
+      </div>
+
+      <form onsubmit="handleAdminLoginSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Admin Master Password *</label>
+          <input type="password" id="adminPassInput" required="" placeholder="Enter password (Default: 123456)" class="w-full bg-brand-navyDark border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none">
+        </div>
+
+        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black py-3.5 rounded-xl text-xs sm:text-sm transition min-h-[44px]">
+          Unlock Admin CMS Mode
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- CHANGE PASSWORD MODAL -->
+  <div id="passwordModal" class="fixed inset-0 z-50 bg-brand-navyDark/90 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-brand-navy border border-brand-gold/50 max-w-md w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative space-y-5">
+      <button onclick="closePasswordModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-brand-gold/20 text-brand-gold flex items-center justify-center font-bold">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-white">Change Admin Password</h3>
+          <p class="text-xs text-slate-400">Security verification required</p>
+        </div>
+      </div>
+
+      <form onsubmit="handleChangePasswordSubmit(event)" class="space-y-4">
+        <div class="p-3 bg-brand-navyDark rounded-xl border border-brand-borderDark space-y-1">
+          <span class="text-[10px] text-brand-gold font-bold uppercase tracking-wider block">Security Question:</span>
+          <p class="text-xs font-semibold text-white">When was VectorEd Academy founded?</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Your Answer *</label>
+          <input type="text" id="secAnsInput" required="" placeholder="Answer" class="w-full bg-brand-navyDark border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">New Master Password *</label>
+          <input type="password" id="newPassInput" required="" placeholder="Set new master password" class="w-full bg-brand-navyDark border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none">
+        </div>
+
+        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black py-3 rounded-xl text-xs sm:text-sm transition min-h-[44px]">
+          Verify Security &amp; Update Password
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT SUBJECT MODAL -->
+  <div id="addSubjectModal" class="fixed inset-0 z-50 bg-brand-navyDark/90 backdrop-blur-md items-center justify-center p-4 hidden">
+    <div class="bg-brand-navy border border-brand-gold/50 max-w-md w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAddSubjectModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+
+      <h3 class="text-lg font-bold text-white flex items-center gap-2" id="subjectModalTitle"><i class="fa-solid fa-pen text-brand-gold"></i> Edit Subject Card</h3>
+
+      <form onsubmit="handleAddSubjectSubmit(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="editSubjectId" value="sub1">
+        
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Category Tab *</label>
+          <select id="subTabSelect" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+            <option value="tab-math">Engg Math &amp; Physics</option>
+            <option value="tab-eng">Advanced Engineering</option>
+            <option value="tab-gen">General Subjects</option>
+            <option value="tab-tech">Tech &amp; Specialized</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Subject Title *</label>
+          <input type="text" id="subTitleInput" required="" placeholder="e.g. Fluid Mechanics II" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Description (Supports Paragraphs &amp; Spacing) *</label>
+          <textarea id="subDescInput" required="" rows="4" placeholder="Brief summary with spacing or paragraphs..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Target Level / Badge Tag *</label>
+          <input type="text" id="subBadgeInput" required="" placeholder="e.g. CE / ME Level" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">FontAwesome Icon Class *</label>
+          <input type="text" id="subIconInput" required="" placeholder="fa-solid fa-droplet" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition min-h-[44px]">
+          Save Subject Card
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT REVIEW MODAL -->
+  <div id="addReviewModal" class="fixed inset-0 z-50 bg-brand-navyDark/90 backdrop-blur-md items-center justify-center p-4 overflow-y-auto hidden">
+    <div class="bg-brand-navy border border-brand-gold/50 max-w-md w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative space-y-4 my-8 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAddReviewModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+
+      <h3 class="text-lg font-bold text-white flex items-center gap-2" id="reviewModalTitle"><i class="fa-solid fa-pen text-brand-gold"></i> Edit Verified Review</h3>
+
+      <form onsubmit="handleAddReviewSubmit(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="editReviewId" value="rev1">
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Review Category Group *</label>
+          <select id="revCatSelect" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+            <option value="local">Philippine Universities &amp; PSHS Achievers</option>
+            <option value="intl">International Learners (UK, UAE, Global)</option>
+            <option value="parents">Parents' Verified Insights</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Student / Parent Name *</label>
+          <input type="text" id="revNameInput" required="" placeholder="e.g. Gabriel Gil" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Tag 1: University / Institution Tag *</label>
+          <input type="text" id="revUniInput" required="" placeholder="e.g. Mapúa Malayan Colleges" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Tag 1 Color Theme *</label>
+          <select id="revUniColorSelect" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+            <option value="bg-red-950 text-red-300 border-red-500/30">🔴 Red Theme</option>
+            <option value="bg-amber-950 text-amber-300 border-amber-500/30">🟡 Gold/Amber Theme</option>
+            <option value="bg-emerald-950 text-emerald-300 border-emerald-500/30">🟢 Emerald Theme</option>
+            <option value="bg-blue-950 text-blue-300 border-blue-500/30">🔵 Blue Theme</option>
+            <option value="bg-purple-950 text-purple-300 border-purple-500/30">🟣 Purple Theme</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Tag 2: Program / Degree *</label>
+          <input type="text" id="revProgInput" required="" placeholder="e.g. BSCE or Parent" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Tag 3: Country Flag Emoji *</label>
+          <input type="text" id="revFlagInput" required="" placeholder="e.g. 🇵🇭, 🇬🇧, 🇦🇪" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Review Testimonial Text (Supports Multiple Paragraphs &amp; Spacing) *</label>
+          <textarea id="revTextInput" required="" rows="5" placeholder="Full review text with spacing or paragraphs..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition min-h-[44px]">
+          Save Verified Review Entry
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT CAROUSEL SLIDE MODAL -->
+  <div id="addCarouselModal" class="fixed inset-0 z-50 bg-brand-navyDark/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-brand-navy border border-brand-gold/50 max-w-md w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAddCarouselModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+
+      <h3 class="text-lg font-bold text-white flex items-center gap-2" id="carouselModalTitle"><i class="fa-solid fa-image text-brand-gold"></i> Add / Edit Image Slide</h3>
+
+      <form onsubmit="handleAddCarouselSubmit(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="carTargetCarouselId" value="1">
+        <input type="hidden" id="carEditIndex" value="-1">
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Hosted Image URL *</label>
+          <input type="url" id="carImgUrlInput" required="" placeholder="https://..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Top Tagline / Subtitle</label>
+          <input type="text" id="carTaglineInput" placeholder="e.g. VectorEd Blueprint Sheet" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Slide Headline Title *</label>
+          <input type="text" id="carTitleInput" required="" placeholder="e.g. Fluid Statics Problem Setup" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Bottom Context Description *</label>
+          <textarea id="carDescInput" required="" rows="3" placeholder="Brief context breakdown with paragraphs..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition min-h-[44px]">
+          Save Carousel Slide
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- PACKAGE PREVIEW MODAL -->
+  <div id="packageDetailModal" class="fixed inset-0 z-50 bg-brand-navyDark/90 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-brand-navy border border-brand-gold/50 max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto">
+      <button onclick="closePackageModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="space-y-2">
+        <span id="modalPkgTag" class="text-[10px] font-mono font-bold text-brand-gold uppercase tracking-wider block">Foundations Package</span>
+        <h3 id="modalPkgTitle" class="text-xl font-black text-white">Foundations Package</h3>
+        <p id="modalPkgSubtitle" class="text-xs text-slate-300 italic"></p>
+        <div id="modalPkgPrice" class="text-2xl font-black text-brand-gold"></div>
+      </div>
+
+      <div class="bg-slate-950 p-2 rounded-2xl border border-brand-borderDark flex items-center justify-center">
+        <img id="modalPkgImg" src="" alt="Package Flyer Preview" class="w-full h-auto max-h-80 object-contain rounded-xl">
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2">
+        <button onclick="closePackageModal()" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition min-h-[40px]">
+          Close
+        </button>
+        <a href="#booking" onclick="closePackageModal(); revealFormB();" class="bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black px-5 py-2.5 rounded-xl text-xs transition flex items-center justify-center min-h-[40px]">
+          Enroll Now
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT PACKAGE PRICE & DETAILS MODAL -->
+  <div id="editPackageModal" class="fixed inset-0 z-50 bg-brand-navyDark/90 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-brand-navy border border-brand-gold/50 max-w-md w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeEditPackageModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+
+      <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-coins text-brand-gold"></i> Edit Package Details &amp; Pricing</h3>
+
+      <form onsubmit="handleSavePackageSubmit(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="editPkgKey" value="foundations">
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Package Title *</label>
+          <input type="text" id="pkgEditTitle" required="" placeholder="e.g. FOUNDATIONS PACKAGE" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-slate-300 mb-1 font-semibold">PHP Price (₱) *</label>
+            <input type="text" id="pkgEditPhp" required="" placeholder="2,500" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1 font-semibold">USD Price ($) *</label>
+            <input type="text" id="pkgEditUsd" required="" placeholder="45" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Hours Badge / Duration *</label>
+          <input type="text" id="pkgEditHours" required="" placeholder="e.g. 4 Hours" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Tagline / Subtitle *</label>
+          <input type="text" id="pkgEditTagline" required="" placeholder="Quick Academic Support When You Need It Most." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Flyer Image URL *</label>
+          <input type="url" id="pkgEditImg" required="" placeholder="https://..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div class="pt-2 border-t border-brand-borderDark space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="block text-slate-300 font-semibold text-xs">Package Features / Details (Green Marks) *</label>
+            <button type="button" onclick="addFeatureRowModal()" class="bg-emerald-800 hover:bg-emerald-700 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg transition flex items-center gap-1">
+              <i class="fa-solid fa-plus"></i> Add Line Detail
+            </button>
+          </div>
+          <div id="modalPkgFeaturesContainer" class="space-y-2 max-h-48 overflow-y-auto pr-1"></div>
+        </div>
+
+        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition min-h-[44px]">
+          Save Package Changes
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT ANKI FLASHCARD MODAL -->
+  <div id="ankiModal" class="fixed inset-0 z-50 bg-brand-navyDark/90 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-brand-navy border border-brand-gold/50 max-w-md w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAnkiModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+
+      <h3 class="text-lg font-bold text-white flex items-center gap-2" id="ankiModalTitle"><i class="fa-solid fa-pen text-brand-gold"></i> Edit Anki Engineering Flashcard</h3>
+
+      <form onsubmit="handleSaveAnkiCard(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="ankiEditIndex" value="-1">
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Formula Title *</label>
+          <input type="text" id="ankiTitleInput" required="" placeholder="e.g. Bernoulli Energy Equation" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Subject Tag *</label>
+          <input type="text" id="ankiTagInput" required="" placeholder="e.g. Fluid Mechanics" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-slate-300 mb-1 font-semibold">Tag Theme</label>
+            <select id="ankiColorInput" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+              <option value="gold">Gold</option>
+              <option value="emerald">Emerald</option>
+              <option value="purple">Purple</option>
+              <option value="cyan">Cyan</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1 font-semibold">Front Text Size</label>
+            <select id="ankiFrontSizeInput" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+              <option value="text-xl">Large (text-xl)</option>
+              <option value="text-lg">Medium (text-lg)</option>
+              <option value="text-base">Normal (text-base)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-slate-300 mb-1 font-semibold">Back Text Size</label>
+            <select id="ankiBackSizeInput" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
+              <option value="text-xs">Small (text-xs)</option>
+              <option value="text-sm">Normal (text-sm)</option>
+              <option value="text-base">Medium (text-base)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1 font-semibold">Front Text Color</label>
+            <input type="color" id="ankiFrontColorInput" value="#F5A623" class="w-full h-10 bg-brand-navyDark border border-brand-borderDark rounded-xl p-1 cursor-pointer">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Back Text Color</label>
+          <input type="color" id="ankiBackColorInput" value="#CBD5E1" class="w-full h-10 bg-brand-navyDark border border-brand-borderDark rounded-xl p-1 cursor-pointer">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Front LaTeX / Formula *</label>
+          <textarea id="ankiFrontInput" required="" rows="3" placeholder="Enter equation or LaTeX formula..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white font-mono outline-none"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Back Explanation / Variables *</label>
+          <textarea id="ankiBackInput" required="" rows="4" placeholder="Where: p = static pressure..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white font-mono outline-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition min-h-[44px]">
+          Save Flashcard
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MANAGE CHECKLIST SUBJECTS MODAL (ADMIN) -->
+  <div id="manageChecklistModal" class="fixed inset-0 z-50 bg-brand-navyDark/90 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-brand-navy border border-brand-gold/50 max-w-md w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeManageChecklistModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+
+      <h3 class="text-lg font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-list-check text-brand-gold"></i> Manage Checklist Subjects
+      </h3>
+      <p class="text-xs text-slate-300">Add or remove subjects available in the Form B trial checklist.</p>
+
+      <form onsubmit="handleAddChecklistSubject(event)" class="space-y-3 text-xs">
+        <div class="flex items-center gap-2">
+          <input type="text" id="newChecklistSubjectInput" required="" placeholder="e.g. Advanced Fluid Dynamics" class="flex-1 bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none focus:border-brand-gold min-h-[40px]">
+          <button type="submit" class="bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black px-4 py-2.5 rounded-xl transition shrink-0 min-h-[40px]">
+            <i class="fa-solid fa-plus"></i> Add
+          </button>
+        </div>
+      </form>
+
+      <div class="border-t border-brand-borderDark pt-3">
+        <span class="text-xs font-bold text-slate-300 block mb-2">Active Checklist Subjects:</span>
+        <div id="adminChecklistItemsList" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzRFXmtKHCPH9P-CEAUQuIAmkWLeoj76mMnnCjLL7ILJNxgO2HT2hmeeoMSYEqkdiIR/exec";
+    let isAdminLoggedIn = false;
+    let inlineEditActive = false;
+    let masterPassword = localStorage.getItem('ve_master_password') || '123456';
+    let activeServiceTab = 'tab-eng';
+    let activeCurrency = 'PHP';
+    let selectedBookDate = '';
+    let selectedBookTimeLocal = '';
+    let selectedBookTimePST = '';
+    let schedulerWeekOffset = 0;
+    let bookedSlots = [];
+
+    let subjectExpandedState = {
+      'tab-math': false,
+      'tab-eng': false,
+      'tab-gen': false,
+      'tab-tech': false
+    };
+
+    let reviewPageStates = {
+      local: 0,
+      intl: 0,
+      parents: 0
+    };
+
+    const DEFAULT_TIMEZONES = [
+      { label: "PST (UTC+8) - Manila / Singapore", offset: 8, iana: "Asia/Manila" },
+      { label: "GST (UTC+4) - Dubai / UAE", offset: 4, iana: "Asia/Dubai" },
+      { label: "GMT (UTC+0) - London / UK", offset: 0, iana: "Europe/London" },
+      { label: "EST (UTC-5) - New York / Toronto", offset: -5, iana: "America/New_York" }
+    ];
+
+    let siteTimezones = JSON.parse(localStorage.getItem('ve_site_timezones')) || [...DEFAULT_TIMEZONES];
+    let selectedSiteOffset = 8;
+
+    function getReviewPageSize() {
+      return window.innerWidth < 768 ? 1 : 3;
+    }
+
+    function convertTimePSTToOffset(timeStrPST, targetOffset) {
+      if (!timeStrPST || targetOffset === 8) return timeStrPST;
+      let cleanTime = timeStrPST.split('-')[0].trim();
+      let match = cleanTime.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+      if (!match) return timeStrPST;
+
+      let h = parseInt(match[1], 10);
+      let m = parseInt(match[2], 10);
+      let ampm = match[3].toUpperCase();
+      if (ampm === 'PM' && h < 12) h += 12;
+      if (ampm === 'AM' && h === 12) h = 0;
+
+      let totalMins = h * 60 + m + (targetOffset - 8) * 60;
+      let normMins = ((totalMins % 1440) + 1440) % 1440;
+      let targetH = Math.floor(normMins / 60);
+      let targetM = normMins % 60;
+
+      let period = targetH >= 12 ? 'PM' : 'AM';
+      let displayH = targetH % 12;
+      if (displayH === 0) displayH = 12;
+      let strH = displayH < 10 ? '0' + displayH : displayH;
+      let strM = targetM < 10 ? '0' + targetM : targetM;
+      return `${strH}:${strM} ${period}`;
+    }
+
+    function saveSiteTimezonesLocal() {
+      try {
+        localStorage.setItem('ve_site_timezones', JSON.stringify(siteTimezones));
+      } catch(e) {}
+    }
+
+    function openCalendarModal() { showModal('calendarModal'); }
+    function closeCalendarModal() { closeModal('calendarModal'); }
+
+    function populateTimezoneDropdowns() {
+      const inqSelect = document.getElementById('inqTimezone');
+      const bookSelect = document.getElementById('bookTimezone');
+
+      const exists = siteTimezones.some(t => t.offset === selectedSiteOffset);
+      if (!exists && siteTimezones.length > 0) {
+        selectedSiteOffset = siteTimezones[0].offset;
+      }
+
+      let optionsHtml = siteTimezones.map(tz => 
+        `<option value="${tz.label}" data-offset="${tz.offset}" ${tz.offset === selectedSiteOffset ? 'selected' : ''}>${tz.label}</option>`
+      ).join('');
+
+      if (inqSelect) inqSelect.innerHTML = optionsHtml;
+      if (bookSelect) bookSelect.innerHTML = optionsHtml;
+    }
+
+    function handleWebsiteTimezoneChange(tzLabel) {
+      const tzObj = siteTimezones.find(t => t.label === tzLabel);
+      if (tzObj) {
+        selectedSiteOffset = tzObj.offset;
+        selectedBookTimeLocal = '';
+        selectedBookTimePST = '';
+        renderTimeSlots();
+      }
+    }
+
+    async function fetchCloudCMSState() {
+      if (!WEB_APP_URL) return;
+      try {
+        const res = await fetch(`${WEB_APP_URL}?type=cms_state`);
+        const data = await res.json();
+        if (data && typeof data === 'object' && Object.keys(data).length > 0) {
+          if (data.ve_frontpage_text) {
+            localStorage.setItem('ve_frontpage_text', JSON.stringify(data.ve_frontpage_text));
+            loadSavedTextElements();
+          }
+          if (data.ve_anki_cards) {
+            ankiCardsData = data.ve_anki_cards;
+            localStorage.setItem('ve_anki_cards', JSON.stringify(ankiCardsData));
+            renderAnkiCard();
+          }
+          if (data.ve_struggles_data) {
+            strugglesData = data.ve_struggles_data;
+            localStorage.setItem('ve_struggles_data', JSON.stringify(strugglesData));
+            renderStruggles();
+          }
+          if (data.ve_subjects_data) {
+            subjectsData = data.ve_subjects_data;
+            localStorage.setItem('ve_subjects_data', JSON.stringify(subjectsData));
+            renderSubjects();
+          }
+          if (data.ve_reviews_data) {
+            reviewsData = data.ve_reviews_data;
+            localStorage.setItem('ve_reviews_data', JSON.stringify(reviewsData));
+            renderReviews();
+          }
+          if (data.ve_carousel1_data) {
+            carousel1Slides = data.ve_carousel1_data;
+            localStorage.setItem('ve_carousel1_data', JSON.stringify(carousel1Slides));
+          }
+          if (data.ve_carousel2_data) {
+            carousel2Slides = data.ve_carousel2_data;
+            localStorage.setItem('ve_carousel2_data', JSON.stringify(carousel2Slides));
+          }
+          renderCarousels();
+          if (data.ve_package_data) {
+            Object.keys(data.ve_package_data).forEach(k => {
+              if (!data.ve_package_data[k].features && defaultPackages[k]) {
+                data.ve_package_data[k].features = [...defaultPackages[k].features];
+              }
+            });
+            packagePricingData = data.ve_package_data;
+            localStorage.setItem('ve_package_data', JSON.stringify(packagePricingData));
+            renderPackages();
+          }
+          if (data.ve_booking_checklist_subjects) {
+            bookingChecklistSubjects = data.ve_booking_checklist_subjects;
+            localStorage.setItem('ve_booking_checklist_subjects', JSON.stringify(bookingChecklistSubjects));
+            renderBookingChecklist();
+          }
+          if (data.ve_site_timezones) {
+            siteTimezones = data.ve_site_timezones;
+            localStorage.setItem('ve_site_timezones', JSON.stringify(siteTimezones));
+            populateTimezoneDropdowns();
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch Central Cloud CMS state, using local baseline cache:", err);
+      }
+    }
+
+    function openAdminTzModal() { renderAdminTzList(); showModal('adminTzModal'); }
+    function closeAdminTzModal() { closeModal('adminTzModal'); }
+
+    function applySiteTzPreset(val) {
+      if (!val) return;
+      const parts = val.split('|');
+      if (parts.length === 3) {
+        document.getElementById('siteTzIanaInput').value = parts[0];
+        document.getElementById('siteTzOffsetInput').value = parts[1];
+        document.getElementById('siteTzLabelInput').value = parts[2];
+      }
+    }
+
+    function renderAdminTzList() {
+      const container = document.getElementById('adminSiteTzListContainer');
+      const badge = document.getElementById('siteTzCountBadge');
+      if (badge) badge.textContent = `${siteTimezones.length} active`;
+      if (!container) return;
+
+      if (!siteTimezones || siteTimezones.length === 0) {
+        container.innerHTML = `<div class="text-center py-3 text-slate-500 text-xs">No active timezones configured.</div>`;
+        return;
+      }
+
+      container.innerHTML = siteTimezones.map((tz, idx) => `
+        <div class="flex items-center justify-between bg-brand-navy border border-brand-borderDark px-3 py-2 rounded-xl text-xs">
+          <div>
+            <span class="text-white font-semibold block">${tz.label}</span>
+            <span class="text-[10px] text-slate-400 font-mono">UTC Offset: ${tz.offset >= 0 ? '+' : ''}${tz.offset} | ${tz.iana || 'UTC'}</span>
+          </div>
+          ${siteTimezones.length > 1 ? `
+          <button type="button" onclick="deleteSiteTimezoneOption(${idx})" class="text-red-400 hover:text-red-300 bg-red-950/60 hover:bg-red-900/80 px-2.5 py-1 rounded-lg border border-red-800/50 transition flex items-center gap-1 min-h-[32px]" title="Delete Timezone">
+            <i class="fa-solid fa-trash-can text-xs"></i> <span class="text-[10px] font-bold">Remove</span>
+          </button>` : `<span class="text-[10px] text-slate-500 italic">Default</span>`}
+        </div>
+      `).join('');
+    }
+
+    async function handleAddSiteTimezone(e) {
+      e.preventDefault();
+      const labelInput = document.getElementById('siteTzLabelInput');
+      const offsetInput = document.getElementById('siteTzOffsetInput');
+      const ianaInput = document.getElementById('siteTzIanaInput');
+      const presetSelect = document.getElementById('siteTzPresetSelect');
+
+      const label = labelInput.value.trim();
+      const offset = parseFloat(offsetInput.value);
+      const iana = ianaInput.value.trim();
+
+      if (!label || isNaN(offset)) {
+        showToast("⚠️ Please enter a valid label and numeric UTC offset.");
+        return;
+      }
+
+      const existingIdx = siteTimezones.findIndex(t => t.label.toLowerCase() === label.toLowerCase());
+      if (existingIdx !== -1) {
+        siteTimezones[existingIdx] = { label, offset, iana: iana || 'UTC' };
+        showToast(`Updated timezone "${label}".`);
+      } else {
+        siteTimezones.push({ label, offset, iana: iana || 'UTC' });
+        showToast(`✓ Added timezone "${label}".`);
+      }
+
+      selectedSiteOffset = offset;
+      saveSiteTimezonesLocal();
+      populateTimezoneDropdowns();
+      renderAdminTzList();
+      renderTimeSlots();
+
+      labelInput.value = ''; offsetInput.value = ''; ianaInput.value = '';
+      if (presetSelect) presetSelect.value = '';
+      saveAllChangesToStorage();
+    }
+
+    async function deleteSiteTimezoneOption(index) {
+      if (siteTimezones.length <= 1) {
+        showToast("⚠️ At least one timezone option must remain active.");
+        return;
+      }
+
+      const target = siteTimezones[index];
+      if (confirm(`Are you sure you want to delete timezone "${target.label}"?`)) {
+        const deletedOffset = target.offset;
+        siteTimezones.splice(index, 1);
+
+        if (selectedSiteOffset === deletedOffset && siteTimezones.length > 0) {
+          selectedSiteOffset = siteTimezones[0].offset;
+        }
+
+        saveSiteTimezonesLocal();
+        populateTimezoneDropdowns();
+        renderAdminTzList();
+        renderTimeSlots();
+        showToast(`✓ Timezone "${target.label}" removed.`);
+        saveAllChangesToStorage();
+      }
+    }
+
+    function getMMDD(dStr) {
+      if (!dStr) return '';
+      dStr = String(dStr).trim();
+
+      let matchISO = dStr.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
+      if (matchISO) {
+        let m = String(matchISO[2]).padStart(2, '0');
+        let d = String(matchISO[3]).padStart(2, '0');
+        return `${m}-${d}`;
+      }
+
+      const months = { jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06', jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12' };
+      let matchText = dStr.match(/^([a-zA-Z]{3,9})\s+(\d{1,2})(?:[,\s]+(\d{4}))?$/);
+      if (matchText) {
+        let mKey = matchText[1].substring(0, 3).toLowerCase();
+        let m = months[mKey] || '01';
+        let d = String(matchText[2]).padStart(2, '0');
+        return `${m}-${d}`;
+      }
+
+      let matchUS = dStr.match(/^(\d{1,2})[-/](\d{1,2})(?:[-/](\d{4}))?$/);
+      if (matchUS) {
+        let m = String(matchUS[1]).padStart(2, '0');
+        let d = String(matchUS[2]).padStart(2, '0');
+        return `${m}-${d}`;
+      }
+
+      let parsed = new Date(dStr);
+      if (!isNaN(parsed.getTime())) {
+        let m = String(parsed.getMonth() + 1).padStart(2, '0');
+        let d = String(parsed.getDate()).padStart(2, '0');
+        return `${m}-${d}`;
+      }
+
+      return dStr;
+    }
+
+    function normalizeTime(tStr) {
+      if (!tStr) return '';
+      tStr = String(tStr).trim();
+
+      if (tStr.includes('_')) { tStr = tStr.split('_')[1] || tStr; }
+      if (tStr.includes('-')) { tStr = tStr.split('-')[0].trim(); }
+
+      let match12 = tStr.match(/^(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)$/i);
+      if (match12) {
+        let h = parseInt(match12[1], 10);
+        let m = String(match12[2]).padStart(2, '0');
+        let ampm = match12[3].toUpperCase();
+        let displayH = String(h).padStart(2, '0');
+        return `${displayH}:${m} ${ampm}`;
+      }
+
+      let match24 = tStr.match(/^(\d{1,2}):(\d{2})(?::\d{2})?$/);
+      if (match24) {
+        let h = parseInt(match24[1], 10);
+        let m = String(match24[2]).padStart(2, '0');
+        let ampm = h >= 12 ? 'PM' : 'AM';
+        let h12 = h % 12; if (h12 === 0) h12 = 12;
+        let displayH = String(h12).padStart(2, '0');
+        return `${displayH}:${m} ${ampm}`;
+      }
+
+      return tStr.toUpperCase();
+    }
+
+    const defaultAnkiCards = [
+      {
+        title: "Bernoulli's Energy Conservation",
+        tag: "Hydraulics & Fluids",
+        color: "emerald",
+        frontSize: "text-xl",
+        frontColor: "#34D399",
+        backSize: "text-xs",
+        backColor: "#CBD5E1",
+        front: "Energy Balance Along Streamline\n$p + \\frac{1}{2}\\rho v^2 + \\rho gh = \\text{constant}$",
+        back: "Where;\n$p$ = Static pressure energy\n$\\frac{1}{2}\\rho v^2$ = Dynamic pressure kinetic energy\n$\\rho gh$ = Hydrostatic potential energy\n\nAssumption\nInviscid, incompressible, steady laminar flow."
+      },
+      {
+        title: "Flexural Formula (Beam Stress)",
+        tag: "Strength of Materials",
+        color: "purple",
+        frontSize: "text-xl",
+        frontColor: "#C084FC",
+        backSize: "text-xs",
+        backColor: "#E2E8F0",
+        front: "Bending Stress Distribution\n$\\sigma = \\frac{M y}{I}$",
+        back: "Where;\n$M$ = Internal bending moment\n$y$ = Perpendicular distance from neutral axis\n$I$ = Area moment of inertia\n\nMaximum Stress\n$\\sigma_{max} = \\frac{M c}{I} = \\frac{M}{S}$"
+      },
+      {
+        title: "Stress Concentration General Formula",
+        tag: "Machine Design",
+        color: "gold",
+        frontSize: "text-xl",
+        frontColor: "#F5A623",
+        backSize: "text-xs",
+        backColor: "#CBD5E1",
+        front: "General\n$K_s = \\frac{S_{max}}{S_{ave} \\text{ or } S_{nom}}$",
+        back: "Where;\n$S_{max} = \\frac{S_u \\text{ or } S_y}{F.S}$\n\nDerived\n$\\frac{S_y}{F.S} = (Area) \\times (K_s)$"
+      },
+      {
+        title: "Navier-Stokes Fluid Conservation",
+        tag: "Fluid Mechanics",
+        color: "cyan",
+        frontSize: "text-lg",
+        frontColor: "#38BDF8",
+        backSize: "text-xs",
+        backColor: "#94A3B8",
+        front: "Navier-Stokes Governing Equation\n$\\rho \\left( \\frac{\\partial \\mathbf{u}}{\\partial t} + \\mathbf{u} \\cdot \\nabla \\mathbf{u} \\right) = -\\nabla p + \\mu \\nabla^2 \\mathbf{u} + \\mathbf{f}$",
+        back: "Where;\n$\\rho$ = Fluid density, $\\mathbf{u}$ = Velocity vector\n$p$ = Pressure gradient, $\\mu$ = Dynamic viscosity\n\nPhysical Meaning\nNewton's 2nd Law applied to continuous viscous fluid momentum."
+      }
+    ];
+
+    let currentAnkiIndex = 0;
+    let ankiCardsData = JSON.parse(localStorage.getItem('ve_anki_cards')) || defaultAnkiCards;
+
+    function renderAnkiCard() {
+      const container = document.getElementById('ankiCardDisplay');
+      const counter = document.getElementById('ankiCardCounter');
+      if (!container) return;
+
+      if (!ankiCardsData || ankiCardsData.length === 0) {
+        container.innerHTML = `<div class="text-center py-8 text-slate-400 text-xs">No flashcards in deck. Click "Add Card" to create one.</div>`;
+        if (counter) counter.textContent = '0 Cards';
+        return;
+      }
+
+      if (currentAnkiIndex < 0) currentAnkiIndex = ankiCardsData.length - 1;
+      if (currentAnkiIndex >= ankiCardsData.length) currentAnkiIndex = 0;
+
+      if (counter) { counter.textContent = `Card ${currentAnkiIndex + 1} of ${ankiCardsData.length}`; }
+
+      const card = ankiCardsData[currentAnkiIndex];
+      const formatMathText = (txt) => txt ? txt.replace(/\n/g, '<br>') : '';
+
+      container.innerHTML = `
+        <div class="bg-brand-navyDark p-3.5 sm:p-4 rounded-2xl border border-brand-borderDark space-y-3 shadow-inner">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-brand-gold bg-brand-gold/10 border border-brand-gold/30 px-2.5 py-0.5 rounded-full shrink-0">
+              ${card.tag || 'Formula'}
+            </span>
+            <span class="text-[10px] text-slate-400 font-bold truncate">${card.title || ''}</span>
+          </div>
+
+          <div class="bg-slate-950 p-3.5 sm:p-4 rounded-xl border border-slate-800 text-center my-2 min-h-[90px] flex flex-col justify-center items-center math-scroll-wrapper">
+            <div class="${card.frontSize || 'text-xl'} font-bold leading-relaxed" style="color: ${card.frontColor || '#F5A623'}">
+              ${formatMathText(card.front)}
+            </div>
+          </div>
+
+          <div class="bg-brand-navy p-3 sm:p-3.5 rounded-xl border border-brand-borderDark/80">
+            <div class="${card.backSize || 'text-xs'} text-slate-300 leading-relaxed font-sans" style="color: ${card.backColor || '#CBD5E1'}">
+              ${formatMathText(card.back)}
+            </div>
+          </div>
+        </div>
+      `;
+
+      if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise([container]).catch((err) => console.warn('MathJax formatting error:', err));
+      }
+    }
+
+    function moveAnkiCard(index, direction) {
+      const targetIndex = index + direction;
+      if (targetIndex < 0 || targetIndex >= ankiCardsData.length) return;
+      const temp = ankiCardsData[index];
+      ankiCardsData[index] = ankiCardsData[targetIndex];
+      ankiCardsData[targetIndex] = temp;
+      currentAnkiIndex = targetIndex;
+      saveAllChangesToStorage();
+      renderAnkiCard();
+      showToast("✓ Flashcard reordered!");
+    }
+
+    const defaultBookingChecklistSubjects = [
+      "Elementary and Advanced Calculus",
+      "General and Advanced Mathematics",
+      "Engineering Sciences (Statics, Dynamics, STREMA)",
+      "Physics",
+      "Chemistry",
+      "Professional Engineering Courses (ME, CE, EE)",
+      "Highschool Math",
+      "Highschool Science",
+      "General Subjects",
+      "Specialized Classes"
+    ];
+
+    let bookingChecklistSubjects = JSON.parse(localStorage.getItem('ve_booking_checklist_subjects')) || defaultBookingChecklistSubjects;
+
+    function renderBookingChecklist() {
+      const container = document.getElementById('bookingChecklistContainer');
+      if (!container) return;
+
+      if (!bookingChecklistSubjects || bookingChecklistSubjects.length === 0) {
+        container.innerHTML = `<div class="col-span-2 text-center text-slate-400 text-xs py-2">No subjects available in checklist.</div>`;
+        return;
+      }
+
+      container.innerHTML = bookingChecklistSubjects.map((subject) => `
+        <label class="flex items-center gap-3 p-2.5 sm:p-3 rounded-xl bg-brand-navyDark/80 hover:bg-slate-800/80 border border-brand-borderDark/60 cursor-pointer transition text-xs text-slate-200 select-none group min-h-[44px]">
+          <input type="checkbox" value="${subject}" class="booking-subject-cb rounded border-brand-borderDark text-brand-gold focus:ring-brand-gold bg-brand-navy accent-amber-500 w-5 h-5 shrink-0">
+          <span class="leading-tight group-hover:text-white font-medium">${subject}</span>
+        </label>
+      `).join('');
+    }
+
+    function openManageChecklistModal() { renderAdminChecklistItems(); showModal('manageChecklistModal'); }
+    function closeManageChecklistModal() { closeModal('manageChecklistModal'); }
+
+    function renderAdminChecklistItems() {
+      const listContainer = document.getElementById('adminChecklistItemsList');
+      if (!listContainer) return;
+
+      listContainer.innerHTML = bookingChecklistSubjects.map((subject, index) => `
+        <div class="flex items-center justify-between p-2 rounded-xl bg-brand-navyDark border border-brand-borderDark text-xs">
+          <span class="text-slate-200 font-medium truncate max-w-[220px]">${index + 1}. ${subject}</span>
+          <div class="flex items-center gap-1">
+            <button onclick="editChecklistSubject(${index})" class="bg-blue-900/60 hover:bg-blue-800 text-blue-200 px-2 py-1 rounded text-[10px] font-bold transition">
+              <i class="fa-solid fa-pen"></i> Edit
+            </button>
+            <button onclick="deleteChecklistSubject(${index})" class="bg-red-900/60 hover:bg-red-800 text-red-200 px-2 py-1 rounded text-[10px] font-bold transition">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleAddChecklistSubject(e) {
+      e.preventDefault();
+      const input = document.getElementById('newChecklistSubjectInput');
+      if (!input || !input.value.trim()) return;
+
+      bookingChecklistSubjects.push(input.value.trim());
+      saveAllChangesToStorage();
+      input.value = '';
+      renderAdminChecklistItems();
+      renderBookingChecklist();
+      showToast("✓ New subject added to Form B checklist!");
+    }
+
+    function editChecklistSubject(index) {
+      if (index < 0 || index >= bookingChecklistSubjects.length) return;
+      const current = bookingChecklistSubjects[index];
+      const input = document.getElementById('newChecklistSubjectInput');
+      if (input) {
+        input.value = current;
+        bookingChecklistSubjects.splice(index, 1);
+        saveAllChangesToStorage();
+        renderAdminChecklistItems();
+        renderBookingChecklist();
+        input.focus();
+        showToast("Subject title loaded into input box. Modify and click 'Add'.");
+      }
+    }
+
+    function deleteChecklistSubject(index) {
+      if (index >= 0 && index < bookingChecklistSubjects.length) {
+        bookingChecklistSubjects.splice(index, 1);
+        saveAllChangesToStorage();
+        renderAdminChecklistItems();
+        renderBookingChecklist();
+        showToast("✓ Subject removed from Form B checklist!");
+      }
+    }
+
+    function prevAnkiCard() { currentAnkiIndex--; renderAnkiCard(); }
+    function nextAnkiCard() { currentAnkiIndex++; renderAnkiCard(); }
+
+    function openAnkiModal(index) {
+      const editIndexInput = document.getElementById('ankiEditIndex');
+      if (editIndexInput) editIndexInput.value = index;
+
+      if (index >= 0 && index < ankiCardsData.length) {
+        const c = ankiCardsData[index];
+        const modalTitle = document.getElementById('ankiModalTitle');
+        if (modalTitle) modalTitle.innerHTML = '<i class="fa-solid fa-pen text-brand-gold"></i> Edit Anki Engineering Flashcard';
+
+        if (document.getElementById('ankiTitleInput')) document.getElementById('ankiTitleInput').value = c.title || '';
+        if (document.getElementById('ankiTagInput')) document.getElementById('ankiTagInput').value = c.tag || '';
+        if (document.getElementById('ankiColorInput')) document.getElementById('ankiColorInput').value = c.color || 'gold';
+        if (document.getElementById('ankiFrontSizeInput')) document.getElementById('ankiFrontSizeInput').value = c.frontSize || 'text-xl';
+        if (document.getElementById('ankiFrontColorInput')) document.getElementById('ankiFrontColorInput').value = c.frontColor || '#F5A623';
+        if (document.getElementById('ankiBackSizeInput')) document.getElementById('ankiBackSizeInput').value = c.backSize || 'text-xs';
+        if (document.getElementById('ankiBackColorInput')) document.getElementById('ankiBackColorInput').value = c.backColor || '#CBD5E1';
+        if (document.getElementById('ankiFrontInput')) document.getElementById('ankiFrontInput').value = c.front || '';
+        if (document.getElementById('ankiBackInput')) document.getElementById('ankiBackInput').value = c.back || '';
+      } else {
+        const modalTitle = document.getElementById('ankiModalTitle');
+        if (modalTitle) modalTitle.innerHTML = '<i class="fa-solid fa-plus text-brand-gold"></i> Add New Anki Engineering Flashcard';
+
+        if (document.getElementById('ankiTitleInput')) document.getElementById('ankiTitleInput').value = '';
+        if (document.getElementById('ankiTagInput')) document.getElementById('ankiTagInput').value = '';
+        if (document.getElementById('ankiColorInput')) document.getElementById('ankiColorInput').value = 'gold';
+        if (document.getElementById('ankiFrontSizeInput')) document.getElementById('ankiFrontSizeInput').value = 'text-xl';
+        if (document.getElementById('ankiFrontColorInput')) document.getElementById('ankiFrontColorInput').value = '#F5A623';
+        if (document.getElementById('ankiBackSizeInput')) document.getElementById('ankiBackSizeInput').value = 'text-xs';
+        if (document.getElementById('ankiBackColorInput')) document.getElementById('ankiBackColorInput').value = '#CBD5E1';
+        if (document.getElementById('ankiFrontInput')) document.getElementById('ankiFrontInput').value = '';
+        if (document.getElementById('ankiBackInput')) document.getElementById('ankiBackInput').value = '';
+      }
+      showModal('ankiModal');
+    }
+
+    function closeAnkiModal() { closeModal('ankiModal'); }
+
+    function handleSaveAnkiCard(e) {
+      if (e) e.preventDefault();
+      const index = parseInt(document.getElementById('ankiEditIndex').value);
+      const title = document.getElementById('ankiTitleInput').value;
+      const tag = document.getElementById('ankiTagInput').value;
+      const color = document.getElementById('ankiColorInput').value;
+      const frontSize = document.getElementById('ankiFrontSizeInput').value;
+      const frontColor = document.getElementById('ankiFrontColorInput').value;
+      const backSize = document.getElementById('ankiBackSizeInput').value;
+      const backColor = document.getElementById('ankiBackColorInput').value;
+      const front = document.getElementById('ankiFrontInput').value;
+      const back = document.getElementById('ankiBackInput').value;
+
+      const cardObj = { title, tag, color, frontSize, frontColor, backSize, backColor, front, back };
+
+      if (index >= 0 && index < ankiCardsData.length) {
+        ankiCardsData[index] = cardObj;
+      } else {
+        ankiCardsData.push(cardObj);
+        currentAnkiIndex = ankiCardsData.length - 1;
+      }
+
+      saveAllChangesToStorage();
+      closeAnkiModal();
+      renderAnkiCard();
+      showToast("✓ Anki Engineering Flashcard saved successfully!");
+    }
+
+    function deleteAnkiCard(index) {
+      if (index >= 0 && index < ankiCardsData.length) {
+        ankiCardsData.splice(index, 1);
+        if (currentAnkiIndex >= ankiCardsData.length) {
+          currentAnkiIndex = Math.max(0, ankiCardsData.length - 1);
+        }
+        saveAllChangesToStorage();
+        renderAnkiCard();
+        showToast("✓ Flashcard deleted successfully!");
+      }
+    }
+
+    const defaultStruggles = [
+      { id: 's1', icon: 'fa-arrows-split-up-and-left', title: 'Twisted Exam Problems', desc: 'Understanding class lectures easily, but freezing on non-standard exam setups when professors combine multiple concepts.' },
+      { id: 's2', icon: 'fa-calculator', title: 'Prerequisite Math Gaps', desc: 'Losing marks to sign errors, algebra slip-ups, unit conversions, and calculus manipulations midway through complex engineering derivations.' },
+      { id: 's3', icon: 'fa-brain', title: 'High-Pressure Fatigue', desc: 'Overloaded course units, overlapping deadlines, and high-stress crams leaving you reactive instead of proactive.' }
+    ];
+
+    const defaultSubjects = [
+      { id: 'sub1', tab: 'tab-math', title: 'University Physics', desc: '<p>Classical Mechanics, Electromagnetism, Optics, Thermodynamics, and Wave Motion.</p>', badge: 'All Engg Majors', icon: 'fa-solid fa-atom' },
+      { id: 'sub2', tab: 'tab-math', title: 'General Chemistry', desc: '<p>Stoichiometry, Chemical Kinetics, Thermochemistry, Electrochemistry, and Equilibrium.</p>', badge: 'ChE / ME / CE', icon: 'fa-solid fa-flask-vial' },
+      { id: 'sub3', tab: 'tab-math', title: 'Statics of Rigid Bodies', desc: '<p>Force Vectors, Equilibrium, Trusses, Frames, Friction, Centroids, and Moment of Inertia.</p>', badge: 'CE / ME / ECE', icon: 'fa-solid fa-cubes-stacked' },
+      { id: 'sub4', tab: 'tab-math', title: 'Dynamics of Rigid Bodies', desc: '<p>Kinematics & Kinetics of Particles and Rigid Bodies, Work-Energy, and Impulse-Momentum.</p>', badge: 'CE / ME Level', icon: 'fa-solid fa-person-running' },
+      { id: 'sub5', tab: 'tab-math', title: 'Differential Equations', desc: '<p>First/Higher Order ODEs, Laplace Transforms, Series Solutions, and Engineering Applications.</p>', badge: 'Math Major', icon: 'fa-solid fa-wave-square' },
+      { id: 'sub6', tab: 'tab-eng', title: 'Thermodynamics & Heat Transfer', desc: '<p>First & Second Laws, Gas Cycles, Conduction, Convection, and Radiation Heat Exchange.</p>', badge: 'ME / ChE / ECE', icon: 'fa-solid fa-temperature-high' },
+      { id: 'sub7', tab: 'tab-eng', title: 'Fluid Mechanics', desc: '<p>Fluid Statics, Navier-Stokes, Pipe Flow Analysis, Bernoulli Principle, and Hydraulics.</p>', badge: 'CE / ME / ChE', icon: 'fa-solid fa-droplet' },
+      { id: 'sub8', tab: 'tab-eng', title: 'Strength of Materials', desc: '<p>Axial Stress, Torsion, Beams Shear & Moment, Beam Deflections, and Combined Stresses.</p>', badge: 'CE / ME Level', icon: 'fa-solid fa-shield-halved' },
+      { id: 'sub9', tab: 'tab-eng', title: 'Machine Design', desc: '<p>Stress Concentration, Fatigue Analysis, Shafts, Gears, Fasteners, and Machine Elements.</p>', badge: 'ME Senior Level', icon: 'fa-solid fa-gears' },
+      { id: 'sub10', tab: 'tab-gen', title: 'English Language & Literature', desc: '<p>Technical Writing, Literary Criticism, Advanced Grammar, and Speech Presentations.</p>', badge: 'SHS & College', icon: 'fa-solid fa-book-open' },
+      { id: 'sub11', tab: 'tab-gen', title: 'Academic Essay & Thesis Writing', desc: '<p>Structuring research arguments, citation methods, and high-impact academic essays.</p>', badge: 'All Levels', icon: 'fa-solid fa-feather-pointed' },
+      { id: 'sub12', tab: 'tab-tech', title: 'Python Programming Projects', desc: '<p>Basic syntax, control flow, functions, NumPy/Pandas, Habit Trackers, and OpenCV.</p>', badge: 'Tech & Engg', icon: 'fa-brands fa-python' },
+      { id: 'sub13', tab: 'tab-tech', title: 'Java & Object-Oriented Logic', desc: '<p>Classes, Objects, Inheritance, Polymorphism, Abstraction, and Data Structures.</p>', badge: 'CS / IT / CPE', icon: 'fa-brands fa-java' },
+      { id: 'sub14', tab: 'tab-tech', title: 'Chess Tactics & Strategy', desc: '<p>Tactical motifs, opening principles, endgame technique, and mental concentration.</p>', badge: 'All Ages', icon: 'fa-solid fa-chess-knight' }
+    ];
+
+    const defaultReviews = [
+      { id: 'rev1', cat: 'local', name: 'Gabriel Gil', uni: 'Mapúa Malayan Colleges Laguna', uniColor: 'bg-red-950 text-red-300 border-red-500/30', prog: 'BS Civil Engineering', flag: '🇵🇭', quote: '<p>Mapúa’s fast quarter system is brutal. The free trial session immediately showed me techniques that saved time during exams.</p><p>VectorEd kept me scoring at the top of our batch.</p>' },
+      { id: 'rev2', cat: 'local', name: 'Dana Hazel Race', uni: 'Pamantasan ng Lungsod ng Valenzuela', uniColor: 'bg-amber-950 text-amber-300 border-amber-500/30', prog: 'BS Civil Engineering', flag: '🇵🇭', quote: '<p>My experience with VectorEd Academy\'s Free Trial Class was great! Very impressive ang effort to understand the student\'s weaknesses and strategize the learning experience.</p><p>Teacher Johnres explains concepts fully pag hindi naintindihan on the first try, and he\'s comfortable enough with the subject to explain it in different ways—specifically in layman\'s terms.</p><p>I gained new perspectives and understood new concepts in just 30 minutes, which is amazing! 💖 It\'s a true testament to his competency and ability to help students learn and look at the subject in a different light.</p>' },
+      { id: 'rev3', cat: 'local', name: 'Jorge Ray Maliuanag', uni: 'Philippine Science High School - Manila', uniColor: 'bg-emerald-950 text-emerald-300 border-emerald-500/30', prog: 'HS STEM Scholar', flag: '🇵🇭', quote: '<p>Teacher Johnres was very in-depth and clear when discussing Statistics topics.</p><p>Very reliable tutor for major STEM and competitive exam prep.</p>' },
+      { id: 'rev4', cat: 'intl', name: 'Hibah Singh', uni: 'United Kingdom Academic Board', uniColor: 'bg-blue-950 text-blue-300 border-blue-500/30', prog: 'A-Level Physics', flag: '🇬🇧', quote: '<p>My overall experience with VectorEd Academy was great.</p><p>Very good tutor that explains topics in depth and uses applied real-life examples.</p>' },
+      { id: 'rev5', cat: 'intl', name: 'Skye & Sean Panoy', uni: 'Sharjah STEM Academy', uniColor: 'bg-purple-950 text-purple-300 border-purple-500/30', prog: 'Python & Machine Learning', flag: '🇦🇪', quote: '<p>In just a few weeks, we could build our calculator, habit tracker, and computer vision models.</p><p>Every session was practical and engaging!</p>' },
+      { id: 'rev6', cat: 'parents', name: 'Mrs. Ra-Ann Blanco', uni: 'De La Salle Zobel Parent', uniColor: 'bg-emerald-950 text-emerald-300 border-emerald-500/30', prog: 'DLSZ Student Parent', flag: '🇵🇭', quote: '<p>Even though he came in at the last minute, he guided our daughter through Computer Programming, Math, English, and Biology with flying colors!</p>' },
+      { id: 'rev7', cat: 'parents', name: 'Mrs. Emily Pilar', uni: 'National University Parent', uniColor: 'bg-amber-950 text-amber-300 border-amber-500/30', prog: 'NU Student Parent', flag: '🇵🇭', quote: '<p>He was able to help Trisha pass her finals exam and save her scholarship for the academic year.</p><p>Teacher Johnres is truly a blessing!</p>' }
+    ];
+
+    const defaultCarousel1 = [
+      { img: 'https://placehold.co/1000x600/152238/F5A623?text=System+of+Fluids+-+Pascal%27s+Principle', tagline: 'VectorEd Blueprint Sheet', title: 'System of Fluids — Pascal\'s Principle Blueprint', desc: 'Clear visual breakdown isolating hydraulic pressure equilibrium. Eliminates confusion between force multiplication and work conservation in fluid mechanics.' },
+      { img: 'https://placehold.co/1000x600/152238/38BDF8?text=Differential+Equations+Lecture+Guide', tagline: 'Conceptual Framework', title: 'First-Order ODE & Integrating Factor Reduction', desc: 'Step-by-step blueprint converting non-exact equations into linear ODE forms with rapid pattern recognition.' }
+    ];
+
+    const defaultCarousel2 = [
+      { img: 'https://placehold.co/1000x600/0B192C/F5A623?text=Bernoulli+Differential+Equation+Solution', tagline: 'OneNote Live Session', title: 'Bernoulli Differential Equation Solution Log', desc: 'Real OneNote screen capture demonstrating variable transformation, integrating factor application, and final implicit form reduction under exam clock pressure.' },
+      { img: 'https://placehold.co/1000x600/0B192C/34D399?text=Step-by-Step+Beam+Deflection+Derivation', tagline: 'Step-by-Step Derivation', title: 'Beam Deflection Double Integration Method', desc: 'Live color-coded integration steps isolating boundary constants (C1, C2) for cantilever beam setups.' }
+    ];
+
+    const defaultPackages = {
+      foundations: { 
+        title: 'FOUNDATIONS PACKAGE', 
+        phpPrice: '2,500', 
+        usdPrice: '45', 
+        hours: '4 Hours', 
+        tagline: 'Quick Academic Support When You Need It Most.', 
+        subtitle: 'Stuck on a Specific Topic? Fix It Fast Before Midterms.', 
+        img: 'https://placehold.co/800x800/152238/F5A623?text=Foundations+Package+Flyer',
+        features: [
+          "1-on-1 Dedicated Tutoring",
+          "Topic Formula Reduction Sheets",
+          "OneNote Step-by-Step Solution Vault",
+          "Weekly Progress & Metric Logs"
+        ]
+      },
+      mastery: { 
+        title: 'MASTERY PACKAGE', 
+        phpPrice: '5,000', 
+        usdPrice: '90', 
+        hours: '7 Hours', 
+        tagline: 'Prepare Properly. Perform Confidently.', 
+        subtitle: 'Consistent Support. Real Academic Improvement.', 
+        img: 'https://placehold.co/800x800/152238/F5A623?text=Mastery+Package+Flyer',
+        features: [
+          "1-on-1 Dedicated Tutoring",
+          "Topic Formula Reduction Sheets",
+          "OneNote Step-by-Step Solution Vault",
+          "Weekly Progress & Metric Logs"
+        ]
+      },
+      scholars: { 
+        title: 'SCHOLAR\'S PACKAGE', 
+        phpPrice: '9,000', 
+        usdPrice: '160', 
+        hours: '10 Hours', 
+        tagline: 'Built for High-Stakes Academic Goals.', 
+        subtitle: 'For Students Preparing for Major Milestones.', 
+        img: 'https://placehold.co/800x800/152238/F5A623?text=Scholars+Package+Flyer',
+        features: [
+          "1-on-1 Dedicated Tutoring",
+          "Topic Formula Reduction Sheets",
+          "OneNote Step-by-Step Solution Vault",
+          "Weekly Progress & Metric Logs"
+        ]
+      }
+    };
+
+    let strugglesData = JSON.parse(localStorage.getItem('ve_struggles_data')) || defaultStruggles;
+    let subjectsData = JSON.parse(localStorage.getItem('ve_subjects_data')) || defaultSubjects;
+    let reviewsData = JSON.parse(localStorage.getItem('ve_reviews_data')) || defaultReviews;
+    let carousel1Slides = JSON.parse(localStorage.getItem('ve_carousel1_data')) || defaultCarousel1;
+    let carousel2Slides = JSON.parse(localStorage.getItem('ve_carousel2_data')) || defaultCarousel2;
+    
+    let packagePricingData = JSON.parse(localStorage.getItem('ve_package_data')) || defaultPackages;
+    Object.keys(packagePricingData).forEach(key => {
+      if (!packagePricingData[key].features || !Array.isArray(packagePricingData[key].features)) {
+        packagePricingData[key].features = defaultPackages[key] ? [...defaultPackages[key].features] : [
+          "1-on-1 Dedicated Tutoring",
+          "Topic Formula Reduction Sheets",
+          "OneNote Step-by-Step Solution Vault",
+          "Weekly Progress & Metric Logs"
+        ];
+      }
+    });
+
+    let car1Index = 0;
+    let car2Index = 0;
+
+    function openAdminAuthModal() { showModal('adminAuthModal'); }
+    function closeAdminAuthModal() { closeModal('adminAuthModal'); }
+    function openPasswordModal() { showModal('passwordModal'); }
+    function closePasswordModal() { closeModal('passwordModal'); }
+    function showModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) { modal.classList.remove('hidden'); modal.classList.add('flex'); }
+    }
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+    }
+
+    function openAddSubjectModal() {
+      document.getElementById('editSubjectId').value = "";
+      document.getElementById('subjectModalTitle').innerHTML = '<i class="fa-solid fa-plus text-brand-gold"></i> Add New Subject Card';
+      document.getElementById('subTitleInput').value = "";
+      document.getElementById('subDescInput').value = "";
+      document.getElementById('subBadgeInput').value = "";
+      document.getElementById('subIconInput').value = "fa-solid fa-book";
+      showModal('addSubjectModal');
+    }
+    function closeAddSubjectModal() { closeModal('addSubjectModal'); }
+
+    function openAddReviewModal() {
+      document.getElementById('editReviewId').value = "";
+      document.getElementById('reviewModalTitle').innerHTML = '<i class="fa-solid fa-award text-brand-gold"></i> Add New Verified Review';
+      document.getElementById('revNameInput').value = "";
+      document.getElementById('revUniInput').value = "";
+      document.getElementById('revProgInput').value = "";
+      document.getElementById('revFlagInput').value = "🇵🇭";
+      document.getElementById('revTextInput').value = "";
+      showModal('addReviewModal');
+    }
+    function closeAddReviewModal() { closeModal('addReviewModal'); }
+
+    function openAddCarouselModal(carouselId) {
+      document.getElementById('carTargetCarouselId').value = carouselId;
+      document.getElementById('carEditIndex').value = "-1";
+      document.getElementById('carouselModalTitle').innerHTML = '<i class="fa-solid fa-image text-brand-gold"></i> Add Image Slide';
+      document.getElementById('carImgUrlInput').value = "";
+      document.getElementById('carTaglineInput').value = "";
+      document.getElementById('carTitleInput').value = "";
+      document.getElementById('carDescInput').value = "";
+      showModal('addCarouselModal');
+    }
+    function closeAddCarouselModal() { closeModal('addCarouselModal'); }
+
+    function openPackageModal(key) {
+      const pkg = packagePricingData[key];
+      if (!pkg) return;
+      document.getElementById('modalPkgTag').textContent = pkg.title;
+      document.getElementById('modalPkgTitle').textContent = pkg.title;
+      const priceText = activeCurrency === 'PHP' ? `₱${pkg.phpPrice}` : `$${pkg.usdPrice}`;
+      document.getElementById('modalPkgPrice').innerHTML = `${priceText} <span class="text-xs font-normal text-slate-300">(${pkg.hours})</span>`;
+      document.getElementById('modalPkgSubtitle').textContent = pkg.tagline;
+      document.getElementById('modalPkgImg').src = pkg.img;
+      showModal('packageDetailModal');
+    }
+    function closePackageModal() { closeModal('packageDetailModal'); }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      const text = document.getElementById('toastText');
+      if (text) text.textContent = msg;
+      if (toast) {
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3500);
+      }
+    }
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    function applyFormat(cmd) { document.execCommand(cmd, false, null); }
+
+    function insertParagraphBreak() {
+      const sel = window.getSelection();
+      if (!sel.rangeCount) return;
+      const range = sel.getRangeAt(0);
+      const p = document.createElement('p');
+      p.innerHTML = '<br>';
+      range.deleteContents();
+      range.insertNode(p);
+      range.setStart(p, 0);
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+
+    const frontPageTextIds = [
+      'heroBadgeText', 'heroHeadline', 'heroSubheadline',
+      'stat1Num', 'stat1Lbl', 'stat2Num', 'stat2Lbl', 'stat3Num', 'stat3Lbl',
+      'strugglesTitle', 'strugglesDesc',
+      'servicesTitle', 'servicesDesc',
+      'reviewsTitle', 'reviewsDesc',
+      'proofTitle', 'proofDesc',
+      'pricingTitle', 'pricingDesc'
+    ];
+
+    function setAllTextEditable(isEditable) {
+      frontPageTextIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.contentEditable = (isEditable && inlineEditActive) ? "true" : "false"; }
+      });
+    }
+
+    function loadSavedTextElements() {
+      const savedText = JSON.parse(localStorage.getItem('ve_frontpage_text'));
+      if (savedText) {
+        Object.keys(savedText).forEach(id => {
+          const el = document.getElementById(id);
+          if (el && savedText[id]) { el.innerHTML = savedText[id]; }
+        });
+      }
+    }
+
+    function handleAdminLoginSubmit(e) {
+      e.preventDefault();
+      const pass = document.getElementById('adminPassInput').value;
+      if (pass === masterPassword) {
+        isAdminLoggedIn = true;
+        document.body.classList.add('admin-mode-on', 'admin-editable-active');
+        document.getElementById('adminToolbar').classList.remove('hidden');
+        closeAdminAuthModal();
+        setAllTextEditable(true);
+        showToast("✓ Admin CMS Mode unlocked! Reordering & Editing active.");
+        renderStruggles();
+        renderSubjects();
+        renderReviews();
+        renderCarousels();
+        renderPackages();
+      } else {
+        showToast("❌ Incorrect master password. Please try again.");
+      }
+    }
+
+    function logoutAdmin() {
+      isAdminLoggedIn = false;
+      document.body.classList.remove('admin-mode-on', 'admin-editable-active');
+      document.getElementById('adminToolbar').classList.add('hidden');
+      setAllTextEditable(false);
+      showToast("Logged out of Admin CMS.");
+      renderStruggles();
+      renderSubjects();
+      renderReviews();
+      renderCarousels();
+      renderPackages();
+    }
+
+    function toggleInlineEditMode() {
+      inlineEditActive = !inlineEditActive;
+      const lbl = document.getElementById('lblInlineEdit');
+      if (inlineEditActive) {
+        document.body.classList.add('admin-editable-active');
+        if (lbl) lbl.textContent = "Inline Edit: ON";
+      } else {
+        document.body.classList.remove('admin-editable-active');
+        if (lbl) lbl.textContent = "Inline Edit: OFF";
+      }
+      setAllTextEditable(isAdminLoggedIn);
+    }
+
+    function handleChangePasswordSubmit(e) {
+      e.preventDefault();
+      const ans = document.getElementById('secAnsInput').value.trim().toLowerCase();
+      const newPass = document.getElementById('newPassInput').value;
+      if (ans.includes("jan") && ans.includes("2025")) {
+        masterPassword = newPass;
+        localStorage.setItem('ve_master_password', masterPassword);
+        closePasswordModal();
+        showToast("✓ Master password updated successfully!");
+      } else {
+        showToast("❌ Verification answer incorrect.");
+      }
+    }
+
+    async function saveAllChangesToStorage() {
+      const textMap = {};
+      frontPageTextIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) textMap[id] = el.innerHTML;
+      });
+
+      const cmsPayload = {
+        ve_frontpage_text: textMap,
+        ve_anki_cards: ankiCardsData,
+        ve_struggles_data: strugglesData,
+        ve_subjects_data: subjectsData,
+        ve_reviews_data: reviewsData,
+        ve_carousel1_data: carousel1Slides,
+        ve_carousel2_data: carousel2Slides,
+        ve_package_data: packagePricingData,
+        ve_booking_checklist_subjects: bookingChecklistSubjects,
+        ve_site_timezones: siteTimezones
+      };
+
+      localStorage.setItem('ve_frontpage_text', JSON.stringify(textMap));
+      localStorage.setItem('ve_anki_cards', JSON.stringify(ankiCardsData));
+      localStorage.setItem('ve_struggles_data', JSON.stringify(strugglesData));
+      localStorage.setItem('ve_subjects_data', JSON.stringify(subjectsData));
+      localStorage.setItem('ve_reviews_data', JSON.stringify(reviewsData));
+      localStorage.setItem('ve_carousel1_data', JSON.stringify(carousel1Slides));
+      localStorage.setItem('ve_carousel2_data', JSON.stringify(carousel2Slides));
+      localStorage.setItem('ve_package_data', JSON.stringify(packagePricingData));
+      localStorage.setItem('ve_booking_checklist_subjects', JSON.stringify(bookingChecklistSubjects));
+      localStorage.setItem('ve_site_timezones', JSON.stringify(siteTimezones));
+
+      showToast("✓ Local CMS state updated. Syncing to Google Sheets...");
+
+      if (WEB_APP_URL) {
+        try {
+          await fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              formType: 'cms_state',
+              cmsState: cmsPayload
+            })
+          });
+          showToast("✓ Central CMS State synchronized across all devices!");
+        } catch (err) {
+          showToast("⚠️ Cloud sync delayed. Local changes preserved.");
+        }
+      }
+    }
+
+    function renderStruggles() {
+      const box = document.getElementById('strugglesContainer');
+      if (!box) return;
+      box.innerHTML = strugglesData.map((item, idx) => `
+        <div class="bg-brand-navy p-5 sm:p-6 rounded-3xl border border-brand-borderDark hover:border-brand-gold/40 transition shadow-xl flex items-start gap-3.5 sm:gap-4 relative group">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-brand-gold/20 text-brand-gold flex items-center justify-center text-lg sm:text-xl shrink-0">
+            <i class="fa-solid ${item.icon}"></i>
+          </div>
+          <div class="space-y-1.5 sm:space-y-2 w-full">
+            <h3 class="text-base sm:text-lg font-bold text-white" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateStruggleField(${idx}, 'title', this.innerHTML)">${item.title}</h3>
+            <div class="text-xs sm:text-sm text-slate-300 leading-relaxed subject-desc-text" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateStruggleField(${idx}, 'desc', this.innerHTML)">${item.desc}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateStruggleField(idx, field, val) {
+      if (strugglesData[idx]) {
+        strugglesData[idx][field] = val;
+        saveAllChangesToStorage();
+      }
+    }
+
+    function switchServiceTab(tabId) {
+      activeServiceTab = tabId;
+      document.querySelectorAll('.service-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-brand-gold', 'text-brand-navyDark', 'active');
+        btn.classList.add('bg-brand-navyDark', 'text-slate-300');
+      });
+      const activeBtn = document.getElementById(`btn-${tabId}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-brand-navyDark', 'text-slate-300');
+        activeBtn.classList.add('bg-brand-gold', 'text-brand-navyDark', 'active');
+      }
+      renderSubjects();
+    }
+
+    function toggleExpandSubjects(tabId) {
+      subjectExpandedState[tabId] = !subjectExpandedState[tabId];
+      renderSubjects();
+    }
+
+    function moveSubject(id, dir) {
+      const sub = subjectsData.find(s => s.id === id);
+      if (!sub) return;
+      const tabSubs = subjectsData.filter(s => s.tab === sub.tab);
+      const tabIdx = tabSubs.findIndex(s => s.id === id);
+      const targetTabIdx = tabIdx + dir;
+      if (targetTabIdx < 0 || targetTabIdx >= tabSubs.length) return;
+
+      const targetSub = tabSubs[targetTabIdx];
+      const realIdx1 = subjectsData.findIndex(s => s.id === sub.id);
+      const realIdx2 = subjectsData.findIndex(s => s.id === targetSub.id);
+
+      const temp = subjectsData[realIdx1];
+      subjectsData[realIdx1] = subjectsData[realIdx2];
+      subjectsData[realIdx2] = temp;
+
+      saveAllChangesToStorage();
+      renderSubjects();
+      showToast("✓ Subject card reordered!");
+    }
+
+    function renderSubjects() {
+      const container = document.getElementById('subjectsDynamicContainer');
+      if (!container) return;
+      const filtered = subjectsData.filter(s => s.tab === activeServiceTab);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="text-center py-12 text-slate-400 text-sm">No subjects listed in this section yet.</div>`;
+        return;
+      }
+
+      const isExpanded = subjectExpandedState[activeServiceTab] || false;
+      const visibleSubjects = isExpanded ? filtered : filtered.slice(0, 3);
+
+      container.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          ${visibleSubjects.map(sub => {
+            const realIdx = subjectsData.findIndex(s => s.id === sub.id);
+            return `
+            <div class="bg-brand-navyDark p-5 sm:p-6 rounded-3xl border border-brand-borderDark hover:border-brand-gold/50 transition shadow-xl space-y-4 flex flex-col justify-between relative group">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="w-10 h-10 rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center font-bold text-base">
+                    <i class="${sub.icon}"></i>
+                  </div>
+                  <span class="text-[10px] font-mono text-brand-gold bg-brand-navy border border-brand-gold/30 px-2.5 py-1 rounded-full font-bold">${sub.badge}</span>
+                </div>
+                <h3 class="text-base sm:text-lg font-bold text-white" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateSubjectField(${realIdx}, 'title', this.innerHTML)">${sub.title}</h3>
+                <div class="text-xs text-slate-300 leading-relaxed subject-desc-text" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateSubjectField(${realIdx}, 'desc', this.innerHTML)">${sub.desc}</div>
+              </div>
+              <div class="edit-card-controls pt-2 border-t border-brand-borderDark flex items-center justify-end gap-1.5 flex-wrap">
+                <button onclick="moveSubject('${sub.id}', -1)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 min-h-[32px]" title="Move Left/Up">
+                  <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <button onclick="moveSubject('${sub.id}', 1)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 min-h-[32px]" title="Move Right/Down">
+                  <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button onclick="editSubjectCard('${sub.id}')" class="bg-blue-900/60 hover:bg-blue-800 text-blue-200 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 min-h-[32px]">
+                  <i class="fa-solid fa-pen"></i> Edit
+                </button>
+                <button onclick="deleteSubjectCard('${sub.id}')" class="bg-red-900/60 hover:bg-red-800 text-red-200 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 min-h-[32px]">
+                  <i class="fa-solid fa-trash"></i> Delete
+                </button>
+              </div>
+            </div>
+          `;
+          }).join('')}
+        </div>
+
+        ${filtered.length > 3 ? `
+          <div class="mt-8 text-center">
+            <button onclick="toggleExpandSubjects('${activeServiceTab}')" class="bg-brand-navyDark hover:bg-slate-800 text-brand-gold border border-brand-gold/40 hover:border-brand-gold font-bold px-6 py-3 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 mx-auto min-h-[44px] shadow-lg">
+              <i class="fa-solid ${isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'}"></i>
+              <span>${isExpanded ? 'Show Fewer Subjects' : `View All ${filtered.length} Subjects in Category`}</span>
+            </button>
+          </div>
+        ` : ''}
+      `;
+    }
+
+    function updateSubjectField(idx, field, val) {
+      if (subjectsData[idx]) {
+        subjectsData[idx][field] = val;
+        saveAllChangesToStorage();
+      }
+    }
+
+    function editSubjectCard(id) {
+      const sub = subjectsData.find(s => s.id === id);
+      if (!sub) return;
+      document.getElementById('editSubjectId').value = sub.id;
+      document.getElementById('subjectModalTitle').innerHTML = '<i class="fa-solid fa-pen text-brand-gold"></i> Edit Subject Card';
+      document.getElementById('subTabSelect').value = sub.tab;
+      document.getElementById('subTitleInput').value = sub.title;
+      document.getElementById('subDescInput').value = sub.desc.replace(/<br\s*[\/]?>/gi, '\n').replace(/<\/p><p>/gi, '\n\n').replace(/<\/?p>/gi, '');
+      document.getElementById('subBadgeInput').value = sub.badge;
+      document.getElementById('subIconInput').value = sub.icon;
+      showModal('addSubjectModal');
+    }
+
+    function deleteSubjectCard(id) {
+      subjectsData = subjectsData.filter(s => s.id !== id);
+      saveAllChangesToStorage();
+      renderSubjects();
+      showToast("✓ Subject card deleted.");
+    }
+
+    function handleAddSubjectSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('editSubjectId').value;
+      const tab = document.getElementById('subTabSelect').value;
+      const title = document.getElementById('subTitleInput').value;
+      let rawDesc = document.getElementById('subDescInput').value;
+      
+      const desc = rawDesc.split(/\r?\n\r?\n/).map(p => `<p>${p.trim().replace(/\r?\n/g, '<br>')}</p>`).join('');
+      const badge = document.getElementById('subBadgeInput').value;
+      const icon = document.getElementById('subIconInput').value;
+
+      if (id) {
+        const subIndex = subjectsData.findIndex(s => s.id === id);
+        if (subIndex !== -1) { subjectsData[subIndex] = { id, tab, title, desc, badge, icon }; }
+      } else {
+        subjectsData.push({ id: 'sub_' + Date.now(), tab, title, desc, badge, icon });
+      }
+      saveAllChangesToStorage();
+      closeAddSubjectModal();
+      renderSubjects();
+      showToast("Subject card saved successfully!");
+    }
+
+    function moveReview(id, dir) {
+      const rev = reviewsData.find(r => r.id === id);
+      if (!rev) return;
+      const catRevs = reviewsData.filter(r => r.cat === rev.cat);
+      const catIdx = catRevs.findIndex(r => r.id === id);
+      const targetCatIdx = catIdx + dir;
+      if (targetCatIdx < 0 || targetCatIdx >= catRevs.length) return;
+
+      const targetRev = catRevs[targetCatIdx];
+      const realIdx1 = reviewsData.findIndex(r => r.id === rev.id);
+      const realIdx2 = reviewsData.findIndex(r => r.id === targetRev.id);
+
+      const temp = reviewsData[realIdx1];
+      reviewsData[realIdx1] = reviewsData[realIdx2];
+      reviewsData[realIdx2] = temp;
+
+      saveAllChangesToStorage();
+      renderReviews();
+      showToast("✓ Review entry reordered!");
+    }
+
+    function renderReviews() {
+      const container = document.getElementById('reviewsDynamicContainer');
+      if (!container) return;
+
+      const categories = [
+        { key: 'local', title: 'Philippine Universities & PSHS Achievers', flag: '🇵🇭' },
+        { key: 'intl', title: 'International Learners (UK, UAE, Global)', flag: '🌍' },
+        { key: 'parents', title: "Parents' Verified Insights", flag: '❤' }
+      ];
+
+      const pageSize = getReviewPageSize();
+
+      container.innerHTML = categories.map(catObj => {
+        const items = reviewsData.filter(r => r.cat === catObj.key);
+        const totalPages = Math.ceil(items.length / pageSize) || 1;
+        const currentPage = reviewPageStates[catObj.key] || 0;
+        
+        const safePage = Math.min(Math.max(0, currentPage), totalPages - 1);
+        reviewPageStates[catObj.key] = safePage;
+
+        const startIndex = safePage * pageSize;
+        const visibleItems = items.slice(startIndex, startIndex + pageSize);
+
+        return `
+          <div class="space-y-4 bg-brand-navy/60 p-4 sm:p-6 rounded-3xl border border-brand-borderDark/80">
+            <div class="flex flex-row items-center justify-between gap-3 pb-3 border-b border-brand-borderDark">
+              <h3 class="text-sm sm:text-xl font-bold text-white flex items-center gap-2">
+                <span>${catObj.flag}</span> ${catObj.title}
+              </h3>
+              
+              <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                <span class="text-[11px] sm:text-xs font-mono text-slate-400 whitespace-nowrap">Page ${safePage + 1} of ${totalPages}</span>
+                <div class="flex items-center gap-1.5">
+                  <button onclick="changeReviewPage('${catObj.key}', -1)" ${safePage === 0 ? 'disabled' : ''} class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-brand-navy hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 hover:text-brand-gold border border-brand-borderDark flex items-center justify-center text-xs transition">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+                  <button onclick="changeReviewPage('${catObj.key}', 1)" ${safePage >= totalPages - 1 ? 'disabled' : ''} class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-brand-navy hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 hover:text-brand-gold border border-brand-borderDark flex items-center justify-center text-xs transition">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            ${items.length === 0 ? `
+              <div class="text-center py-8 text-slate-400 text-xs">No reviews listed under this section yet.</div>
+            ` : `
+              <div class="grid grid-cols-1 ${pageSize > 1 ? 'md:grid-cols-3' : 'grid-cols-1'} gap-5 sm:gap-6 transition-all duration-300">
+                ${visibleItems.map(r => renderReviewCard(r)).join('')}
+              </div>
+            `}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function changeReviewPage(catKey, delta) {
+      const items = reviewsData.filter(r => r.cat === catKey);
+      const pageSize = getReviewPageSize();
+      const totalPages = Math.ceil(items.length / pageSize) || 1;
+      let curr = reviewPageStates[catKey] || 0;
+      curr += delta;
+      if (curr >= 0 && curr < totalPages) {
+        reviewPageStates[catKey] = curr;
+        renderReviews();
+      }
+    }
+
+    function renderReviewCard(r) {
+      const isParent = r.cat === 'parents';
+      const badgeText = isParent ? 'Verified Client' : 'Verified Scholar';
+      const realIdx = reviewsData.findIndex(x => x.id === r.id);
+
+      return `
+        <div class="bg-brand-navy p-5 sm:p-6 rounded-3xl border border-brand-borderDark hover:border-brand-gold/40 transition shadow-xl space-y-4 flex flex-col justify-between relative group w-full">
+          <div class="space-y-3">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-[10px] font-bold px-2.5 py-1 rounded-full border ${r.uniColor || 'bg-red-950 text-red-300 border-red-500/30'}">${r.flag || '🇵🇭'} ${r.uni}</span>
+              <span class="text-[10px] font-mono text-slate-300 bg-brand-navyDark px-2 py-0.5 rounded border border-brand-borderDark">${r.prog}</span>
+            </div>
+            <div class="text-xs sm:text-sm text-slate-200 italic leading-relaxed review-quote-text" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateReviewField(${realIdx}, 'quote', this.innerHTML)">${r.quote}</div>
+          </div>
+          <div class="pt-3 border-t border-brand-borderDark flex items-center justify-between">
+            <div>
+              <span class="block font-bold text-white text-xs sm:text-sm" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateReviewField(${realIdx}, 'name', this.innerHTML)">${r.name}</span>
+              <span class="text-[10px] text-brand-gold"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> ${badgeText}</span>
+            </div>
+            <div class="edit-card-controls items-center gap-1">
+              <button onclick="moveReview('${r.id}', -1)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded text-[10px] font-bold transition" title="Move Up/Left"><i class="fa-solid fa-arrow-left"></i></button>
+              <button onclick="moveReview('${r.id}', 1)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded text-[10px] font-bold transition" title="Move Down/Right"><i class="fa-solid fa-arrow-right"></i></button>
+              <button onclick="editReviewCard('${r.id}')" class="bg-blue-900/60 hover:bg-blue-800 text-blue-200 px-2 py-1 rounded text-[10px] font-bold transition">
+                <i class="fa-solid fa-pen"></i> Edit
+              </button>
+              <button onclick="deleteReviewCard('${r.id}')" class="bg-red-900/60 hover:bg-red-800 text-red-200 px-2 py-1 rounded text-[10px] font-bold transition">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function updateReviewField(idx, field, val) {
+      if (reviewsData[idx]) {
+        reviewsData[idx][field] = val;
+        saveAllChangesToStorage();
+      }
+    }
+
+    function editReviewCard(id) {
+      const r = reviewsData.find(x => x.id === id);
+      if (!r) return;
+      document.getElementById('editReviewId').value = r.id;
+      document.getElementById('reviewModalTitle').innerHTML = '<i class="fa-solid fa-pen text-brand-gold"></i> Edit Verified Review';
+      document.getElementById('revCatSelect').value = r.cat;
+      document.getElementById('revNameInput').value = r.name;
+      document.getElementById('revUniInput').value = r.uni;
+      document.getElementById('revUniColorSelect').value = r.uniColor || 'bg-red-950 text-red-300 border-red-500/30';
+      document.getElementById('revProgInput').value = r.prog;
+      document.getElementById('revFlagInput').value = r.flag || '🇵🇭';
+      document.getElementById('revTextInput').value = r.quote.replace(/<\/p><p>/gi, '\n\n').replace(/<\/?p>/gi, '').replace(/<br\s*[\/]?>/gi, '\n');
+      showModal('addReviewModal');
+    }
+
+    function deleteReviewCard(id) {
+      reviewsData = reviewsData.filter(r => r.id !== id);
+      saveAllChangesToStorage();
+      renderReviews();
+      showToast("✓ Review entry deleted.");
+    }
+
+    function handleAddReviewSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('editReviewId').value;
+      const cat = document.getElementById('revCatSelect').value;
+      const name = document.getElementById('revNameInput').value;
+      const uni = document.getElementById('revUniInput').value;
+      const uniColor = document.getElementById('revUniColorSelect').value;
+      const prog = document.getElementById('revProgInput').value;
+      const flag = document.getElementById('revFlagInput').value;
+      let rawQuote = document.getElementById('revTextInput').value;
+
+      const quote = rawQuote.split(/\r?\n\r?\n/).map(p => `<p>${p.trim().replace(/\r?\n/g, '<br>')}</p>`).join('');
+
+      if (id) {
+        const revIndex = reviewsData.findIndex(x => x.id === id);
+        if (revIndex !== -1) { reviewsData[revIndex] = { id, cat, name, uni, uniColor, prog, flag, quote }; }
+      } else {
+        reviewsData.push({ id: 'rev_' + Date.now(), cat, name, uni, uniColor, prog, flag, quote });
+      }
+      saveAllChangesToStorage();
+      closeAddReviewModal();
+      renderReviews();
+      showToast("Verified review saved successfully!");
+    }
+
+    function renderCarousels() {
+      renderCarouselBox(1, carousel1Slides, car1Index, 'carousel1Box');
+      renderCarouselBox(2, carousel2Slides, car2Index, 'carousel2Box');
+    }
+
+    function renderCarouselBox(carId, slides, currentIndex, boxId) {
+      const box = document.getElementById(boxId);
+      if (!box) return;
+
+      if (slides.length === 0) {
+        box.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs">No slides available in Carousel ${carId}.</div>`;
+        return;
+      }
+
+      const safeIndex = (currentIndex >= slides.length) ? 0 : currentIndex;
+      const slide = slides[safeIndex];
+
+      box.innerHTML = `
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-8 bg-brand-navy rounded-2xl border border-brand-borderDark p-2 relative overflow-hidden flex items-center justify-center min-h-[220px] sm:min-h-[320px]">
+            <img src="${slide.img}" alt="${slide.title}" class="w-full h-auto max-h-[380px] object-contain rounded-xl shadow-2xl">
+          </div>
+          <div class="lg:col-span-4 space-y-4 flex flex-col justify-between">
+            <div class="space-y-2">
+              <span class="text-[10px] font-mono font-bold text-brand-gold uppercase tracking-widest block">${slide.tagline || 'VectorEd Asset'}</span>
+              <h4 class="text-base sm:text-lg font-bold text-white" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateCarouselField(${carId}, ${safeIndex}, 'title', this.innerHTML)">${slide.title}</h4>
+              <div class="text-xs text-slate-300 leading-relaxed subject-desc-text" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateCarouselField(${carId}, ${safeIndex}, 'desc', this.innerHTML)">${slide.desc}</div>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-brand-borderDark">
+              <span class="text-[11px] font-mono text-slate-400">Slide ${safeIndex + 1} of ${slides.length}</span>
+              <div class="flex items-center gap-2">
+                <button onclick="prevSlide(${carId})" class="w-9 h-9 rounded-xl bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-brand-gold border border-brand-borderDark flex items-center justify-center text-xs transition min-h-[36px]">
+                  <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button onclick="nextSlide(${carId})" class="w-9 h-9 rounded-xl bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-brand-gold border border-brand-borderDark flex items-center justify-center text-xs transition min-h-[36px]">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+            <div class="edit-card-controls items-center gap-1.5 pt-2 border-t border-brand-borderDark">
+              <button onclick="moveCarouselSlide(${carId}, ${safeIndex}, -1)" class="bg-slate-800 hover:bg-slate-700 text-white px-2 py-1 rounded text-[10px] font-bold" title="Move Left"><i class="fa-solid fa-arrow-left"></i></button>
+              <button onclick="moveCarouselSlide(${carId}, ${safeIndex}, 1)" class="bg-slate-800 hover:bg-slate-700 text-white px-2 py-1 rounded text-[10px] font-bold" title="Move Right"><i class="fa-solid fa-arrow-right"></i></button>
+              <button onclick="editCarouselSlide(${carId}, ${safeIndex})" class="bg-blue-900/60 text-blue-200 px-2 py-1 rounded text-[10px] font-bold">Edit</button>
+              <button onclick="deleteCarouselSlide(${carId}, ${safeIndex})" class="bg-red-900/60 text-red-200 px-2 py-1 rounded text-[10px] font-bold">Delete</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function updateCarouselField(carId, idx, field, val) {
+      const slides = carId === 1 ? carousel1Slides : carousel2Slides;
+      if (slides[idx]) {
+        slides[idx][field] = val;
+        saveAllChangesToStorage();
+      }
+    }
+
+    function prevSlide(carId) {
+      if (carId === 1) { car1Index = (car1Index - 1 + carousel1Slides.length) % carousel1Slides.length; }
+      else { car2Index = (car2Index - 1 + carousel2Slides.length) % carousel2Slides.length; }
+      renderCarousels();
+    }
+
+    function nextSlide(carId) {
+      if (carId === 1) { car1Index = (car1Index + 1) % carousel1Slides.length; }
+      else { car2Index = (car2Index + 1) % carousel2Slides.length; }
+      renderCarousels();
+    }
+
+    function moveCarouselSlide(carId, index, dir) {
+      const slides = carId === 1 ? carousel1Slides : carousel2Slides;
+      const target = index + dir;
+      if (target < 0 || target >= slides.length) return;
+      const temp = slides[index];
+      slides[index] = slides[target];
+      slides[target] = temp;
+      saveAllChangesToStorage();
+      renderCarousels();
+      showToast("Slide reordered!");
+    }
+
+    function editCarouselSlide(carId, index) {
+      const slides = carId === 1 ? carousel1Slides : carousel2Slides;
+      const s = slides[index];
+      if (!s) return;
+      document.getElementById('carTargetCarouselId').value = carId;
+      document.getElementById('carEditIndex').value = index;
+      document.getElementById('carouselModalTitle').innerHTML = '<i class="fa-solid fa-pen text-brand-gold"></i> Edit Image Slide';
+      document.getElementById('carImgUrlInput').value = s.img;
+      document.getElementById('carTaglineInput').value = s.tagline || '';
+      document.getElementById('carTitleInput').value = s.title;
+      document.getElementById('carDescInput').value = s.desc.replace(/<br\s*[\/]?>/gi, '\n').replace(/<\/p><p>/gi, '\n\n').replace(/<\/?p>/gi, '');
+      showModal('addCarouselModal');
+    }
+
+    function deleteCarouselSlide(carId, index) {
+      if (carId === 1) {
+        if (index >= 0 && index < carousel1Slides.length) { carousel1Slides.splice(index, 1); car1Index = 0; }
+      } else {
+        if (index >= 0 && index < carousel2Slides.length) { carousel2Slides.splice(index, 1); car2Index = 0; }
+      }
+      saveAllChangesToStorage();
+      renderCarousels();
+      showToast("✓ Carousel slide removed.");
+    }
+
+    function handleAddCarouselSubmit(e) {
+      e.preventDefault();
+      const carId = parseInt(document.getElementById('carTargetCarouselId').value);
+      const editIndex = parseInt(document.getElementById('carEditIndex').value);
+      const img = document.getElementById('carImgUrlInput').value;
+      const tagline = document.getElementById('carTaglineInput').value;
+      const title = document.getElementById('carTitleInput').value;
+      let rawDesc = document.getElementById('carDescInput').value;
+      const desc = rawDesc.split(/\r?\n\r?\n/).map(p => `<p>${p.trim().replace(/\r?\n/g, '<br>')}</p>`).join('');
+
+      const targetArray = carId === 1 ? carousel1Slides : carousel2Slides;
+
+      if (editIndex >= 0 && editIndex < targetArray.length) {
+        targetArray[editIndex] = { img, tagline, title, desc };
+      } else {
+        targetArray.push({ img, tagline, title, desc });
+      }
+
+      saveAllChangesToStorage();
+      closeAddCarouselModal();
+      renderCarousels();
+      showToast("Carousel slide saved!");
+    }
+
+    function switchCurrency(curr) {
+      activeCurrency = curr;
+      const btnPHP = document.getElementById('currBtnPHP');
+      const btnUSD = document.getElementById('currBtnUSD');
+
+      if (curr === 'PHP') {
+        btnPHP.className = "px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-brand-gold text-brand-navyDark shadow-md min-h-[40px]";
+        btnUSD.className = "px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-300 hover:text-white min-h-[40px]";
+      } else {
+        btnUSD.className = "px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-brand-gold text-brand-navyDark shadow-md min-h-[40px]";
+        btnPHP.className = "px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-300 hover:text-white min-h-[40px]";
+      }
+      renderPackages();
+    }
+
+    function renderPackages() {
+      const container = document.getElementById('packagesDynamicContainer');
+      if (!container) return;
+
+      const keys = ['foundations', 'mastery', 'scholars'];
+      container.innerHTML = keys.map(key => {
+        const pkg = packagePricingData[key];
+        const isMastery = key === 'mastery';
+        const price = activeCurrency === 'PHP' ? `₱${pkg.phpPrice}` : `$${pkg.usdPrice}`;
+        const features = pkg.features || [];
+
+        return `
+          <div class="bg-brand-navy p-5 sm:p-8 rounded-3xl border ${isMastery ? 'border-brand-gold gold-glow' : 'border-brand-borderDark'} shadow-2xl flex flex-col justify-between space-y-6 relative group">
+            ${isMastery ? `<div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brand-gold text-brand-navyDark font-black text-[10px] uppercase tracking-wider px-4 py-1 rounded-full shadow-lg">★ Most Popular Choice</div>` : ''}
+
+            <div class="space-y-4">
+              <span class="text-[10px] font-mono font-bold text-brand-gold uppercase tracking-wider block">${pkg.hours} Coaching</span>
+              <h3 class="text-xl sm:text-2xl font-black text-white" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updatePackageField('${key}', 'title', this.innerText)">${pkg.title}</h3>
+              <p class="text-xs text-slate-300 italic" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updatePackageField('${key}', 'tagline', this.innerText)">${pkg.tagline}</p>
+
+              <div class="pt-2 pb-4 border-y border-brand-borderDark flex items-baseline gap-1">
+                <span class="text-3xl sm:text-4xl font-black text-brand-gold">${price}</span>
+                <span class="text-xs text-slate-400 font-normal"> / ${pkg.hours}</span>
+              </div>
+
+              <div class="space-y-2">
+                <ul class="space-y-2.5 text-xs text-slate-300">
+                  ${features.map((feat, fIdx) => `
+                    <li class="flex items-center justify-between gap-2 group/feat">
+                      <div class="flex items-center gap-2 flex-1 min-w-0">
+                        <i class="fa-solid fa-circle-check text-emerald-400 shrink-0"></i>
+                        <span contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" 
+                              onblur="updatePackageFeature('${key}', ${fIdx}, this.innerText)"
+                              class="flex-1 font-medium text-slate-300 hover:text-white transition leading-snug">${feat}</span>
+                      </div>
+                      ${isAdminLoggedIn ? `
+                        <button type="button" onclick="deletePackageFeature('${key}', ${fIdx})" class="text-red-400 hover:text-red-300 text-xs px-1.5 py-0.5 rounded bg-red-950/60 hover:bg-red-900 border border-red-800/50 transition shrink-0" title="Delete Detail">
+                          <i class="fa-solid fa-xmark"></i>
+                        </button>
+                      ` : ''}
+                    </li>
+                  `).join('')}
+                </ul>
+
+                ${isAdminLoggedIn ? `
+                  <button type="button" onclick="addPackageFeature('${key}')" class="mt-2 text-xs text-brand-gold hover:text-amber-300 font-bold bg-brand-navyDark hover:bg-slate-800 border border-brand-gold/40 px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 w-fit shadow">
+                    <i class="fa-solid fa-plus-circle"></i> Add Detail Line
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+
+            <div class="space-y-3 pt-4 border-t border-brand-borderDark">
+              <a href="#booking" onclick="revealFormB()" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black py-3 rounded-xl text-center text-xs transition flex items-center justify-center min-h-[44px]">
+                Enroll ${pkg.title}
+              </a>
+
+              <button onclick="openPackageModal('${key}')" class="w-full bg-brand-navyDark hover:bg-slate-800 text-slate-300 border border-brand-borderDark py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 min-h-[44px]">
+                <i class="fa-solid fa-eye text-brand-gold"></i> Read More
+              </button>
+
+              <div class="edit-card-controls pt-2 justify-center">
+                <button onclick="openEditPackageModal('${key}')" class="bg-blue-900/60 hover:bg-blue-800 text-blue-200 px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1 min-h-[36px]">
+                  <i class="fa-solid fa-coins"></i> Edit Pricing &amp; Details
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updatePackageField(key, field, val) {
+      if (packagePricingData[key]) {
+        packagePricingData[key][field] = val.trim();
+        saveAllChangesToStorage();
+      }
+    }
+
+    function updatePackageFeature(key, fIdx, val) {
+      if (packagePricingData[key] && packagePricingData[key].features && packagePricingData[key].features[fIdx] !== undefined) {
+        packagePricingData[key].features[fIdx] = val.trim();
+        saveAllChangesToStorage();
+      }
+    }
+
+    function addPackageFeature(key) {
+      if (packagePricingData[key]) {
+        if (!packagePricingData[key].features) packagePricingData[key].features = [];
+        packagePricingData[key].features.push("New Package Feature Detail");
+        saveAllChangesToStorage();
+        renderPackages();
+        showToast("✓ New detail added to package!");
+      }
+    }
+
+    function deletePackageFeature(key, fIdx) {
+      if (packagePricingData[key] && packagePricingData[key].features) {
+        packagePricingData[key].features.splice(fIdx, 1);
+        saveAllChangesToStorage();
+        renderPackages();
+        showToast("✓ Detail line removed.");
+      }
+    }
+
+    function openEditPackageModal(key) {
+      const pkg = packagePricingData[key];
+      if (!pkg) return;
+      document.getElementById('editPkgKey').value = key;
+      document.getElementById('pkgEditTitle').value = pkg.title || '';
+      document.getElementById('pkgEditPhp').value = pkg.phpPrice || '';
+      document.getElementById('pkgEditUsd').value = pkg.usdPrice || '';
+      document.getElementById('pkgEditHours').value = pkg.hours || '';
+      document.getElementById('pkgEditTagline').value = pkg.tagline || '';
+      document.getElementById('pkgEditImg').value = pkg.img || '';
+
+      renderModalPackageFeatures(key);
+      showModal('editPackageModal');
+    }
+
+    function renderModalPackageFeatures(key) {
+      const container = document.getElementById('modalPkgFeaturesContainer');
+      if (!container) return;
+      const pkg = packagePricingData[key];
+      const features = (pkg && pkg.features) ? pkg.features : [];
+
+      if (features.length === 0) {
+        container.innerHTML = `<div class="text-slate-400 text-xs py-1 italic">No features defined. Click 'Add Line Detail' to create one.</div>`;
+        return;
+      }
+
+      container.innerHTML = features.map((feat, idx) => `
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-circle-check text-emerald-400 text-xs shrink-0"></i>
+          <input type="text" value="${feat.replace(/"/g, '&quot;')}" onchange="updateModalFeatureValue(${idx}, this.value)" placeholder="Feature description..." class="pkg-modal-feature-input flex-1 bg-brand-navyDark border border-brand-borderDark rounded-xl px-3 py-1.5 text-xs text-white outline-none focus:border-brand-gold min-h-[38px]">
+          <button type="button" onclick="removeFeatureRowModal(${idx})" class="text-red-400 hover:text-red-300 bg-red-950/60 hover:bg-red-900 border border-red-800/50 p-1.5 rounded-lg text-xs transition shrink-0 min-h-[38px] w-9 flex items-center justify-center" title="Remove Detail">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function updateModalFeatureValue(idx, val) {
+      const key = document.getElementById('editPkgKey').value;
+      if (packagePricingData[key] && packagePricingData[key].features) {
+        packagePricingData[key].features[idx] = val.trim();
+      }
+    }
+
+    function addFeatureRowModal() {
+      const key = document.getElementById('editPkgKey').value;
+      if (packagePricingData[key]) {
+        if (!packagePricingData[key].features) packagePricingData[key].features = [];
+        packagePricingData[key].features.push("New Package Feature Detail");
+        renderModalPackageFeatures(key);
+      }
+    }
+
+    function removeFeatureRowModal(idx) {
+      const key = document.getElementById('editPkgKey').value;
+      if (packagePricingData[key] && packagePricingData[key].features) {
+        packagePricingData[key].features.splice(idx, 1);
+        renderModalPackageFeatures(key);
+      }
+    }
+
+    function closeEditPackageModal() { closeModal('editPackageModal'); }
+
+    function handleSavePackageSubmit(e) {
+      e.preventDefault();
+      const key = document.getElementById('editPkgKey').value;
+      if (!packagePricingData[key]) return;
+
+      packagePricingData[key].title = document.getElementById('pkgEditTitle').value;
+      packagePricingData[key].phpPrice = document.getElementById('pkgEditPhp').value;
+      packagePricingData[key].usdPrice = document.getElementById('pkgEditUsd').value;
+      packagePricingData[key].hours = document.getElementById('pkgEditHours').value;
+      packagePricingData[key].tagline = document.getElementById('pkgEditTagline').value;
+      packagePricingData[key].img = document.getElementById('pkgEditImg').value;
+
+      const inputs = document.querySelectorAll('.pkg-modal-feature-input');
+      if (inputs && inputs.length > 0) {
+        packagePricingData[key].features = Array.from(inputs).map(inp => inp.value.trim()).filter(v => v.length > 0);
+      }
+
+      saveAllChangesToStorage();
+      closeEditPackageModal();
+      renderPackages();
+      showToast("✓ Package details & pricing updated successfully!");
+    }
+
+    function revealFormB() {
+      const gate = document.getElementById('schedulerGateCard');
+      const wrapper = document.getElementById('formBWrapper');
+      if (gate) gate.classList.add('hidden');
+      if (wrapper) wrapper.classList.remove('hidden');
+      fetchBookedSlots();
+    }
+
+    function hideFormB() {
+      const gate = document.getElementById('schedulerGateCard');
+      const wrapper = document.getElementById('formBWrapper');
+      if (gate) gate.classList.remove('hidden');
+      if (wrapper) wrapper.classList.add('hidden');
+    }
+
+    function changeSchedulerWeek(dir) {
+      schedulerWeekOffset += dir;
+      renderDatePills();
+      fetchBookedSlots();
+    }
+
+    function getActiveMondayDate() {
+      const today = new Date();
+      const currentDay = today.getDay();
+      const daysToMonday = (currentDay === 0) ? 1 : (1 - currentDay);
+      const baseMonday = new Date(today);
+      baseMonday.setDate(today.getDate() + daysToMonday);
+      baseMonday.setHours(0, 0, 0, 0);
+
+      const activeMonday = new Date(baseMonday);
+      activeMonday.setDate(baseMonday.getDate() + (schedulerWeekOffset * 7));
+      return activeMonday;
+    }
+
+    function renderDatePills() {
+      const container = document.getElementById('datePills');
+      const label = document.getElementById('schedulerWeekRangeLabel');
+      if (!container) return;
+
+      const today = new Date();
+      const currentDay = today.getDay();
+      const activeMonday = getActiveMondayDate();
+
+      const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+      const todayMonthStr = monthNames[today.getMonth()];
+      const todayDateNum = today.getDate() < 10 ? '0' + today.getDate() : today.getDate();
+      const todayFormatted = `${todayMonthStr} ${todayDateNum}`;
+
+      let pillsHTML = '';
+      let startDateStr = '';
+      let endDateStr = '';
+      let weekDates = [];
+
+      for (let i = 0; i < 6; i++) {
+        const d = new Date(activeMonday);
+        d.setDate(activeMonday.getDate() + i);
+
+        const mStr = monthNames[d.getMonth()];
+        const dateNum = d.getDate() < 10 ? '0' + d.getDate() : d.getDate();
+        const formattedStr = `${mStr} ${dateNum}`;
+
+        weekDates.push(formattedStr);
+
+        if (i === 0) startDateStr = `${mStr} ${dateNum}`;
+        if (i === 5) endDateStr = `${mStr} ${dateNum}, ${d.getFullYear()}`;
+      }
+
+      if (!selectedBookDate || !weekDates.includes(selectedBookDate)) {
+        if (weekDates.includes(todayFormatted) && currentDay !== 0) {
+          selectedBookDate = todayFormatted;
+        } else {
+          selectedBookDate = weekDates[0];
+        }
+      }
+
+      for (let i = 0; i < 6; i++) {
+        const formattedStr = weekDates[i];
+        const isToday = (formattedStr === todayFormatted && currentDay !== 0);
+        const isSelected = (selectedBookDate === formattedStr);
+
+        pillsHTML += `
+          <button type="button" onclick="selectBookDate('${formattedStr}', this)" class="date-pill-btn p-2 rounded-2xl border text-xs transition relative min-h-[44px] flex flex-col justify-center items-center ${isSelected ? 'bg-brand-gold text-brand-navyDark font-black border-brand-gold shadow-lg' : 'bg-brand-navy text-slate-300 border-brand-borderDark hover:border-brand-gold'}">
+            <span class="block text-[9px] opacity-80 uppercase font-mono">${days[i]} ${isToday ? '• TODAY' : ''}</span>
+            <span class="block font-bold mt-0.5 text-xs">${formattedStr}</span>
+          </button>
+        `;
+      }
+
+      container.innerHTML = pillsHTML;
+      if (label) label.textContent = `${startDateStr} - ${endDateStr}`;
+      renderTimeSlots();
+    }
+
+    function selectBookDate(dateStr, btn) {
+      selectedBookDate = dateStr;
+      selectedBookTimeLocal = '';
+      selectedBookTimePST = '';
+      document.querySelectorAll('.date-pill-btn').forEach(b => {
+        b.className = "date-pill-btn p-2 rounded-2xl border text-xs transition min-h-[44px] flex flex-col justify-center items-center bg-brand-navy text-slate-300 border-brand-borderDark hover:border-brand-gold";
+      });
+      if (btn) {
+        btn.className = "date-pill-btn p-2 rounded-2xl border text-xs transition min-h-[44px] flex flex-col justify-center items-center bg-brand-gold text-brand-navyDark font-black border-brand-gold shadow-lg";
+      }
+      renderTimeSlots();
+      fetchBookedSlots();
+    }
+
+    const morningSlotsPST = ["08:00 AM", "08:30 AM", "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM"];
+    const afternoonSlotsPST = ["01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM"];
+    const eveningSlotsPST = ["06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM"];
+
+    async function fetchBookedSlots() {
+      if (!WEB_APP_URL) return;
+      try {
+        let fetchedList = [];
+
+        try {
+          const res1 = await fetch(`${WEB_APP_URL}?type=booked_slots`);
+          const data1 = await res1.json();
+          if (Array.isArray(data1)) {
+            data1.forEach(item => {
+              if (item && item.date && item.time) {
+                fetchedList.push({ date: item.date, time: item.time });
+              }
+            });
+          }
+        } catch (e1) {
+          console.warn("Bookings tab sync notice:", e1);
+        }
+
+        try {
+          const res2 = await fetch(WEB_APP_URL);
+          const data2 = await res2.json();
+          if (data2 && data2.schedules && typeof data2.schedules === 'object') {
+            const dayMap = { 'monday': 0, 'tuesday': 1, 'wednesday': 2, 'thursday': 3, 'friday': 4, 'saturday': 5, 'sunday': 6 };
+
+            Object.keys(data2.schedules).forEach(weekKey => {
+              const daySlots = data2.schedules[weekKey];
+              if (daySlots && typeof daySlots === 'object') {
+                Object.keys(daySlots).forEach(slotKey => {
+                  const slotObj = daySlots[slotKey];
+                  if (slotObj && (slotObj.status === 'booked' || slotObj.status === 'blocked' || slotObj.booked)) {
+                    let actualDate = weekKey;
+                    
+                    const parts = slotKey.split('_');
+                    if (parts.length > 1) {
+                      const dayName = parts[0].toLowerCase().trim();
+                      if (dayMap.hasOwnProperty(dayName) && weekKey.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                        const monDate = new Date(weekKey + 'T00:00:00');
+                        const offset = dayMap[dayName];
+                        monDate.setDate(monDate.getDate() + offset);
+                        
+                        const yyyy = monDate.getFullYear();
+                        const mm = String(monDate.getMonth() + 1).padStart(2, '0');
+                        const dd = String(monDate.getDate()).padStart(2, '0');
+                        actualDate = `${yyyy}-${mm}-${dd}`;
+                      }
+                    }
+                    
+                    fetchedList.push({ date: actualDate, time: slotKey });
+                  }
+                });
+              }
+            });
+          }
+        } catch (e2) {
+          console.warn("Calendar_State tab sync notice:", e2);
+        }
+
+        bookedSlots = fetchedList;
+        renderTimeSlots();
+      } catch (err) {
+        console.warn("Could not fetch real-time slots:", err);
+      }
+    }
+
+    function renderTimeSlots() {
+      renderSlotGroup('slotsMorning', morningSlotsPST);
+      renderSlotGroup('slotsAfternoon', afternoonSlotsPST);
+      renderSlotGroup('slotsEvening', eveningSlotsPST);
+    }
+
+    function renderSlotGroup(elementId, slotsArrayPST) {
+      const box = document.getElementById(elementId);
+      if (!box) return;
+
+      const targetMMDD = getMMDD(selectedBookDate);
+
+      box.innerHTML = slotsArrayPST.map(pstTimeStr => {
+        const targetNormTimePST = normalizeTime(pstTimeStr);
+
+        const isBooked = bookedSlots.some(b => {
+          const slotMMDD = getMMDD(b.date);
+          const slotNormTimePST = normalizeTime(b.time);
+          return (slotMMDD === targetMMDD) && (slotNormTimePST === targetNormTimePST);
+        });
+
+        const localTimeDisplay = convertTimePSTToOffset(pstTimeStr, selectedSiteOffset);
+        const isSelected = selectedBookTimePST === pstTimeStr;
+
+        if (isBooked) {
+          return `
+            <button type="button" disabled class="w-full py-2.5 px-3 rounded-xl bg-slate-800/90 text-slate-500 text-[11px] font-mono font-bold border border-slate-700/60 cursor-not-allowed opacity-60 flex items-center justify-between shadow-inner min-h-[40px]">
+              <span>${localTimeDisplay}</span>
+              <span class="text-[9px] bg-red-950/80 text-red-400 border border-red-800/50 px-1.5 py-0.5 rounded font-extrabold tracking-wider uppercase">BOOKED</span>
+            </button>
+          `;
+        }
+
+        return `
+          <button type="button" onclick="selectBookTime('${localTimeDisplay}', '${pstTimeStr}', this)" class="slot-time-btn w-full py-2.5 px-3 rounded-xl border text-[11px] font-mono font-bold transition min-h-[40px] ${isSelected ? 'bg-brand-gold text-brand-navyDark border-brand-gold shadow-md' : 'bg-brand-navyDark text-slate-200 border-brand-borderDark hover:border-brand-gold'}">
+            ${localTimeDisplay}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectBookTime(localTimeStr, pstTimeStr, btn) {
+      selectedBookTimeLocal = localTimeStr;
+      selectedBookTimePST = pstTimeStr;
+      document.querySelectorAll('.slot-time-btn').forEach(b => {
+        b.className = "slot-time-btn w-full py-2.5 px-3 rounded-xl border text-[11px] font-mono font-bold transition min-h-[40px] bg-brand-navyDark text-slate-200 border-brand-borderDark hover:border-brand-gold";
+      });
+      if (btn) {
+        btn.className = "slot-time-btn w-full py-2.5 px-3 rounded-xl border text-[11px] font-mono font-bold transition min-h-[40px] bg-brand-gold text-brand-navyDark border-brand-gold shadow-md";
+      }
+    }
+
+    async function handleInquirySubmit(e) {
+      e.preventDefault();
+
+      const nameInput = document.getElementById('inqName');
+      const emailInput = document.getElementById('inqEmail');
+      const phoneInput = document.getElementById('inqPhone');
+      const messageInput = document.getElementById('inqMessage');
+
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const school = document.getElementById('inqUni').value.trim();
+      const message = messageInput.value.trim();
+      const timezone = document.getElementById('inqTimezone').value || 'PST (UTC+8) - Manila / Singapore';
+
+      if (!name || name.length < 2) {
+        showToast("⚠️ Please enter a valid full name (at least 2 characters).");
+        nameInput.focus();
+        return;
+      }
+
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!email || !emailRegex.test(email)) {
+        showToast("⚠️ Please enter a valid email address (e.g. name@domain.com).");
+        emailInput.focus();
+        return;
+      }
+
+      const phoneRegex = /^09\d{9}$/;
+      if (!phone || !phoneRegex.test(phone)) {
+        showToast("⚠️ Phone number must be exactly 11 digits and start with 09 (e.g. 09171234567).");
+        phoneInput.focus();
+        return;
+      }
+
+      if (!message) {
+        showToast("⚠️ Please enter your message or target subject.");
+        messageInput.focus();
+        return;
+      }
+
+      const btn = document.getElementById('btnInqSubmit');
+      const origText = btn.innerHTML;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing...`;
+      btn.disabled = true;
+
+      const payload = {
+        formType: 'inquiry',
+        name: name,
+        email: email,
+        phone: phone,
+        school: school,
+        message: message,
+        timezone: timezone
+      };
+
+      showToast("✓ Inquiry sent successfully! Our team will reach out shortly.");
+      e.target.reset();
+      btn.innerHTML = origText;
+      btn.disabled = false;
+
+      if (WEB_APP_URL) {
+        fetch(WEB_APP_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        }).catch(err => {
+          console.warn("Inquiry background dispatch notice:", err);
+        });
+      }
+    }
+
+    function get30MinWindow(timeStr) {
+      if (!timeStr) return "08:00 AM - 08:30 AM";
+      if (timeStr.includes(' - ')) return timeStr;
+      const match = timeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+      if (!match) return timeStr + " - " + timeStr;
+      let [_, hStr, mStr, ampm] = match;
+      let h = parseInt(hStr, 10);
+      let m = parseInt(mStr, 10);
+      let endM = m + 30;
+      let endH = h;
+      let endAmpm = ampm.toUpperCase();
+      if (endM >= 60) {
+        endM -= 60;
+        endH += 1;
+        if (endH === 12) {
+          endAmpm = (endAmpm === 'AM') ? 'PM' : 'AM';
+        } else if (endH > 12) {
+          endH -= 12;
+        }
+      }
+      const startFormatted = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')} ${ampm.toUpperCase()}`;
+      const endFormatted = `${String(endH).padStart(2, '0')}:${String(endM).padStart(2, '0')} ${endAmpm}`;
+      return `${startFormatted} - ${endFormatted}`;
+    }
+
+    async function handleBookingSubmit(e) {
+      e.preventDefault();
+      if (!selectedBookDate || !selectedBookTimePST) {
+        showToast("⚠️ Please select both a Class Date and Time Slot before confirming.");
+        return;
+      }
+
+      const nameInput = document.getElementById('bookName');
+      const emailInput = document.getElementById('bookEmail');
+      const phoneInput = document.getElementById('bookPhone');
+      const notesInput = document.getElementById('bookNotes');
+
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const notesText = notesInput.value.trim();
+
+      if (!name || name.length < 2) {
+        showToast("⚠️ Please enter a valid full name (at least 2 characters).");
+        nameInput.focus();
+        return;
+      }
+
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!email || !emailRegex.test(email)) {
+        showToast("⚠️ Please enter a valid email address (e.g. name@domain.com).");
+        emailInput.focus();
+        return;
+      }
+
+      const phoneRegex = /^09\d{9}$/;
+      if (!phone || !phoneRegex.test(phone)) {
+        showToast("⚠️ Phone number must be exactly 11 digits and start with 09 (e.g. 09171234567).");
+        phoneInput.focus();
+        return;
+      }
+
+      if (!notesText) {
+        showToast("⚠️ Please enter additional notes (mention if Free Trial Class or Consultation).");
+        notesInput.focus();
+        return;
+      }
+
+      const btn = document.getElementById('btnBookSubmit');
+      const origText = btn.innerHTML;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Confirming Reservation...`;
+      btn.disabled = true;
+
+      const checkedBoxes = Array.from(document.querySelectorAll('.booking-subject-cb:checked')).map(cb => cb.value);
+      const selectedSubjectsText = checkedBoxes.length > 0 ? checkedBoxes.join(', ') : 'None Selected';
+
+      const activeMonday = getActiveMondayDate();
+      const yyyy = activeMonday.getFullYear();
+      const mm = String(activeMonday.getMonth() + 1).padStart(2, '0');
+      const dd = String(activeMonday.getDate()).padStart(2, '0');
+      const calculatedWeekKey = `${yyyy}-${mm}-${dd}`;
+
+      const dayNamesFull = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      let derivedDayName = 'Monday';
+
+      for (let i = 0; i < 6; i++) {
+        const d = new Date(activeMonday);
+        d.setDate(activeMonday.getDate() + i);
+        const mStr = monthNames[d.getMonth()];
+        const dateNum = d.getDate() < 10 ? '0' + d.getDate() : d.getDate();
+        const formattedStr = `${mStr} ${dateNum}`;
+        if (selectedBookDate === formattedStr || selectedBookDate.includes(formattedStr)) {
+          derivedDayName = dayNamesFull[i];
+          break;
+        }
+      }
+
+      const formattedTimeWindowPST = get30MinWindow(selectedBookTimePST);
+      const calculatedSlotKeyPST = `${derivedDayName}_${formattedTimeWindowPST}`;
+
+      const payload = {
+        formType: 'booking',
+        appointmentDate: selectedBookDate,
+        appointmentTime: formattedTimeWindowPST,
+        weekKey: calculatedWeekKey,
+        slotKey: calculatedSlotKeyPST,
+        name: name,
+        email: email,
+        phone: phone,
+        subjects: selectedSubjectsText,
+        notes: notesText,
+        timezone: document.getElementById('bookTimezone').value || 'PST (UTC+8) - Manila / Singapore'
+      };
+
+      bookedSlots.push({ date: selectedBookDate, time: selectedBookTimePST });
+      renderTimeSlots();
+
+      showToast("✓ Class Slot Reserved! Synchronizing with Google Sheets...");
+      e.target.reset();
+      renderBookingChecklist();
+      selectedBookTimeLocal = '';
+      selectedBookTimePST = '';
+      btn.innerHTML = origText;
+      btn.disabled = false;
+
+      if (WEB_APP_URL) {
+        fetch(WEB_APP_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        }).then(() => {
+          fetchBookedSlots();
+        }).catch(err => {
+          console.warn("Booking background dispatch notice:", err);
+        });
+      }
+    }
+
+    function checkDirectBookingUrlTrigger() {
+      const currentHash = window.location.hash.toLowerCase();
+      const currentSearch = window.location.search.toLowerCase();
+      if (currentHash === '#book-trial' || currentSearch.includes('open=formb') || currentHash === '#formb') {
+        revealFormB();
+        setTimeout(() => {
+          const bookingElem = document.getElementById('booking');
+          if (bookingElem) {
+            bookingElem.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 300);
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      renderReviews();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      isAdminLoggedIn = false;
+      document.body.classList.remove('admin-mode-on', 'admin-editable-active');
+      const toolbar = document.getElementById('adminToolbar');
+      if (toolbar) toolbar.classList.add('hidden');
+
+      loadSavedTextElements();
+      setAllTextEditable(false);
+
+      populateTimezoneDropdowns();
+      fetchCloudCMSState();
+
+      renderAnkiCard();
+      renderStruggles();
+      renderSubjects();
+      renderReviews();
+      renderCarousels();
+      renderPackages();
+      renderDatePills();
+      renderBookingChecklist();
+      fetchBookedSlots();
+
+      checkDirectBookingUrlTrigger();
+    });
+
+    window.addEventListener('hashchange', () => {
+      checkDirectBookingUrlTrigger();
+    });
+  </script>
+</body>
+</html>

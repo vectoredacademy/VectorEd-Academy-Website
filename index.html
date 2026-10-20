@@ -200,83 +200,92 @@
       </div>
 
       <div class="hidden sm:flex items-center gap-3">
-        <button id="adminLoginBtn" onclick="openAdminAuthModal()" class="bg-brand-navyDark hover:bg-slate-800 text-brand-gold border border-brand-gold/40 hover:border-brand-gold font-bold px-3.5 py-2.5 rounded-xl text-xs transition flex items-center gap-1.5">
+        <button id="adminLoginBtn" onclick="openAdminAuthModal()" class="bg-brand-navyDark hover:bg-slate-800 text-brand-gold border border-brand-gold/40 hover:border-brand-gold font-bold px-3.5 py-2.5 rounded-xl text-xs transition flex items-center gap-1.5 min-h-[44px]">
           <i class="fa-solid fa-user-gear"></i>
           <span>Admin Access</span>
         </button>
 
-        <a href="#booking" onclick="revealFormB()" class="bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-extrabold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition shadow-lg hover:shadow-brand-gold/20 flex items-center gap-2">
+        <a href="#booking" onclick="revealFormB()" class="bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-extrabold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition shadow-lg hover:shadow-brand-gold/20 flex items-center gap-2 min-h-[44px]">
           <i class="fa-solid fa-calendar-plus text-sm"></i>
           <span>Book Free Trial</span>
         </a>
       </div>
 
-      <button onclick="toggleMobileMenu()" class="lg:hidden text-slate-300 hover:text-white text-2xl p-2 focus:outline-none" aria-label="Toggle Navigation Menu">
+      <button onclick="toggleMobileMenu()" class="lg:hidden text-slate-300 hover:text-white text-2xl p-2 focus:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Toggle Navigation Menu">
         <i class="fa-solid fa-bars" id="mobileMenuIcon"></i>
       </button>
     </div>
 
     <!-- Mobile Drawer Menu -->
     <div id="mobileMenu" class="hidden lg:hidden bg-brand-navyDark border-b border-brand-borderDark px-4 pt-3 pb-6 space-y-3">
-      <a href="#services" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-brand-gold font-medium">Programs &amp; Subjects</a>
-      <a href="#proof" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-brand-gold font-medium">Proof &amp; Derivation Vaults</a>
-      <a href="#reviews" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-brand-gold font-medium">Verified Reviews</a>
-      <a href="#pricing" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-brand-gold font-medium">Packages &amp; Plans</a>
-      <button onclick="toggleMobileMenu(); openAdminAuthModal();" class="w-full text-left py-2 text-brand-gold font-bold flex items-center gap-2">
+      <a href="#services" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-brand-gold font-medium">Programs &amp; Subjects</a>
+      <a href="#proof" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-brand-gold font-medium">Proof &amp; Derivation Vaults</a>
+      <a href="#reviews" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-brand-gold font-medium">Verified Reviews</a>
+      <a href="#pricing" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-brand-gold font-medium">Packages &amp; Plans</a>
+      <button onclick="toggleMobileMenu(); openAdminAuthModal();" class="w-full text-left py-2.5 text-brand-gold font-bold flex items-center gap-2">
         <i class="fa-solid fa-user-gear"></i> Admin Access
       </button>
-      <a href="#booking" onclick="toggleMobileMenu(); revealFormB();" class="block text-center bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl mt-2">Book Free Trial Class</a>
+      <a href="https://www.facebook.com/VectorEd.Academy" target="_blank" rel="noopener noreferrer" class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-xs transition min-h-[44px]">
+        <i class="fa-brands fa-facebook text-base mr-1.5"></i> Connect on Facebook
+      </a>
+      <a href="#booking" onclick="toggleMobileMenu(); revealFormB();" class="block text-center bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl mt-2 min-h-[44px]">Book Free Trial Class</a>
     </div>
   </nav>
 
-  <section class="relative py-12 lg:py-20 overflow-hidden stem-grid-bg border-b border-brand-borderDark">
+  <section class="relative py-10 lg:py-20 overflow-hidden stem-grid-bg border-b border-brand-borderDark">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
         
-        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-          <div class="inline-flex items-center gap-2 bg-brand-navy border border-brand-gold/40 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-brand-gold shadow-lg">
+        <div class="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 bg-brand-navy border border-brand-gold/40 px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold text-brand-gold shadow-lg">
             <span class="animate-pulse text-base">🌍</span>
             <span id="heroBadgeText">Serving STEM &amp; Engineering Students (Philippines, UAE, UK)</span>
           </div>
 
-          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-white tracking-tight leading-[1.15]" id="heroHeadline">Master Complex Engineering &amp; STEM Courses With <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-amber-300 to-amber-500">Elite 1-on-1 Guidance</span>  </h1>
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-white tracking-tight leading-[1.15]" id="heroHeadline">Master Complex Engineering &amp; STEM Courses With <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-amber-300 to-amber-500">Elite 1-on-1 Guidance</span></h1>
 
-          <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed hero-sub-text" id="heroSubheadline">
-          Behind in the race? We'll help you find your pace. Customized academic coaching for Engineering Undergraduates, SHS STEM, and high-stakes exam prep.
+          <p class="text-slate-300 text-sm sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed hero-sub-text" id="heroSubheadline">
+            Behind in the race? We'll help you find your pace. Customized academic coaching for Engineering Undergraduates, SHS STEM, and high-stakes exam prep.
           </p>
 
-          <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-            <a href="#booking" onclick="revealFormB()" class="w-full sm:w-auto bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-extrabold px-8 py-4 rounded-xl text-base transition gold-glow flex items-center justify-center gap-3">
-              <i class="fa-solid fa-rocket text-lg"></i>
+          <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-4 flex-wrap">
+            <a href="#booking" onclick="revealFormB()" class="w-full sm:w-auto bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-extrabold px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl text-sm sm:text-base transition gold-glow flex items-center justify-center gap-2.5 min-h-[48px]">
+              <i class="fa-solid fa-rocket text-base sm:text-lg"></i>
               <span>Book Free 20-Min Trial Class</span>
             </a>
+
+            <!-- Facebook CTA Button -->
+            <a href="https://www.facebook.com/VectorEd.Academy" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto border border-blue-500/40 bg-blue-600/90 hover:bg-blue-600 text-white font-extrabold px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl text-sm sm:text-base transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 min-h-[48px]">
+              <i class="fa-brands fa-facebook text-lg sm:text-xl text-white"></i>
+              <span>Message Us on Facebook</span>
+            </a>
             
-            <a href="https://diagnostics-students-archetype.netlify.app" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-white border border-brand-borderDark hover:border-brand-gold px-6 py-4 rounded-xl text-base font-bold transition flex items-center justify-center gap-3">
+            <a href="https://diagnostics-students-archetype.netlify.app" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-white border border-brand-borderDark hover:border-brand-gold px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl text-sm sm:text-base font-bold transition flex items-center justify-center gap-2.5 min-h-[48px]">
               <i class="fa-solid fa-clipboard-check text-brand-gold"></i>
               <span>Take 60-Sec Diagnostic Quiz</span>
             </a>
           </div>
 
-          <div class="pt-6 border-t border-brand-borderDark/60 grid grid-cols-3 gap-4 text-center sm:text-left">
+          <div class="pt-6 border-t border-brand-borderDark/60 grid grid-cols-3 gap-3 sm:gap-4 text-center sm:text-left">
             <div>
-              <span class="block font-heading font-black text-2xl sm:text-3xl text-white" id="stat1Num">8+ Years</span>
-              <span class="text-xs text-slate-400 font-medium" id="stat1Lbl"><b>Academic Authority</b></span>
+              <span class="block font-heading font-black text-xl sm:text-3xl text-white" id="stat1Num">8+ Years</span>
+              <span class="text-[11px] sm:text-xs text-slate-400 font-medium" id="stat1Lbl"><b>Academic Authority</b></span>
             </div>
             <div>
-              <span class="block font-heading font-black text-2xl sm:text-3xl text-brand-gold">40+ Students</span>
-              <span class="text-xs text-slate-400 font-medium" id="stat2Lbl"><b>Students Served</b></span>
+              <span class="block font-heading font-black text-xl sm:text-3xl text-brand-gold">40+ Students</span>
+              <span class="text-[11px] sm:text-xs text-slate-400 font-medium" id="stat2Lbl"><b>Students Served</b></span>
             </div>
             <div>
-              <span class="block font-heading font-black text-2xl sm:text-3xl text-white">TBA</span>
-              <span class="text-xs text-slate-400 font-medium" id="stat3Lbl"><b>Passing Rate</b></span>
+              <span class="block font-heading font-black text-xl sm:text-3xl text-white">TBA</span>
+              <span class="text-[11px] sm:text-xs text-slate-400 font-medium" id="stat3Lbl"><b>Passing Rate</b></span>
             </div>
           </div>
         </div>
 
         <!-- ANKI STEM FLASHCARD WORKSPACE -->
         <div class="lg:col-span-5">
-          <div class="glass-panel p-5 sm:p-6 rounded-3xl relative shadow-2xl border border-brand-gold/30" id="ankiHeroWidget">
-            <div class="flex items-center justify-between pb-3 border-b border-brand-borderDark mb-4">
+          <div class="glass-panel p-4 sm:p-6 rounded-3xl relative shadow-2xl border border-brand-gold/30" id="ankiHeroWidget">
+            <div class="flex items-center justify-between pb-3 border-b border-brand-borderDark mb-3 sm:mb-4">
               <div class="flex items-center gap-2">
                 <span class="w-3 h-3 rounded-full bg-red-500"></span>
                 <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
@@ -299,12 +308,12 @@
             <div id="ankiCardDisplay" class="space-y-4 font-mono"></div>
 
             <!-- Anki Footer Navigation Controls -->
-            <div class="mt-4 pt-3 border-t border-brand-borderDark flex items-center justify-between">
+            <div class="mt-4 pt-3 border-t border-brand-borderDark flex items-center justify-between flex-wrap gap-2">
               <div class="flex items-center gap-2">
-                <button onclick="prevAnkiCard()" class="px-3 py-1.5 bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-brand-gold border border-brand-borderDark rounded-xl text-xs font-bold transition flex items-center gap-1">
+                <button onclick="prevAnkiCard()" class="px-3 py-2 bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-brand-gold border border-brand-borderDark rounded-xl text-xs font-bold transition flex items-center gap-1 min-h-[40px]">
                   <i class="fa-solid fa-chevron-left text-[10px]"></i> Prev Formula
                 </button>
-                <button onclick="nextAnkiCard()" class="px-3 py-1.5 bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-brand-gold border border-brand-borderDark rounded-xl text-xs font-bold transition flex items-center gap-1">
+                <button onclick="nextAnkiCard()" class="px-3 py-2 bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-brand-gold border border-brand-borderDark rounded-xl text-xs font-bold transition flex items-center gap-1 min-h-[40px]">
                   Next Formula <i class="fa-solid fa-chevron-right text-[10px]"></i>
                 </button>
               </div>
@@ -332,22 +341,22 @@
     </div>
   </section>
 
-  <section class="py-16 bg-brand-navyDark border-b border-brand-borderDark relative">
+  <section class="py-12 sm:py-16 bg-brand-navyDark border-b border-brand-borderDark relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="text-center max-w-3xl mx-auto mb-12">
+      <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
         <span class="text-brand-gold font-bold text-xs uppercase tracking-widest block mb-2">Bridge The Engineering Gap</span>
-        <h2 class="text-3xl sm:text-4xl font-heading font-extrabold text-white" id="strugglesTitle">Why Bright STEM Students Get Stuck</h2>
-        <p class="text-slate-400 text-sm sm:text-base mt-2" id="strugglesDesc">Classroom lectures show simple standard setups. University finals present non-standard twists under severe time pressure.</p>
+        <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-white" id="strugglesTitle">Why Bright STEM Students Get Stuck</h2>
+        <p class="text-slate-400 text-xs sm:text-base mt-2" id="strugglesDesc">Classroom lectures show simple standard setups. University finals present non-standard twists under severe time pressure.</p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
         <!-- Video Demo -->
         <div class="lg:col-span-6">
-          <div class="bg-slate-950 p-4 sm:p-6 rounded-3xl border border-brand-gold/40 shadow-2xl relative">
-            <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
-              <span class="text-xs font-mono text-brand-gold"><i class="fa-solid fa-laptop-code"></i> Live Tablet Workspace</span>
-              <span class="text-[10px] bg-red-950 text-red-400 px-2.5 py-0.5 rounded-full border border-red-800 font-bold">● High-Speed Derivation</span>
+          <div class="bg-slate-950 p-3 sm:p-6 rounded-3xl border border-brand-gold/40 shadow-2xl relative">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3 sm:mb-4">
+              <span class="text-[11px] sm:text-xs font-mono text-brand-gold"><i class="fa-solid fa-laptop-code"></i> Live Tablet Workspace</span>
+              <span class="text-[9px] sm:text-[10px] bg-red-950 text-red-400 px-2.5 py-0.5 rounded-full border border-red-800 font-bold">● High-Speed Derivation</span>
             </div>
 
             <div class="bg-brand-navy rounded-2xl overflow-hidden border border-brand-borderDark relative aspect-video flex items-center justify-center">
@@ -357,41 +366,41 @@
         </div>
 
         <!-- Struggling Cards Container -->
-        <div class="lg:col-span-6 space-y-6" id="strugglesContainer"></div>
+        <div class="lg:col-span-6 space-y-4 sm:space-y-6" id="strugglesContainer"></div>
       </div>
 
     </div>
   </section>
 
-  <section id="services" class="py-16 bg-brand-navy border-b border-brand-borderDark relative">
+  <section id="services" class="py-12 sm:py-16 bg-brand-navy border-b border-brand-borderDark relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
         <div>
           <span class="text-brand-gold font-bold text-xs uppercase tracking-widest block mb-2">Academic Coaching Architecture</span>
-          <h2 class="text-3xl sm:text-4xl font-heading font-extrabold text-white" id="servicesTitle">Targeted Subjects &amp; Specializations</h2>
-          <p class="text-slate-400 text-sm sm:text-base mt-2" id="servicesDesc">Filter our core coaching domains tailored for high school, SHS STEM, and university undergrads.</p>
+          <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-white" id="servicesTitle">Targeted Subjects &amp; Specializations</h2>
+          <p class="text-slate-400 text-xs sm:text-base mt-2" id="servicesDesc">Filter our core coaching domains tailored for high school, SHS STEM, and university undergrads.</p>
         </div>
 
         <div class="edit-card-controls">
-          <button onclick="openAddSubjectModal()" class="bg-emerald-800 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow-lg">
+          <button onclick="openAddSubjectModal()" class="bg-emerald-800 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow-lg min-h-[44px]">
             <i class="fa-solid fa-plus-circle text-base"></i> Add New Subject
           </button>
         </div>
       </div>
 
       <!-- Service Filter Tabs -->
-      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10">
-        <button onclick="switchServiceTab('tab-math')" id="btn-tab-math" class="service-tab-btn font-extrabold px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm transition shadow-lg flex items-center gap-2 bg-brand-navyDark text-slate-300">
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8 sm:mb-10">
+        <button onclick="switchServiceTab('tab-math')" id="btn-tab-math" class="service-tab-btn font-extrabold px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm transition shadow-lg flex items-center gap-2 bg-brand-navyDark text-slate-300 min-h-[44px]">
           <i class="fa-solid fa-calculator"></i> Engg Math &amp; Physics
         </button>
-        <button onclick="switchServiceTab('tab-eng')" id="btn-tab-eng" class="service-tab-btn hover:text-white border border-brand-borderDark px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 bg-brand-gold text-brand-navyDark active">
+        <button onclick="switchServiceTab('tab-eng')" id="btn-tab-eng" class="service-tab-btn hover:text-white border border-brand-borderDark px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 bg-brand-gold text-brand-navyDark active min-h-[44px]">
           <i class="fa-solid fa-gears"></i> Advanced Engineering
         </button>
-        <button onclick="switchServiceTab('tab-gen')" id="btn-tab-gen" class="service-tab-btn bg-brand-navyDark text-slate-300 hover:text-white border border-brand-borderDark px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2">
+        <button onclick="switchServiceTab('tab-gen')" id="btn-tab-gen" class="service-tab-btn bg-brand-navyDark text-slate-300 hover:text-white border border-brand-borderDark px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 min-h-[44px]">
           <i class="fa-solid fa-pen-nib"></i> General Subjects
         </button>
-        <button onclick="switchServiceTab('tab-tech')" id="btn-tab-tech" class="service-tab-btn bg-brand-navyDark text-slate-300 hover:text-white border border-brand-borderDark px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2">
+        <button onclick="switchServiceTab('tab-tech')" id="btn-tab-tech" class="service-tab-btn bg-brand-navyDark text-slate-300 hover:text-white border border-brand-borderDark px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 min-h-[44px]">
           <i class="fa-solid fa-laptop-code"></i> Tech &amp; Specialized
         </button>
       </div>
@@ -401,24 +410,30 @@
     </div>
   </section>
 
-  <section id="reviews" class="py-16 bg-brand-navyDark border-b border-brand-borderDark relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+  <section id="reviews" class="py-12 sm:py-16 bg-brand-navyDark border-b border-brand-borderDark relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
       
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <span class="text-brand-gold font-bold text-xs uppercase tracking-widest block mb-2">Verified Social Proof</span>
-          <h2 class="text-3xl sm:text-4xl font-heading font-extrabold text-white" id="reviewsTitle">Proven Results Across Top Universities &amp; Global Programs</h2>
-          <p class="text-slate-400 text-sm sm:text-base mt-2" id="reviewsDesc">See how our 1-on-1 problem-solving framework converts academic friction into high percentile scores.</p>
+          <div class="flex items-center gap-2 mb-2 flex-wrap">
+            <span class="text-brand-gold font-bold text-xs uppercase tracking-widest block">Verified Social Proof</span>
+            <a href="https://www.facebook.com/VectorEd.Academy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] bg-blue-900/50 hover:bg-blue-800/80 text-blue-200 border border-blue-500/40 px-2.5 py-0.5 rounded-full font-semibold transition">
+              <i class="fa-brands fa-facebook text-blue-400"></i> VectorEd Academy FB
+            </a>
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-white" id="reviewsTitle">Proven Results Across Top Universities &amp; Global Programs</h2>
+          <p class="text-slate-400 text-xs sm:text-base mt-2" id="reviewsDesc">See how our 1-on-1 problem-solving framework converts academic friction into high percentile scores.</p>
         </div>
 
         <div class="edit-card-controls">
-          <button onclick="openAddReviewModal()" class="bg-blue-800 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow-lg">
+          <button onclick="openAddReviewModal()" class="bg-blue-800 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow-lg min-h-[44px]">
             <i class="fa-solid fa-plus-circle text-base"></i> Add New Review
           </button>
         </div>
       </div>
 
-      <div id="reviewsDynamicContainer" class="space-y-10"></div>
+      <!-- CAROUSEL REVIEW CONTAINER -->
+      <div id="reviewsDynamicContainer" class="space-y-8 sm:space-y-12"></div>
 
     </div>
   </section>
@@ -487,51 +502,51 @@
     </div>
   </section>
 
-  <section id="pricing" class="py-16 bg-brand-navyDark border-b border-brand-borderDark relative">
+  <section id="pricing" class="py-12 sm:py-16 bg-brand-navyDark border-b border-brand-borderDark relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="text-center max-w-3xl mx-auto mb-10">
         <span class="text-brand-gold font-bold text-xs uppercase tracking-widest block mb-2">Transparent Coaching Packages</span>
-        <h2 class="text-3xl sm:text-4xl font-heading font-extrabold text-white" id="pricingTitle">Invest In Your Academic Excellence</h2>
-        <p class="text-slate-400 text-sm sm:text-base mt-2" id="pricingDesc">Flexible hour packages tailored for quick topic recovery or full-term grade boosting.</p>
+        <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-white" id="pricingTitle">Invest In Your Academic Excellence</h2>
+        <p class="text-slate-400 text-xs sm:text-base mt-2" id="pricingDesc">Flexible hour packages tailored for quick topic recovery or full-term grade boosting.</p>
         
         <!-- CURRENCY SWITCHER -->
         <div class="mt-6 inline-flex items-center bg-brand-navy p-1.5 rounded-2xl border border-brand-borderDark shadow-xl">
           <span class="text-xs text-slate-400 font-bold px-3">Active Currency:</span>
-          <button id="currBtnPHP" onclick="switchCurrency('PHP')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-brand-gold text-brand-navyDark shadow-md">
+          <button id="currBtnPHP" onclick="switchCurrency('PHP')" class="px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-brand-gold text-brand-navyDark shadow-md min-h-[40px]">
             🇵🇭 PHP (₱)
           </button>
-          <button id="currBtnUSD" onclick="switchCurrency('USD')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-300 hover:text-white">
+          <button id="currBtnUSD" onclick="switchCurrency('USD')" class="px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-300 hover:text-white min-h-[40px]">
             🇺🇸 USD ($)
           </button>
         </div>
       </div>
 
-      <div id="packagesDynamicContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch"></div>
+      <div id="packagesDynamicContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch"></div>
 
     </div>
   </section>
 
-  <section id="booking" class="py-16 bg-brand-navy border-b border-brand-borderDark relative">
+  <section id="booking" class="py-12 sm:py-16 bg-brand-navy border-b border-brand-borderDark relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="text-center max-w-3xl mx-auto mb-12">
+      <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
         <span class="text-brand-gold font-bold text-xs uppercase tracking-widest block mb-2">Dual Intake Gateway</span>
-        <h2 class="text-3xl sm:text-4xl font-heading font-extrabold text-white">Inquire or Schedule Your Trial Class</h2>
-        <p class="text-slate-400 text-sm sm:text-base mt-2">Connected directly to VectorEd's Google Sheets database for real-time confirmation.</p>
+        <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-white">Inquire or Schedule Your Trial Class</h2>
+        <p class="text-slate-400 text-xs sm:text-base mt-2">Connected directly to VectorEd's Google Sheets database for real-time confirmation.</p>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         <!-- Form A: General Inquiry -->
-        <div class="lg:col-span-5 bg-brand-navyDark p-6 sm:p-8 rounded-3xl border border-brand-borderDark flex flex-col justify-between">
+        <div class="lg:col-span-5 bg-brand-navyDark p-5 sm:p-8 rounded-3xl border border-brand-borderDark flex flex-col justify-between">
           <div>
             <div class="flex items-center gap-3 mb-6">
               <div class="w-10 h-10 rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center font-bold shrink-0">
                 <i class="fa-solid fa-paper-plane"></i>
               </div>
               <div>
-                <h3 class="text-lg font-bold text-white">Form A: General Inquiry</h3>
+                <h3 class="text-base sm:text-lg font-bold text-white">Form A: General Inquiry</h3>
                 <p class="text-xs text-slate-400">Routes payload to Tab `Inquiries`</p>
               </div>
             </div>
@@ -539,27 +554,27 @@
             <form onsubmit="handleInquirySubmit(event)" class="space-y-4">
               <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name *</label>
-                <input type="text" id="inqName" required="" placeholder="e.g. Gabriel Gil" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition">
+                <input type="text" id="inqName" required="" placeholder="e.g. Gabriel Gil" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition min-h-[44px]">
               </div>
 
               <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address *</label>
-                <input type="email" id="inqEmail" required="" placeholder="gabriel@domain.com" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition">
+                <input type="email" id="inqEmail" required="" placeholder="gabriel@domain.com" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition min-h-[44px]">
               </div>
 
               <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Cellphone Number (09XXXXXXXXX) *</label>
-                <input type="tel" id="inqPhone" required="" maxlength="11" pattern="09[0-9]{9}" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)" placeholder="09171234567" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition">
+                <input type="tel" id="inqPhone" required="" maxlength="11" pattern="09[0-9]{9}" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)" placeholder="09171234567" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition min-h-[44px]">
               </div>
 
               <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">University / School</label>
-                <input type="text" id="inqUni" placeholder="e.g. Mapúa / DLSU / UST" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition">
+                <input type="text" id="inqUni" placeholder="e.g. Mapúa / DLSU / UST" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition min-h-[44px]">
               </div>
 
               <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Select Timezone</label>
-                <select id="inqTimezone" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white outline-none transition"></select>
+                <select id="inqTimezone" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white outline-none transition min-h-[44px]"></select>
               </div>
 
               <div>
@@ -567,7 +582,7 @@
                 <textarea id="inqMessage" required="" rows="3" placeholder="Tell us about your active bottleneck or upcoming exam date..." class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition"></textarea>
               </div>
 
-              <button type="submit" id="btnInqSubmit" class="w-full bg-brand-navy hover:bg-slate-800 text-brand-gold border border-brand-gold font-bold py-3.5 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-2">
+              <button type="submit" id="btnInqSubmit" class="w-full bg-brand-navy hover:bg-slate-800 text-brand-gold border border-brand-gold font-bold py-3.5 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-2 min-h-[48px]">
                 <span>Send General Inquiry</span>
                 <i class="fa-solid fa-paper-plane text-xs"></i>
               </button>
@@ -577,27 +592,27 @@
 
         <!-- Form B Gate & Interactive Scheduler -->
         <div class="lg:col-span-7" id="schedulerContainer">
-          <div id="schedulerGateCard" class="bg-brand-navyDark p-8 sm:p-12 rounded-3xl border border-brand-borderDark text-center flex flex-col items-center justify-center min-h-[460px] space-y-6">
-            <div class="w-20 h-20 rounded-3xl bg-brand-gold/20 text-brand-gold flex items-center justify-center text-3xl font-bold shadow-xl border border-brand-gold/30 animate-bounce shrink-0">
+          <div id="schedulerGateCard" class="bg-brand-navyDark p-6 sm:p-12 rounded-3xl border border-brand-borderDark text-center flex flex-col items-center justify-center min-h-[420px] sm:min-h-[460px] space-y-6">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-brand-gold/20 text-brand-gold flex items-center justify-center text-2xl sm:text-3xl font-bold shadow-xl border border-brand-gold/30 animate-bounce shrink-0">
               <i class="fa-solid fa-calendar-days"></i>
             </div>
 
             <div class="space-y-2 max-w-md">
               <span class="text-xs font-bold text-brand-gold uppercase tracking-widest block">● Interactive Slot Reservation</span>
-              <h3 class="text-2xl sm:text-3xl font-black text-white">Ready To Reserve Your Class?</h3>
+              <h3 class="text-xl sm:text-3xl font-black text-white">Ready To Reserve Your Class?</h3>
               <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
                 Choose your preferred schedule and lock in your 1-on-1 session directly on our calendar.
               </p>
             </div>
 
             <div class="w-full max-w-md space-y-3">
-              <button onclick="revealFormB()" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black py-4 px-6 rounded-2xl text-sm sm:text-base transition gold-glow flex items-center justify-center gap-3 shadow-2xl">
-                <i class="fa-solid fa-calendar-check text-lg"></i>
+              <button onclick="revealFormB()" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black py-3.5 sm:py-4 px-5 rounded-2xl text-xs sm:text-base transition gold-glow flex items-center justify-center gap-2.5 shadow-2xl min-h-[48px]">
+                <i class="fa-solid fa-calendar-check text-base sm:text-lg"></i>
                 <span>Choose Between Free Trial or Consultation Class</span>
               </button>
 
               <!-- LIVE CALENDAR BUTTON ON GATE CARD -->
-              <button onclick="openCalendarModal()" type="button" class="w-full bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-white border border-brand-borderDark hover:border-brand-gold font-bold py-3 px-5 rounded-2xl text-xs sm:text-sm transition flex items-center justify-center gap-2.5 shadow-lg">
+              <button onclick="openCalendarModal()" type="button" class="w-full bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-white border border-brand-borderDark hover:border-brand-gold font-bold py-3 px-5 rounded-2xl text-xs sm:text-sm transition flex items-center justify-center gap-2.5 shadow-lg min-h-[44px]">
                 <i class="fa-solid fa-calendar-week text-brand-gold text-base"></i>
                 <span>View Live Weekly Class Calendar</span>
               </button>
@@ -605,7 +620,7 @@
           </div>
 
           <div id="formBWrapper" class="hidden bg-brand-navyDark p-4 sm:p-8 rounded-3xl border border-brand-borderDark relative shadow-2xl space-y-6">
-            <button onclick="hideFormB()" class="sm:hidden absolute top-4 right-4 bg-brand-navy border border-brand-borderDark text-slate-300 hover:text-white p-2.5 rounded-xl text-xs flex items-center gap-1.5 z-20">
+            <button onclick="hideFormB()" class="sm:hidden absolute top-4 right-4 bg-brand-navy border border-brand-borderDark text-slate-300 hover:text-white p-2 rounded-xl text-xs flex items-center gap-1.5 z-20 min-h-[36px]">
               <i class="fa-solid fa-xmark text-sm"></i>
               <span>Close</span>
             </button>
@@ -633,7 +648,7 @@
                   <span class="text-[11px] text-slate-300">Check active class bookings and tutor availability in real time.</span>
                 </div>
               </div>
-              <button type="button" onclick="openCalendarModal()" class="w-full sm:w-auto bg-brand-navyDark hover:bg-slate-800 text-brand-gold border border-brand-gold/40 hover:border-brand-gold px-4 py-2.5 rounded-xl text-xs font-extrabold transition flex items-center justify-center gap-2 shrink-0">
+              <button type="button" onclick="openCalendarModal()" class="w-full sm:w-auto bg-brand-navyDark hover:bg-slate-800 text-brand-gold border border-brand-gold/40 hover:border-brand-gold px-4 py-2.5 rounded-xl text-xs font-extrabold transition flex items-center justify-center gap-2 shrink-0 min-h-[44px]">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 <span>View Live Class Calendar</span>
               </button>
@@ -642,7 +657,7 @@
             <form onsubmit="handleBookingSubmit(event)" class="space-y-5">
               <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Select Timezone *</label>
-                <select id="bookTimezone" onchange="handleWebsiteTimezoneChange(this.value)" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white outline-none transition mb-3"></select>
+                <select id="bookTimezone" onchange="handleWebsiteTimezoneChange(this.value)" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white outline-none transition mb-3 min-h-[44px]"></select>
               </div>
 
               <div>
@@ -650,11 +665,11 @@
                   <label class="block text-xs font-semibold text-slate-300">1. Select Class Date * (Monday to Saturday)</label>
                   
                   <div class="flex items-center gap-2 bg-brand-navy p-1 rounded-xl border border-brand-borderDark self-start sm:self-auto">
-                    <button type="button" onclick="changeSchedulerWeek(-1)" class="px-2.5 py-1 rounded-lg bg-brand-navyDark hover:bg-slate-800 text-brand-gold text-xs font-bold transition flex items-center gap-1 border border-brand-borderDark">
+                    <button type="button" onclick="changeSchedulerWeek(-1)" class="px-2.5 py-1 rounded-lg bg-brand-navyDark hover:bg-slate-800 text-brand-gold text-xs font-bold transition flex items-center gap-1 border border-brand-borderDark min-h-[36px]">
                       <i class="fa-solid fa-chevron-left text-[10px]"></i> Prev
                     </button>
                     <span id="schedulerWeekRangeLabel" class="text-[11px] font-mono font-bold text-slate-200 px-1"></span>
-                    <button type="button" onclick="changeSchedulerWeek(1)" class="px-2.5 py-1 rounded-lg bg-brand-navyDark hover:bg-slate-800 text-brand-gold text-xs font-bold transition flex items-center gap-1 border border-brand-borderDark">
+                    <button type="button" onclick="changeSchedulerWeek(1)" class="px-2.5 py-1 rounded-lg bg-brand-navyDark hover:bg-slate-800 text-brand-gold text-xs font-bold transition flex items-center gap-1 border border-brand-borderDark min-h-[36px]">
                       Next <i class="fa-solid fa-chevron-right text-[10px]"></i>
                     </button>
                   </div>
@@ -693,17 +708,17 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name *</label>
-                    <input type="text" id="bookName" required="" placeholder="Your Full Name" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none">
+                    <input type="text" id="bookName" required="" placeholder="Your Full Name" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none min-h-[44px]">
                   </div>
                   <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address *</label>
-                    <input type="email" id="bookEmail" required="" placeholder="you@domain.com" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none">
+                    <input type="email" id="bookEmail" required="" placeholder="you@domain.com" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none min-h-[44px]">
                   </div>
                 </div>
 
                 <div>
                   <label class="block text-xs font-semibold text-slate-300 mb-1">Cellphone Number (09XXXXXXXXX) *</label>
-                  <input type="tel" id="bookPhone" required="" maxlength="11" pattern="09[0-9]{9}" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)" placeholder="09171234567" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none">
+                  <input type="tel" id="bookPhone" required="" maxlength="11" pattern="09[0-9]{9}" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)" placeholder="09171234567" class="w-full bg-brand-navy border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none min-h-[44px]">
                 </div>
 
                 <!-- SUBJECT CHECKLIST SECTION -->
@@ -730,7 +745,7 @@
                 </div>
               </div>
 
-              <button type="submit" id="btnBookSubmit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black py-4 rounded-xl text-xs sm:text-sm transition gold-glow flex items-center justify-center gap-2 shadow-xl">
+              <button type="submit" id="btnBookSubmit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black py-4 rounded-xl text-xs sm:text-sm transition gold-glow flex items-center justify-center gap-2 shadow-xl min-h-[48px]">
                 <i class="fa-solid fa-calendar-check"></i>
                 <span>Confirm &amp; Reserve Class Slot</span>
               </button>
@@ -766,10 +781,10 @@
 
         <div>
           <span class="font-bold text-white text-xs uppercase tracking-wider block mb-3">Direct Connect</span>
-          <ul class="space-y-2 text-xs">
-            <li><a href="https://www.facebook.com/share/1NnxduVw9U/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-gold transition flex items-center gap-1.5"><i class="fa-brands fa-facebook"></i> Official VectorEd FB Page</a></li>
-            <li><a href="https://www.facebook.com/johnres.hipe.58/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-gold transition flex items-center gap-1.5"><i class="fa-solid fa-user-tie"></i> Engr. Johnres Hipe</a></li>
-            <li class="text-slate-400"><i class="fa-solid fa-phone"></i> 09934258900</li>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="https://www.facebook.com/VectorEd.Academy" target="_blank" rel="noopener noreferrer" class="hover:text-brand-gold transition flex items-center gap-1.5 py-0.5"><i class="fa-brands fa-facebook text-blue-400 text-sm"></i> Official VectorEd FB Page</a></li>
+            <li><a href="https://www.facebook.com/johnres.hipe.58/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-gold transition flex items-center gap-1.5 py-0.5"><i class="fa-solid fa-user-tie"></i> Engr. Johnres Hipe</a></li>
+            <li class="text-slate-400 py-0.5"><i class="fa-solid fa-phone"></i> 09934258900</li>
           </ul>
         </div>
 
@@ -789,7 +804,6 @@
       </div>
     </div>
   </footer>
-
 
   <!-- LIVE CLASS CALENDAR MODAL -->
   <div id="calendarModal" class="fixed inset-0 z-50 bg-brand-navyDark/90 backdrop-blur-md hidden items-center justify-center p-3 sm:p-5">
@@ -814,8 +828,8 @@
         </div>
       </div>
 
-      <div class="flex-1 w-full overflow-hidden rounded-2xl border border-brand-borderDark bg-slate-950 min-h-[450px]">
-        <iframe src="https://vectored-academy-calendar.netlify.app" class="w-full h-full min-h-[450px] sm:min-h-[550px] border-0 rounded-2xl" title="VectorEd Live Class Calendar" allowfullscreen=""></iframe>
+      <div class="flex-1 w-full overflow-hidden rounded-2xl border border-brand-borderDark bg-slate-950 min-h-[380px] sm:min-h-[550px]">
+        <iframe src="https://vectored-academy-calendar.netlify.app" class="w-full h-full min-h-[380px] sm:min-h-[550px] border-0 rounded-2xl" title="VectorEd Live Class Calendar" allowfullscreen=""></iframe>
       </div>
 
       <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 text-xs">
@@ -823,10 +837,10 @@
           <i class="fa-solid fa-circle-info text-brand-gold mr-1"></i> Live schedule updates automatically in real time.
         </span>
         <div class="flex items-center gap-2 w-full sm:w-auto">
-          <a href="https://vectored-academy-calendar.netlify.app" target="_blank" rel="noopener noreferrer" class="sm:hidden flex-1 text-center bg-brand-navyDark hover:bg-slate-800 text-brand-gold border border-brand-gold/40 px-3 py-2 rounded-xl text-xs font-bold transition">
+          <a href="https://vectored-academy-calendar.netlify.app" target="_blank" rel="noopener noreferrer" class="sm:hidden flex-1 text-center bg-brand-navyDark hover:bg-slate-800 text-brand-gold border border-brand-gold/40 px-3 py-2.5 rounded-xl text-xs font-bold transition min-h-[40px] flex items-center justify-center gap-1">
             <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Open in New Tab
           </a>
-          <button onclick="closeCalendarModal()" class="flex-1 sm:flex-none bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black px-5 py-2 rounded-xl transition">
+          <button onclick="closeCalendarModal()" class="flex-1 sm:flex-none bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black px-5 py-2.5 rounded-xl transition min-h-[40px]">
             Close Calendar
           </button>
         </div>
@@ -899,7 +913,7 @@
           <input type="text" id="siteTzIanaInput" placeholder="e.g. Asia/Tokyo" class="w-full bg-brand-navy border border-brand-borderDark rounded-xl p-2 text-white outline-none focus:border-brand-gold">
         </div>
 
-        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-bold py-2 rounded-xl transition flex items-center justify-center gap-1.5 shadow">
+        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 shadow min-h-[44px]">
           <i class="fa-solid fa-plus"></i> Save &amp; Enable Timezone Option
         </button>
       </form>
@@ -977,7 +991,7 @@
           <input type="password" id="newPassInput" required="" placeholder="Set new master password" class="w-full bg-brand-navyDark border border-brand-borderDark focus:border-brand-gold rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none">
         </div>
 
-        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black py-3 rounded-xl text-xs sm:text-sm transition">
+        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black py-3 rounded-xl text-xs sm:text-sm transition min-h-[44px]">
           Verify Security &amp; Update Password
         </button>
       </form>
@@ -996,7 +1010,7 @@
         
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Category Tab *</label>
-          <select id="subTabSelect" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <select id="subTabSelect" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
             <option value="tab-math">Engg Math &amp; Physics</option>
             <option value="tab-eng">Advanced Engineering</option>
             <option value="tab-gen">General Subjects</option>
@@ -1006,7 +1020,7 @@
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Subject Title *</label>
-          <input type="text" id="subTitleInput" required="" placeholder="e.g. Fluid Mechanics II" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="subTitleInput" required="" placeholder="e.g. Fluid Mechanics II" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div>
@@ -1016,15 +1030,15 @@
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Target Level / Badge Tag *</label>
-          <input type="text" id="subBadgeInput" required="" placeholder="e.g. CE / ME Level" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="subBadgeInput" required="" placeholder="e.g. CE / ME Level" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">FontAwesome Icon Class *</label>
-          <input type="text" id="subIconInput" required="" placeholder="fa-solid fa-droplet" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="subIconInput" required="" placeholder="fa-solid fa-droplet" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
-        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition">
+        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition min-h-[44px]">
           Save Subject Card
         </button>
       </form>
@@ -1043,7 +1057,7 @@
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Review Category Group *</label>
-          <select id="revCatSelect" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <select id="revCatSelect" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
             <option value="local">Philippine Universities &amp; PSHS Achievers</option>
             <option value="intl">International Learners (UK, UAE, Global)</option>
             <option value="parents">Parents' Verified Insights</option>
@@ -1052,17 +1066,17 @@
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Student / Parent Name *</label>
-          <input type="text" id="revNameInput" required="" placeholder="e.g. Gabriel Gil" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="revNameInput" required="" placeholder="e.g. Gabriel Gil" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Tag 1: University / Institution Tag *</label>
-          <input type="text" id="revUniInput" required="" placeholder="e.g. Mapúa Malayan Colleges" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="revUniInput" required="" placeholder="e.g. Mapúa Malayan Colleges" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Tag 1 Color Theme *</label>
-          <select id="revUniColorSelect" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <select id="revUniColorSelect" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
             <option value="bg-red-950 text-red-300 border-red-500/30">🔴 Red Theme</option>
             <option value="bg-amber-950 text-amber-300 border-amber-500/30">🟡 Gold/Amber Theme</option>
             <option value="bg-emerald-950 text-emerald-300 border-emerald-500/30">🟢 Emerald Theme</option>
@@ -1073,12 +1087,12 @@
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Tag 2: Program / Degree *</label>
-          <input type="text" id="revProgInput" required="" placeholder="e.g. BSCE or Parent" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="revProgInput" required="" placeholder="e.g. BSCE or Parent" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Tag 3: Country Flag Emoji *</label>
-          <input type="text" id="revFlagInput" required="" placeholder="e.g. 🇵🇭, 🇬🇧, 🇦🇪" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="revFlagInput" required="" placeholder="e.g. 🇵🇭, 🇬🇧, 🇦🇪" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div>
@@ -1086,7 +1100,7 @@
           <textarea id="revTextInput" required="" rows="5" placeholder="Full review text with spacing or paragraphs..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none"></textarea>
         </div>
 
-        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition">
+        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition min-h-[44px]">
           Save Verified Review Entry
         </button>
       </form>
@@ -1106,17 +1120,17 @@
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Hosted Image URL *</label>
-          <input type="url" id="carImgUrlInput" required="" placeholder="https://..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="url" id="carImgUrlInput" required="" placeholder="https://..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Top Tagline / Subtitle</label>
-          <input type="text" id="carTaglineInput" placeholder="e.g. VectorEd Blueprint Sheet" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="carTaglineInput" placeholder="e.g. VectorEd Blueprint Sheet" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Slide Headline Title *</label>
-          <input type="text" id="carTitleInput" required="" placeholder="e.g. Fluid Statics Problem Setup" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="carTitleInput" required="" placeholder="e.g. Fluid Statics Problem Setup" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div>
@@ -1124,7 +1138,7 @@
           <textarea id="carDescInput" required="" rows="3" placeholder="Brief context breakdown with paragraphs..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none"></textarea>
         </div>
 
-        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition">
+        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition min-h-[44px]">
           Save Carousel Slide
         </button>
       </form>
@@ -1148,10 +1162,10 @@
       </div>
 
       <div class="flex items-center justify-end gap-3 pt-2">
-        <button onclick="closePackageModal()" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition">
+        <button onclick="closePackageModal()" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition min-h-[40px]">
           Close
         </button>
-        <a href="#booking" onclick="closePackageModal(); revealFormB();" class="bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black px-5 py-2.5 rounded-xl text-xs transition">
+        <a href="#booking" onclick="closePackageModal(); revealFormB();" class="bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black px-5 py-2.5 rounded-xl text-xs transition flex items-center justify-center min-h-[40px]">
           Enroll Now
         </a>
       </div>
@@ -1170,33 +1184,33 @@
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Package Title *</label>
-          <input type="text" id="pkgEditTitle" required="" placeholder="e.g. FOUNDATIONS PACKAGE" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="pkgEditTitle" required="" placeholder="e.g. FOUNDATIONS PACKAGE" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-slate-300 mb-1 font-semibold">PHP Price (₱) *</label>
-            <input type="text" id="pkgEditPhp" required="" placeholder="2,500" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+            <input type="text" id="pkgEditPhp" required="" placeholder="2,500" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
           </div>
           <div>
             <label class="block text-slate-300 mb-1 font-semibold">USD Price ($) *</label>
-            <input type="text" id="pkgEditUsd" required="" placeholder="45" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+            <input type="text" id="pkgEditUsd" required="" placeholder="45" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
           </div>
         </div>
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Hours Badge / Duration *</label>
-          <input type="text" id="pkgEditHours" required="" placeholder="e.g. 4 Hours" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="pkgEditHours" required="" placeholder="e.g. 4 Hours" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Tagline / Subtitle *</label>
-          <input type="text" id="pkgEditTagline" required="" placeholder="Quick Academic Support When You Need It Most." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="pkgEditTagline" required="" placeholder="Quick Academic Support When You Need It Most." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Flyer Image URL *</label>
-          <input type="url" id="pkgEditImg" required="" placeholder="https://..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="url" id="pkgEditImg" required="" placeholder="https://..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <!-- DYNAMIC PACKAGE DETAILS / FEATURES MANAGEMENT -->
@@ -1210,7 +1224,7 @@
           <div id="modalPkgFeaturesContainer" class="space-y-2 max-h-48 overflow-y-auto pr-1"></div>
         </div>
 
-        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition">
+        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition min-h-[44px]">
           Save Package Changes
         </button>
       </form>
@@ -1229,18 +1243,18 @@
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Formula Title *</label>
-          <input type="text" id="ankiTitleInput" required="" placeholder="e.g. Bernoulli Energy Equation" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="ankiTitleInput" required="" placeholder="e.g. Bernoulli Energy Equation" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Subject Tag *</label>
-          <input type="text" id="ankiTagInput" required="" placeholder="e.g. Fluid Mechanics" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+          <input type="text" id="ankiTagInput" required="" placeholder="e.g. Fluid Mechanics" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-slate-300 mb-1 font-semibold">Tag Theme</label>
-            <select id="ankiColorInput" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+            <select id="ankiColorInput" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
               <option value="gold">Gold</option>
               <option value="emerald">Emerald</option>
               <option value="purple">Purple</option>
@@ -1249,7 +1263,7 @@
           </div>
           <div>
             <label class="block text-slate-300 mb-1 font-semibold">Front Text Size</label>
-            <select id="ankiFrontSizeInput" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+            <select id="ankiFrontSizeInput" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
               <option value="text-xl">Large (text-xl)</option>
               <option value="text-lg">Medium (text-lg)</option>
               <option value="text-base">Normal (text-base)</option>
@@ -1260,7 +1274,7 @@
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-slate-300 mb-1 font-semibold">Back Text Size</label>
-            <select id="ankiBackSizeInput" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none">
+            <select id="ankiBackSizeInput" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
               <option value="text-xs">Small (text-xs)</option>
               <option value="text-sm">Normal (text-sm)</option>
               <option value="text-base">Medium (text-base)</option>
@@ -1287,7 +1301,7 @@
           <textarea id="ankiBackInput" required="" rows="4" placeholder="Where: p = static pressure..." class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white font-mono outline-none"></textarea>
         </div>
 
-        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition">
+        <button type="submit" class="w-full bg-brand-gold text-brand-navyDark font-black py-3 rounded-xl transition min-h-[44px]">
           Save Flashcard
         </button>
       </form>
@@ -1306,8 +1320,8 @@
 
       <form onsubmit="handleAddChecklistSubject(event)" class="space-y-3 text-xs">
         <div class="flex items-center gap-2">
-          <input type="text" id="newChecklistSubjectInput" required="" placeholder="e.g. Advanced Fluid Dynamics" class="flex-1 bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none focus:border-brand-gold">
-          <button type="submit" class="bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black px-4 py-2.5 rounded-xl transition shrink-0">
+          <input type="text" id="newChecklistSubjectInput" required="" placeholder="e.g. Advanced Fluid Dynamics" class="flex-1 bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none focus:border-brand-gold min-h-[40px]">
+          <button type="submit" class="bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black px-4 py-2.5 rounded-xl transition shrink-0 min-h-[40px]">
             <i class="fa-solid fa-plus"></i> Add
           </button>
         </div>
@@ -1332,6 +1346,13 @@
     let selectedBookTimePST = '';
     let schedulerWeekOffset = 0;
     let bookedSlots = [];
+
+    /* Carousel Page States for Verified Reviews */
+    let reviewPageStates = {
+      local: 0,
+      intl: 0,
+      parents: 0
+    };
 
     const DEFAULT_TIMEZONES = [
       { label: "PST (UTC+8) - Manila / Singapore", offset: 8, iana: "Asia/Manila" },
@@ -1500,7 +1521,7 @@
             <span class="text-[10px] text-slate-400 font-mono">UTC Offset: ${tz.offset >= 0 ? '+' : ''}${tz.offset} | ${tz.iana || 'UTC'}</span>
           </div>
           ${siteTimezones.length > 1 ? `
-          <button type="button" onclick="deleteSiteTimezoneOption(${idx})" class="text-red-400 hover:text-red-300 bg-red-950/60 hover:bg-red-900/80 px-2.5 py-1 rounded-lg border border-red-800/50 transition flex items-center gap-1" title="Delete Timezone">
+          <button type="button" onclick="deleteSiteTimezoneOption(${idx})" class="text-red-400 hover:text-red-300 bg-red-950/60 hover:bg-red-900/80 px-2.5 py-1 rounded-lg border border-red-800/50 transition flex items-center gap-1 min-h-[32px]" title="Delete Timezone">
             <i class="fa-solid fa-trash-can text-xs"></i> <span class="text-[10px] font-bold">Remove</span>
           </button>` : `<span class="text-[10px] text-slate-500 italic">Default</span>`}
         </div>
@@ -2259,12 +2280,12 @@
       const box = document.getElementById('strugglesContainer');
       if (!box) return;
       box.innerHTML = strugglesData.map((item, idx) => `
-        <div class="bg-brand-navy p-6 rounded-3xl border border-brand-borderDark hover:border-brand-gold/40 transition shadow-xl flex items-start gap-4 relative group">
-          <div class="w-12 h-12 rounded-2xl bg-brand-gold/20 text-brand-gold flex items-center justify-center text-xl shrink-0">
+        <div class="bg-brand-navy p-5 sm:p-6 rounded-3xl border border-brand-borderDark hover:border-brand-gold/40 transition shadow-xl flex items-start gap-3.5 sm:gap-4 relative group">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-brand-gold/20 text-brand-gold flex items-center justify-center text-lg sm:text-xl shrink-0">
             <i class="fa-solid ${item.icon}"></i>
           </div>
-          <div class="space-y-2 w-full">
-            <h3 class="text-lg font-bold text-white" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateStruggleField(${idx}, 'title', this.innerHTML)">${item.title}</h3>
+          <div class="space-y-1.5 sm:space-y-2 w-full">
+            <h3 class="text-base sm:text-lg font-bold text-white" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateStruggleField(${idx}, 'title', this.innerHTML)">${item.title}</h3>
             <div class="text-xs sm:text-sm text-slate-300 leading-relaxed subject-desc-text" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateStruggleField(${idx}, 'desc', this.innerHTML)">${item.desc}</div>
           </div>
         </div>
@@ -2303,11 +2324,11 @@
       }
 
       container.innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           ${filtered.map(sub => {
             const realIdx = subjectsData.findIndex(s => s.id === sub.id);
             return `
-            <div class="bg-brand-navyDark p-6 rounded-3xl border border-brand-borderDark hover:border-brand-gold/50 transition shadow-xl space-y-4 flex flex-col justify-between relative group">
+            <div class="bg-brand-navyDark p-5 sm:p-6 rounded-3xl border border-brand-borderDark hover:border-brand-gold/50 transition shadow-xl space-y-4 flex flex-col justify-between relative group">
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
                   <div class="w-10 h-10 rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center font-bold text-base">
@@ -2319,10 +2340,10 @@
                 <div class="text-xs text-slate-300 leading-relaxed subject-desc-text" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateSubjectField(${realIdx}, 'desc', this.innerHTML)">${sub.desc}</div>
               </div>
               <div class="edit-card-controls pt-2 border-t border-brand-borderDark flex items-center justify-end gap-2">
-                <button onclick="editSubjectCard('${sub.id}')" class="bg-blue-900/60 hover:bg-blue-800 text-blue-200 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                <button onclick="editSubjectCard('${sub.id}')" class="bg-blue-900/60 hover:bg-blue-800 text-blue-200 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 min-h-[32px]">
                   <i class="fa-solid fa-pen"></i> Edit
                 </button>
-                <button onclick="deleteSubjectCard('${sub.id}')" class="bg-red-900/60 hover:bg-red-800 text-red-200 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                <button onclick="deleteSubjectCard('${sub.id}')" class="bg-red-900/60 hover:bg-red-800 text-red-200 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 min-h-[32px]">
                   <i class="fa-solid fa-trash"></i> Delete
                 </button>
               </div>
@@ -2387,36 +2408,67 @@
       const container = document.getElementById('reviewsDynamicContainer');
       if (!container) return;
 
-      const localList = reviewsData.filter(r => r.cat === 'local');
-      const intlList = reviewsData.filter(r => r.cat === 'intl');
-      const parentList = reviewsData.filter(r => r.cat === 'parents');
+      const categories = [
+        { key: 'local', title: 'Philippine Universities & PSHS Achievers', flag: '🇵🇭' },
+        { key: 'intl', title: 'International Learners (UK, UAE, Global)', flag: '🌍' },
+        { key: 'parents', title: "Parents' Verified Insights", flag: '❤' }
+      ];
 
-      container.innerHTML = `
-        <div class="space-y-4">
-          <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
-            <span>🇵🇭</span> Philippine Universities & PSHS Achievers
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            ${localList.map(r => renderReviewCard(r)).join('')}
+      container.innerHTML = categories.map(catObj => {
+        const items = reviewsData.filter(r => r.cat === catObj.key);
+        const pageSize = 3;
+        const totalPages = Math.ceil(items.length / pageSize) || 1;
+        const currentPage = reviewPageStates[catObj.key] || 0;
+        
+        // Clamp current page
+        const safePage = Math.min(Math.max(0, currentPage), totalPages - 1);
+        reviewPageStates[catObj.key] = safePage;
+
+        const startIndex = safePage * pageSize;
+        const visibleItems = items.slice(startIndex, startIndex + pageSize);
+
+        return `
+          <div class="space-y-4 bg-brand-navy/60 p-4 sm:p-6 rounded-3xl border border-brand-borderDark/80">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-brand-borderDark">
+              <h3 class="text-base sm:text-xl font-bold text-white flex items-center gap-2">
+                <span>${catObj.flag}</span> ${catObj.title}
+              </h3>
+              
+              <div class="flex items-center gap-3 self-end sm:self-auto">
+                <span class="text-xs font-mono text-slate-400">Page ${safePage + 1} of ${totalPages}</span>
+                <div class="flex items-center gap-1.5">
+                  <button onclick="changeReviewPage('${catObj.key}', -1)" ${safePage === 0 ? 'disabled' : ''} class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-brand-navy hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 hover:text-brand-gold border border-brand-borderDark flex items-center justify-center text-xs transition">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+                  <button onclick="changeReviewPage('${catObj.key}', 1)" ${safePage >= totalPages - 1 ? 'disabled' : ''} class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-brand-navy hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 hover:text-brand-gold border border-brand-borderDark flex items-center justify-center text-xs transition">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            ${items.length === 0 ? `
+              <div class="text-center py-8 text-slate-400 text-xs">No reviews listed under this section yet.</div>
+            ` : `
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 transition-all duration-300">
+                ${visibleItems.map(r => renderReviewCard(r)).join('')}
+              </div>
+            `}
           </div>
-        </div>
-        <div class="space-y-4 pt-6 border-t border-brand-borderDark">
-          <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
-            <span>🌍</span> International Learners (UK, UAE, Global)
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            ${intlList.map(r => renderReviewCard(r)).join('')}
-          </div>
-        </div>
-        <div class="space-y-4 pt-6 border-t border-brand-borderDark">
-          <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
-            <span>❤</span> Parents' Verified Insights
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            ${parentList.map(r => renderReviewCard(r)).join('')}
-          </div>
-        </div>
-      `;
+        `;
+      }).join('');
+    }
+
+    function changeReviewPage(catKey, delta) {
+      const items = reviewsData.filter(r => r.cat === catKey);
+      const pageSize = 3;
+      const totalPages = Math.ceil(items.length / pageSize) || 1;
+      let curr = reviewPageStates[catKey] || 0;
+      curr += delta;
+      if (curr >= 0 && curr < totalPages) {
+        reviewPageStates[catKey] = curr;
+        renderReviews();
+      }
     }
 
     function renderReviewCard(r) {
@@ -2425,7 +2477,7 @@
       const realIdx = reviewsData.findIndex(x => x.id === r.id);
 
       return `
-        <div class="bg-brand-navy p-6 rounded-3xl border border-brand-borderDark hover:border-brand-gold/40 transition shadow-xl space-y-4 flex flex-col justify-between relative group">
+        <div class="bg-brand-navy p-5 sm:p-6 rounded-3xl border border-brand-borderDark hover:border-brand-gold/40 transition shadow-xl space-y-4 flex flex-col justify-between relative group">
           <div class="space-y-3">
             <div class="flex items-center gap-2 flex-wrap">
               <span class="text-[10px] font-bold px-2.5 py-1 rounded-full border ${r.uniColor || 'bg-red-950 text-red-300 border-red-500/30'}">${r.flag || '🇵🇭'} ${r.uni}</span>
@@ -2530,16 +2582,16 @@
           <div class="lg:col-span-4 space-y-4 flex flex-col justify-between">
             <div class="space-y-2">
               <span class="text-[10px] font-mono font-bold text-brand-gold uppercase tracking-widest block">${slide.tagline || 'VectorEd Asset'}</span>
-              <h4 class="text-lg font-bold text-white" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateCarouselField(${carId}, ${safeIndex}, 'title', this.innerHTML)">${slide.title}</h4>
+              <h4 class="text-base sm:text-lg font-bold text-white" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateCarouselField(${carId}, ${safeIndex}, 'title', this.innerHTML)">${slide.title}</h4>
               <div class="text-xs text-slate-300 leading-relaxed subject-desc-text" contenteditable="${isAdminLoggedIn ? 'true' : 'false'}" onblur="updateCarouselField(${carId}, ${safeIndex}, 'desc', this.innerHTML)">${slide.desc}</div>
             </div>
             <div class="flex items-center justify-between pt-4 border-t border-brand-borderDark">
               <span class="text-[11px] font-mono text-slate-400">Slide ${safeIndex + 1} of ${slides.length}</span>
               <div class="flex items-center gap-2">
-                <button onclick="prevSlide(${carId})" class="w-9 h-9 rounded-xl bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-brand-gold border border-brand-borderDark flex items-center justify-center text-xs transition">
+                <button onclick="prevSlide(${carId})" class="w-9 h-9 rounded-xl bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-brand-gold border border-brand-borderDark flex items-center justify-center text-xs transition min-h-[36px]">
                   <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <button onclick="nextSlide(${carId})" class="w-9 h-9 rounded-xl bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-brand-gold border border-brand-borderDark flex items-center justify-center text-xs transition">
+                <button onclick="nextSlide(${carId})" class="w-9 h-9 rounded-xl bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-brand-gold border border-brand-borderDark flex items-center justify-center text-xs transition min-h-[36px]">
                   <i class="fa-solid fa-chevron-right"></i>
                 </button>
               </div>
@@ -2642,11 +2694,11 @@
       const btnUSD = document.getElementById('currBtnUSD');
 
       if (curr === 'PHP') {
-        btnPHP.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-brand-gold text-brand-navyDark shadow-md";
-        btnUSD.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-300 hover:text-white";
+        btnPHP.className = "px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-brand-gold text-brand-navyDark shadow-md min-h-[40px]";
+        btnUSD.className = "px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-300 hover:text-white min-h-[40px]";
       } else {
-        btnUSD.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-brand-gold text-brand-navyDark shadow-md";
-        btnPHP.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-300 hover:text-white";
+        btnUSD.className = "px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-brand-gold text-brand-navyDark shadow-md min-h-[40px]";
+        btnPHP.className = "px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-300 hover:text-white min-h-[40px]";
       }
       renderPackages();
     }
@@ -2663,7 +2715,7 @@
         const features = pkg.features || [];
 
         return `
-          <div class="bg-brand-navy p-6 sm:p-8 rounded-3xl border ${isMastery ? 'border-brand-gold gold-glow' : 'border-brand-borderDark'} shadow-2xl flex flex-col justify-between space-y-6 relative group">
+          <div class="bg-brand-navy p-5 sm:p-8 rounded-3xl border ${isMastery ? 'border-brand-gold gold-glow' : 'border-brand-borderDark'} shadow-2xl flex flex-col justify-between space-y-6 relative group">
             ${isMastery ? `<div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brand-gold text-brand-navyDark font-black text-[10px] uppercase tracking-wider px-4 py-1 rounded-full shadow-lg">★ Most Popular Choice</div>` : ''}
 
             <div class="space-y-4">
@@ -2705,16 +2757,16 @@
             </div>
 
             <div class="space-y-3 pt-4 border-t border-brand-borderDark">
-              <a href="#booking" onclick="revealFormB()" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black py-3 rounded-xl text-center text-xs transition block">
+              <a href="#booking" onclick="revealFormB()" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-navyDark font-black py-3 rounded-xl text-center text-xs transition flex items-center justify-center min-h-[44px]">
                 Enroll ${pkg.title}
               </a>
 
-              <button onclick="openPackageModal('${key}')" class="w-full bg-brand-navyDark hover:bg-slate-800 text-slate-300 border border-brand-borderDark py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5">
+              <button onclick="openPackageModal('${key}')" class="w-full bg-brand-navyDark hover:bg-slate-800 text-slate-300 border border-brand-borderDark py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 min-h-[44px]">
                 <i class="fa-solid fa-eye text-brand-gold"></i> Read More
               </button>
 
               <div class="edit-card-controls pt-2 justify-center">
-                <button onclick="openEditPackageModal('${key}')" class="bg-blue-900/60 hover:bg-blue-800 text-blue-200 px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                <button onclick="openEditPackageModal('${key}')" class="bg-blue-900/60 hover:bg-blue-800 text-blue-200 px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1 min-h-[36px]">
                   <i class="fa-solid fa-coins"></i> Edit Pricing &amp; Details
                 </button>
               </div>
@@ -2786,8 +2838,8 @@
       container.innerHTML = features.map((feat, idx) => `
         <div class="flex items-center gap-2">
           <i class="fa-solid fa-circle-check text-emerald-400 text-xs shrink-0"></i>
-          <input type="text" value="${feat.replace(/"/g, '&quot;')}" onchange="updateModalFeatureValue(${idx}, this.value)" placeholder="Feature description..." class="pkg-modal-feature-input flex-1 bg-brand-navyDark border border-brand-borderDark rounded-xl px-3 py-1.5 text-xs text-white outline-none focus:border-brand-gold">
-          <button type="button" onclick="removeFeatureRowModal(${idx})" class="text-red-400 hover:text-red-300 bg-red-950/60 hover:bg-red-900 border border-red-800/50 p-1.5 rounded-lg text-xs transition shrink-0" title="Remove Detail">
+          <input type="text" value="${feat.replace(/"/g, '&quot;')}" onchange="updateModalFeatureValue(${idx}, this.value)" placeholder="Feature description..." class="pkg-modal-feature-input flex-1 bg-brand-navyDark border border-brand-borderDark rounded-xl px-3 py-1.5 text-xs text-white outline-none focus:border-brand-gold min-h-[38px]">
+          <button type="button" onclick="removeFeatureRowModal(${idx})" class="text-red-400 hover:text-red-300 bg-red-950/60 hover:bg-red-900 border border-red-800/50 p-1.5 rounded-lg text-xs transition shrink-0 min-h-[38px] w-9 flex items-center justify-center" title="Remove Detail">
             <i class="fa-solid fa-trash"></i>
           </button>
         </div>
@@ -2926,9 +2978,9 @@
         const isSelected = (selectedBookDate === formattedStr);
 
         pillsHTML += `
-          <button type="button" onclick="selectBookDate('${formattedStr}', this)" class="date-pill-btn p-2.5 rounded-2xl border text-xs transition relative ${isSelected ? 'bg-brand-gold text-brand-navyDark font-black border-brand-gold shadow-lg' : 'bg-brand-navy text-slate-300 border-brand-borderDark hover:border-brand-gold'}">
-            <span class="block text-[10px] opacity-80 uppercase font-mono">${days[i]} ${isToday ? '• TODAY' : ''}</span>
-            <span class="block font-bold mt-0.5">${formattedStr}</span>
+          <button type="button" onclick="selectBookDate('${formattedStr}', this)" class="date-pill-btn p-2 rounded-2xl border text-xs transition relative min-h-[44px] flex flex-col justify-center items-center ${isSelected ? 'bg-brand-gold text-brand-navyDark font-black border-brand-gold shadow-lg' : 'bg-brand-navy text-slate-300 border-brand-borderDark hover:border-brand-gold'}">
+            <span class="block text-[9px] opacity-80 uppercase font-mono">${days[i]} ${isToday ? '• TODAY' : ''}</span>
+            <span class="block font-bold mt-0.5 text-xs">${formattedStr}</span>
           </button>
         `;
       }
@@ -2943,10 +2995,10 @@
       selectedBookTimeLocal = '';
       selectedBookTimePST = '';
       document.querySelectorAll('.date-pill-btn').forEach(b => {
-        b.className = "date-pill-btn p-2.5 rounded-2xl border text-xs transition bg-brand-navy text-slate-300 border-brand-borderDark hover:border-brand-gold";
+        b.className = "date-pill-btn p-2 rounded-2xl border text-xs transition min-h-[44px] flex flex-col justify-center items-center bg-brand-navy text-slate-300 border-brand-borderDark hover:border-brand-gold";
       });
       if (btn) {
-        btn.className = "date-pill-btn p-2.5 rounded-2xl border text-xs transition bg-brand-gold text-brand-navyDark font-black border-brand-gold shadow-lg";
+        btn.className = "date-pill-btn p-2 rounded-2xl border text-xs transition min-h-[44px] flex flex-col justify-center items-center bg-brand-gold text-brand-navyDark font-black border-brand-gold shadow-lg";
       }
       renderTimeSlots();
       fetchBookedSlots();
@@ -3047,7 +3099,7 @@
 
         if (isBooked) {
           return `
-            <button type="button" disabled class="w-full py-2 px-3 rounded-xl bg-slate-800/90 text-slate-500 text-[11px] font-mono font-bold border border-slate-700/60 cursor-not-allowed opacity-60 flex items-center justify-between shadow-inner">
+            <button type="button" disabled class="w-full py-2.5 px-3 rounded-xl bg-slate-800/90 text-slate-500 text-[11px] font-mono font-bold border border-slate-700/60 cursor-not-allowed opacity-60 flex items-center justify-between shadow-inner min-h-[40px]">
               <span>${localTimeDisplay}</span>
               <span class="text-[9px] bg-red-950/80 text-red-400 border border-red-800/50 px-1.5 py-0.5 rounded font-extrabold tracking-wider uppercase">BOOKED</span>
             </button>
@@ -3055,7 +3107,7 @@
         }
 
         return `
-          <button type="button" onclick="selectBookTime('${localTimeDisplay}', '${pstTimeStr}', this)" class="slot-time-btn w-full py-2 px-3 rounded-xl border text-[11px] font-mono font-bold transition ${isSelected ? 'bg-brand-gold text-brand-navyDark border-brand-gold shadow-md' : 'bg-brand-navyDark text-slate-200 border-brand-borderDark hover:border-brand-gold'}">
+          <button type="button" onclick="selectBookTime('${localTimeDisplay}', '${pstTimeStr}', this)" class="slot-time-btn w-full py-2.5 px-3 rounded-xl border text-[11px] font-mono font-bold transition min-h-[40px] ${isSelected ? 'bg-brand-gold text-brand-navyDark border-brand-gold shadow-md' : 'bg-brand-navyDark text-slate-200 border-brand-borderDark hover:border-brand-gold'}">
             ${localTimeDisplay}
           </button>
         `;
@@ -3066,10 +3118,10 @@
       selectedBookTimeLocal = localTimeStr;
       selectedBookTimePST = pstTimeStr;
       document.querySelectorAll('.slot-time-btn').forEach(b => {
-        b.className = "slot-time-btn w-full py-2 px-3 rounded-xl border text-[11px] font-mono font-bold transition bg-brand-navyDark text-slate-200 border-brand-borderDark hover:border-brand-gold";
+        b.className = "slot-time-btn w-full py-2.5 px-3 rounded-xl border text-[11px] font-mono font-bold transition min-h-[40px] bg-brand-navyDark text-slate-200 border-brand-borderDark hover:border-brand-gold";
       });
       if (btn) {
-        btn.className = "slot-time-btn w-full py-2 px-3 rounded-xl border text-[11px] font-mono font-bold transition bg-brand-gold text-brand-navyDark border-brand-gold shadow-md";
+        btn.className = "slot-time-btn w-full py-2.5 px-3 rounded-xl border text-[11px] font-mono font-bold transition min-h-[40px] bg-brand-gold text-brand-navyDark border-brand-gold shadow-md";
       }
     }
 
@@ -3286,6 +3338,20 @@
       }
     }
 
+    function checkDirectBookingUrlTrigger() {
+      const currentHash = window.location.hash.toLowerCase();
+      const currentSearch = window.location.search.toLowerCase();
+      if (currentHash === '#book-trial' || currentSearch.includes('open=formb') || currentHash === '#formb') {
+        revealFormB();
+        setTimeout(() => {
+          const bookingElem = document.getElementById('booking');
+          if (bookingElem) {
+            bookingElem.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 300);
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       isAdminLoggedIn = false;
       document.body.classList.remove('admin-mode-on', 'admin-editable-active');
@@ -3307,6 +3373,13 @@
       renderDatePills();
       renderBookingChecklist();
       fetchBookedSlots();
+
+      // Trigger automatic Form B reveal if accessed via Direct Lead URL
+      checkDirectBookingUrlTrigger();
+    });
+
+    window.addEventListener('hashchange', () => {
+      checkDirectBookingUrlTrigger();
     });
   </script>
 </body>

@@ -186,6 +186,7 @@
     </div>
   </div>
 
+  <!-- NAVIGATION BAR -->
   <nav class="bg-brand-navy/95 backdrop-blur-md border-b border-brand-borderDark sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       
@@ -240,6 +241,7 @@
     </div>
   </nav>
 
+  <!-- HERO SECTION -->
   <section class="relative py-10 lg:py-20 overflow-hidden stem-grid-bg border-b border-brand-borderDark">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
@@ -346,6 +348,7 @@
     </div>
   </section>
 
+  <!-- STRUGGLES SECTION -->
   <section class="py-12 sm:py-16 bg-brand-navyDark border-b border-brand-borderDark relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
@@ -375,6 +378,7 @@
     </div>
   </section>
 
+  <!-- SERVICES SECTION -->
   <section id="services" class="py-12 sm:py-16 bg-brand-navy border-b border-brand-borderDark relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
@@ -412,6 +416,7 @@
     </div>
   </section>
 
+  <!-- REVIEWS SECTION -->
   <section id="reviews" class="py-12 sm:py-16 bg-brand-navyDark border-b border-brand-borderDark relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
       
@@ -439,6 +444,7 @@
     </div>
   </section>
 
+  <!-- PROOF & DERIVATION VAULTS SECTION -->
   <section id="proof" class="py-12 sm:py-16 bg-brand-navy border-b border-brand-borderDark relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
       
@@ -503,6 +509,7 @@
     </div>
   </section>
 
+  <!-- PRICING SECTION -->
   <section id="pricing" class="py-12 sm:py-16 bg-brand-navyDark border-b border-brand-borderDark relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
@@ -512,11 +519,12 @@
         <p class="text-slate-400 text-xs sm:text-base mt-2" id="pricingDesc">Flexible hour packages tailored for quick topic recovery or full-term grade boosting.</p>
       </div>
 
-      <div id="packagesDynamicContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch"></div>
+      <div id="packagesDynamicContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch pt-4"></div>
 
     </div>
   </section>
 
+  <!-- BOOKING SECTION -->
   <section id="booking" class="py-12 sm:py-16 bg-brand-navy border-b border-brand-borderDark relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
@@ -743,6 +751,7 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer class="bg-brand-navyDark border-t border-brand-borderDark py-12 text-slate-400 text-xs sm:text-sm mt-auto">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
@@ -1313,6 +1322,7 @@
     </div>
   </div>
 
+  <!-- JAVASCRIPT LOGIC -->
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzRFXmtKHCPH9P-CEAUQuIAmkWLeoj76mMnnCjLL7ILJNxgO2HT2hmeeoMSYEqkdiIR/exec";
     let isAdminLoggedIn = false;
@@ -2766,8 +2776,8 @@
         const features = pkg.features || [];
 
         return `
-          <div class="bg-brand-navy p-5 sm:p-8 rounded-3xl border ${isMastery ? 'border-brand-gold gold-glow' : 'border-brand-borderDark'} shadow-2xl flex flex-col justify-between space-y-6 relative group fast-render-card">
-            ${isMastery ? `<div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brand-gold text-brand-navyDark font-black text-[10px] uppercase tracking-wider px-4 py-1 rounded-full shadow-lg">★ Most Popular Choice</div>` : ''}
+          <div class="bg-brand-navy p-5 sm:p-8 rounded-3xl border ${isMastery ? 'border-brand-gold gold-glow' : 'border-brand-borderDark'} shadow-2xl flex flex-col justify-between space-y-6 relative group">
+            ${isMastery ? `<div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brand-gold text-brand-navyDark font-black text-[10px] sm:text-xs uppercase tracking-wider px-4 py-1 rounded-full shadow-lg z-10 whitespace-nowrap">★ Most Popular Choice</div>` : ''}
 
             <div class="space-y-4">
               <span class="text-[10px] font-mono font-bold text-brand-gold uppercase tracking-wider block">${pkg.hours} Coaching</span>

@@ -64,6 +64,7 @@
       overflow-x: hidden;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
+      text-rendering: optimizeSpeed;
     }
     .gold-glow {
       box-shadow: 0 0 25px rgba(245, 166, 35, 0.25);
@@ -85,6 +86,13 @@
     .toast-msg.show {
       transform: translateY(0);
       opacity: 1;
+    }
+
+    /* Hardware Accelerated Performance Optimization */
+    .fast-render-card {
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 300px;
+      will-change: transform, opacity;
     }
 
     /* Mobile formula scroll wrapper */
@@ -502,16 +510,6 @@
         <span class="text-brand-gold font-bold text-xs uppercase tracking-widest block mb-2">Transparent Coaching Packages</span>
         <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-white" id="pricingTitle">Invest In Your Academic Excellence</h2>
         <p class="text-slate-400 text-xs sm:text-base mt-2" id="pricingDesc">Flexible hour packages tailored for quick topic recovery or full-term grade boosting.</p>
-        
-        <div class="mt-6 inline-flex items-center bg-brand-navy p-1.5 rounded-2xl border border-brand-borderDark shadow-xl">
-          <span class="text-xs text-slate-400 font-bold px-3">Active Currency:</span>
-          <button id="currBtnPHP" onclick="switchCurrency('PHP')" class="px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-brand-gold text-brand-navyDark shadow-md min-h-[40px]">
-            🇵🇭 PHP (₱)
-          </button>
-          <button id="currBtnUSD" onclick="switchCurrency('USD')" class="px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-300 hover:text-white min-h-[40px]">
-            🇺🇸 USD ($)
-          </button>
-        </div>
       </div>
 
       <div id="packagesDynamicContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch"></div>
@@ -1175,15 +1173,9 @@
           <input type="text" id="pkgEditTitle" required="" placeholder="e.g. FOUNDATIONS PACKAGE" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-slate-300 mb-1 font-semibold">PHP Price (₱) *</label>
-            <input type="text" id="pkgEditPhp" required="" placeholder="2,500" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
-          </div>
-          <div>
-            <label class="block text-slate-300 mb-1 font-semibold">USD Price ($) *</label>
-            <input type="text" id="pkgEditUsd" required="" placeholder="45" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
-          </div>
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">PHP Price (₱) *</label>
+          <input type="text" id="pkgEditPhp" required="" placeholder="2,500" class="w-full bg-brand-navyDark border border-brand-borderDark rounded-xl p-2.5 text-white outline-none min-h-[40px]">
         </div>
 
         <div>
@@ -1327,7 +1319,6 @@
     let inlineEditActive = false;
     let masterPassword = localStorage.getItem('ve_master_password') || '123456';
     let activeServiceTab = 'tab-eng';
-    let activeCurrency = 'PHP';
     let selectedBookDate = '';
     let selectedBookTimeLocal = '';
     let selectedBookTimePST = '';
@@ -1422,68 +1413,80 @@
       }
     }
 
-    async function fetchCloudCMSState() {
+    function fetchCloudCMSState() {
       if (!WEB_APP_URL) return;
-      try {
-        const res = await fetch(`${WEB_APP_URL}?type=cms_state`);
-        const data = await res.json();
-        if (data && typeof data === 'object' && Object.keys(data).length > 0) {
-          if (data.ve_frontpage_text) {
-            localStorage.setItem('ve_frontpage_text', JSON.stringify(data.ve_frontpage_text));
-            loadSavedTextElements();
+      
+      const executeCloudFetch = async () => {
+        try {
+          const res = await fetch(`${WEB_APP_URL}?type=cms_state`);
+          const data = await res.json();
+          if (data && typeof data === 'object' && Object.keys(data).length > 0) {
+            let needsRerender = false;
+            if (data.ve_frontpage_text) {
+              localStorage.setItem('ve_frontpage_text', JSON.stringify(data.ve_frontpage_text));
+              loadSavedTextElements();
+            }
+            if (data.ve_anki_cards) {
+              ankiCardsData = data.ve_anki_cards;
+              localStorage.setItem('ve_anki_cards', JSON.stringify(ankiCardsData));
+              renderAnkiCard();
+            }
+            if (data.ve_struggles_data) {
+              strugglesData = data.ve_struggles_data;
+              localStorage.setItem('ve_struggles_data', JSON.stringify(strugglesData));
+              renderStruggles();
+            }
+            if (data.ve_subjects_data) {
+              subjectsData = data.ve_subjects_data;
+              localStorage.setItem('ve_subjects_data', JSON.stringify(subjectsData));
+              renderSubjects();
+            }
+            if (data.ve_reviews_data) {
+              reviewsData = data.ve_reviews_data;
+              localStorage.setItem('ve_reviews_data', JSON.stringify(reviewsData));
+              renderReviews();
+            }
+            if (data.ve_carousel1_data) {
+              carousel1Slides = data.ve_carousel1_data;
+              localStorage.setItem('ve_carousel1_data', JSON.stringify(carousel1Slides));
+              needsRerender = true;
+            }
+            if (data.ve_carousel2_data) {
+              carousel2Slides = data.ve_carousel2_data;
+              localStorage.setItem('ve_carousel2_data', JSON.stringify(carousel2Slides));
+              needsRerender = true;
+            }
+            if (needsRerender) renderCarousels();
+            if (data.ve_package_data) {
+              Object.keys(data.ve_package_data).forEach(k => {
+                if (!data.ve_package_data[k].features && defaultPackages[k]) {
+                  data.ve_package_data[k].features = [...defaultPackages[k].features];
+                }
+              });
+              packagePricingData = data.ve_package_data;
+              localStorage.setItem('ve_package_data', JSON.stringify(packagePricingData));
+              renderPackages();
+            }
+            if (data.ve_booking_checklist_subjects) {
+              bookingChecklistSubjects = data.ve_booking_checklist_subjects;
+              localStorage.setItem('ve_booking_checklist_subjects', JSON.stringify(bookingChecklistSubjects));
+              renderBookingChecklist();
+            }
+            if (data.ve_site_timezones) {
+              siteTimezones = data.ve_site_timezones;
+              localStorage.setItem('ve_site_timezones', JSON.stringify(siteTimezones));
+              populateTimezoneDropdowns();
+            }
           }
-          if (data.ve_anki_cards) {
-            ankiCardsData = data.ve_anki_cards;
-            localStorage.setItem('ve_anki_cards', JSON.stringify(ankiCardsData));
-            renderAnkiCard();
-          }
-          if (data.ve_struggles_data) {
-            strugglesData = data.ve_struggles_data;
-            localStorage.setItem('ve_struggles_data', JSON.stringify(strugglesData));
-            renderStruggles();
-          }
-          if (data.ve_subjects_data) {
-            subjectsData = data.ve_subjects_data;
-            localStorage.setItem('ve_subjects_data', JSON.stringify(subjectsData));
-            renderSubjects();
-          }
-          if (data.ve_reviews_data) {
-            reviewsData = data.ve_reviews_data;
-            localStorage.setItem('ve_reviews_data', JSON.stringify(reviewsData));
-            renderReviews();
-          }
-          if (data.ve_carousel1_data) {
-            carousel1Slides = data.ve_carousel1_data;
-            localStorage.setItem('ve_carousel1_data', JSON.stringify(carousel1Slides));
-          }
-          if (data.ve_carousel2_data) {
-            carousel2Slides = data.ve_carousel2_data;
-            localStorage.setItem('ve_carousel2_data', JSON.stringify(carousel2Slides));
-          }
-          renderCarousels();
-          if (data.ve_package_data) {
-            Object.keys(data.ve_package_data).forEach(k => {
-              if (!data.ve_package_data[k].features && defaultPackages[k]) {
-                data.ve_package_data[k].features = [...defaultPackages[k].features];
-              }
-            });
-            packagePricingData = data.ve_package_data;
-            localStorage.setItem('ve_package_data', JSON.stringify(packagePricingData));
-            renderPackages();
-          }
-          if (data.ve_booking_checklist_subjects) {
-            bookingChecklistSubjects = data.ve_booking_checklist_subjects;
-            localStorage.setItem('ve_booking_checklist_subjects', JSON.stringify(bookingChecklistSubjects));
-            renderBookingChecklist();
-          }
-          if (data.ve_site_timezones) {
-            siteTimezones = data.ve_site_timezones;
-            localStorage.setItem('ve_site_timezones', JSON.stringify(siteTimezones));
-            populateTimezoneDropdowns();
-          }
+        } catch (err) {
+          console.warn("Could not fetch Central Cloud CMS state, using local baseline cache:", err);
         }
-      } catch (err) {
-        console.warn("Could not fetch Central Cloud CMS state, using local baseline cache:", err);
+      };
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => executeCloudFetch(), { timeout: 2000 });
+      } else {
+        setTimeout(executeCloudFetch, 500);
       }
     }
 
@@ -1743,9 +1746,11 @@
         </div>
       `;
 
-      if (window.MathJax && MathJax.typesetPromise) {
-        MathJax.typesetPromise([container]).catch((err) => console.warn('MathJax formatting error:', err));
-      }
+      requestAnimationFrame(() => {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise([container]).catch((err) => console.warn('MathJax formatting notice:', err));
+        }
+      });
     }
 
     function moveAnkiCard(index, direction) {
@@ -1979,7 +1984,6 @@
       foundations: { 
         title: 'FOUNDATIONS PACKAGE', 
         phpPrice: '2,500', 
-        usdPrice: '45', 
         hours: '4 Hours', 
         tagline: 'Quick Academic Support When You Need It Most.', 
         subtitle: 'Stuck on a Specific Topic? Fix It Fast Before Midterms.', 
@@ -1994,7 +1998,6 @@
       mastery: { 
         title: 'MASTERY PACKAGE', 
         phpPrice: '5,000', 
-        usdPrice: '90', 
         hours: '7 Hours', 
         tagline: 'Prepare Properly. Perform Confidently.', 
         subtitle: 'Consistent Support. Real Academic Improvement.', 
@@ -2009,7 +2012,6 @@
       scholars: { 
         title: 'SCHOLAR\'S PACKAGE', 
         phpPrice: '9,000', 
-        usdPrice: '160', 
         hours: '10 Hours', 
         tagline: 'Built for High-Stakes Academic Goals.', 
         subtitle: 'For Students Preparing for Major Milestones.', 
@@ -2097,7 +2099,7 @@
       if (!pkg) return;
       document.getElementById('modalPkgTag').textContent = pkg.title;
       document.getElementById('modalPkgTitle').textContent = pkg.title;
-      const priceText = activeCurrency === 'PHP' ? `₱${pkg.phpPrice}` : `$${pkg.usdPrice}`;
+      const priceText = `₱${pkg.phpPrice}`;
       document.getElementById('modalPkgPrice').innerHTML = `${priceText} <span class="text-xs font-normal text-slate-300">(${pkg.hours})</span>`;
       document.getElementById('modalPkgSubtitle').textContent = pkg.tagline;
       document.getElementById('modalPkgImg').src = pkg.img;
@@ -2277,7 +2279,7 @@
       const box = document.getElementById('strugglesContainer');
       if (!box) return;
       box.innerHTML = strugglesData.map((item, idx) => `
-        <div class="bg-brand-navy p-5 sm:p-6 rounded-3xl border border-brand-borderDark hover:border-brand-gold/40 transition shadow-xl flex items-start gap-3.5 sm:gap-4 relative group">
+        <div class="bg-brand-navy p-5 sm:p-6 rounded-3xl border border-brand-borderDark hover:border-brand-gold/40 transition shadow-xl flex items-start gap-3.5 sm:gap-4 relative group fast-render-card">
           <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-brand-gold/20 text-brand-gold flex items-center justify-center text-lg sm:text-xl shrink-0">
             <i class="fa-solid ${item.icon}"></i>
           </div>
@@ -2354,7 +2356,7 @@
           ${visibleSubjects.map(sub => {
             const realIdx = subjectsData.findIndex(s => s.id === sub.id);
             return `
-            <div class="bg-brand-navyDark p-5 sm:p-6 rounded-3xl border border-brand-borderDark hover:border-brand-gold/50 transition shadow-xl space-y-4 flex flex-col justify-between relative group">
+            <div class="bg-brand-navyDark p-5 sm:p-6 rounded-3xl border border-brand-borderDark hover:border-brand-gold/50 transition shadow-xl space-y-4 flex flex-col justify-between relative group fast-render-card">
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
                   <div class="w-10 h-10 rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center font-bold text-base">
@@ -2490,7 +2492,7 @@
         const visibleItems = items.slice(startIndex, startIndex + pageSize);
 
         return `
-          <div class="space-y-4 bg-brand-navy/60 p-4 sm:p-6 rounded-3xl border border-brand-borderDark/80">
+          <div class="space-y-4 bg-brand-navy/60 p-4 sm:p-6 rounded-3xl border border-brand-borderDark/80 fast-render-card">
             <div class="flex flex-row items-center justify-between gap-3 pb-3 border-b border-brand-borderDark">
               <h3 class="text-sm sm:text-xl font-bold text-white flex items-center gap-2">
                 <span>${catObj.flag}</span> ${catObj.title}
@@ -2641,7 +2643,7 @@
       box.innerHTML = `
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           <div class="lg:col-span-8 bg-brand-navy rounded-2xl border border-brand-borderDark p-2 relative overflow-hidden flex items-center justify-center min-h-[220px] sm:min-h-[320px]">
-            <img src="${slide.img}" alt="${slide.title}" class="w-full h-auto max-h-[380px] object-contain rounded-xl shadow-2xl">
+            <img src="${slide.img}" alt="${slide.title}" class="w-full h-auto max-h-[380px] object-contain rounded-xl shadow-2xl" loading="lazy">
           </div>
           <div class="lg:col-span-4 space-y-4 flex flex-col justify-between">
             <div class="space-y-2">
@@ -2752,21 +2754,6 @@
       showToast("Carousel slide saved!");
     }
 
-    function switchCurrency(curr) {
-      activeCurrency = curr;
-      const btnPHP = document.getElementById('currBtnPHP');
-      const btnUSD = document.getElementById('currBtnUSD');
-
-      if (curr === 'PHP') {
-        btnPHP.className = "px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-brand-gold text-brand-navyDark shadow-md min-h-[40px]";
-        btnUSD.className = "px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-300 hover:text-white min-h-[40px]";
-      } else {
-        btnUSD.className = "px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-brand-gold text-brand-navyDark shadow-md min-h-[40px]";
-        btnPHP.className = "px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-300 hover:text-white min-h-[40px]";
-      }
-      renderPackages();
-    }
-
     function renderPackages() {
       const container = document.getElementById('packagesDynamicContainer');
       if (!container) return;
@@ -2775,11 +2762,11 @@
       container.innerHTML = keys.map(key => {
         const pkg = packagePricingData[key];
         const isMastery = key === 'mastery';
-        const price = activeCurrency === 'PHP' ? `₱${pkg.phpPrice}` : `$${pkg.usdPrice}`;
+        const price = `₱${pkg.phpPrice}`;
         const features = pkg.features || [];
 
         return `
-          <div class="bg-brand-navy p-5 sm:p-8 rounded-3xl border ${isMastery ? 'border-brand-gold gold-glow' : 'border-brand-borderDark'} shadow-2xl flex flex-col justify-between space-y-6 relative group">
+          <div class="bg-brand-navy p-5 sm:p-8 rounded-3xl border ${isMastery ? 'border-brand-gold gold-glow' : 'border-brand-borderDark'} shadow-2xl flex flex-col justify-between space-y-6 relative group fast-render-card">
             ${isMastery ? `<div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brand-gold text-brand-navyDark font-black text-[10px] uppercase tracking-wider px-4 py-1 rounded-full shadow-lg">★ Most Popular Choice</div>` : ''}
 
             <div class="space-y-4">
@@ -2878,7 +2865,6 @@
       document.getElementById('editPkgKey').value = key;
       document.getElementById('pkgEditTitle').value = pkg.title || '';
       document.getElementById('pkgEditPhp').value = pkg.phpPrice || '';
-      document.getElementById('pkgEditUsd').value = pkg.usdPrice || '';
       document.getElementById('pkgEditHours').value = pkg.hours || '';
       document.getElementById('pkgEditTagline').value = pkg.tagline || '';
       document.getElementById('pkgEditImg').value = pkg.img || '';
@@ -2942,7 +2928,6 @@
 
       packagePricingData[key].title = document.getElementById('pkgEditTitle').value;
       packagePricingData[key].phpPrice = document.getElementById('pkgEditPhp').value;
-      packagePricingData[key].usdPrice = document.getElementById('pkgEditUsd').value;
       packagePricingData[key].hours = document.getElementById('pkgEditHours').value;
       packagePricingData[key].tagline = document.getElementById('pkgEditTagline').value;
       packagePricingData[key].img = document.getElementById('pkgEditImg').value;
@@ -3071,68 +3056,77 @@
     const afternoonSlotsPST = ["01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM"];
     const eveningSlotsPST = ["06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM"];
 
-    async function fetchBookedSlots() {
+    function fetchBookedSlots() {
       if (!WEB_APP_URL) return;
-      try {
-        let fetchedList = [];
-
+      
+      const executeBookedFetch = async () => {
         try {
-          const res1 = await fetch(`${WEB_APP_URL}?type=booked_slots`);
-          const data1 = await res1.json();
-          if (Array.isArray(data1)) {
-            data1.forEach(item => {
-              if (item && item.date && item.time) {
-                fetchedList.push({ date: item.date, time: item.time });
-              }
-            });
+          let fetchedList = [];
+
+          try {
+            const res1 = await fetch(`${WEB_APP_URL}?type=booked_slots`);
+            const data1 = await res1.json();
+            if (Array.isArray(data1)) {
+              data1.forEach(item => {
+                if (item && item.date && item.time) {
+                  fetchedList.push({ date: item.date, time: item.time });
+                }
+              });
+            }
+          } catch (e1) {
+            console.warn("Bookings tab sync notice:", e1);
           }
-        } catch (e1) {
-          console.warn("Bookings tab sync notice:", e1);
-        }
 
-        try {
-          const res2 = await fetch(WEB_APP_URL);
-          const data2 = await res2.json();
-          if (data2 && data2.schedules && typeof data2.schedules === 'object') {
-            const dayMap = { 'monday': 0, 'tuesday': 1, 'wednesday': 2, 'thursday': 3, 'friday': 4, 'saturday': 5, 'sunday': 6 };
+          try {
+            const res2 = await fetch(WEB_APP_URL);
+            const data2 = await res2.json();
+            if (data2 && data2.schedules && typeof data2.schedules === 'object') {
+              const dayMap = { 'monday': 0, 'tuesday': 1, 'wednesday': 2, 'thursday': 3, 'friday': 4, 'saturday': 5, 'sunday': 6 };
 
-            Object.keys(data2.schedules).forEach(weekKey => {
-              const daySlots = data2.schedules[weekKey];
-              if (daySlots && typeof daySlots === 'object') {
-                Object.keys(daySlots).forEach(slotKey => {
-                  const slotObj = daySlots[slotKey];
-                  if (slotObj && (slotObj.status === 'booked' || slotObj.status === 'blocked' || slotObj.booked)) {
-                    let actualDate = weekKey;
-                    
-                    const parts = slotKey.split('_');
-                    if (parts.length > 1) {
-                      const dayName = parts[0].toLowerCase().trim();
-                      if (dayMap.hasOwnProperty(dayName) && weekKey.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                        const monDate = new Date(weekKey + 'T00:00:00');
-                        const offset = dayMap[dayName];
-                        monDate.setDate(monDate.getDate() + offset);
-                        
-                        const yyyy = monDate.getFullYear();
-                        const mm = String(monDate.getMonth() + 1).padStart(2, '0');
-                        const dd = String(monDate.getDate()).padStart(2, '0');
-                        actualDate = `${yyyy}-${mm}-${dd}`;
+              Object.keys(data2.schedules).forEach(weekKey => {
+                const daySlots = data2.schedules[weekKey];
+                if (daySlots && typeof daySlots === 'object') {
+                  Object.keys(daySlots).forEach(slotKey => {
+                    const slotObj = daySlots[slotKey];
+                    if (slotObj && (slotObj.status === 'booked' || slotObj.status === 'blocked' || slotObj.booked)) {
+                      let actualDate = weekKey;
+                      
+                      const parts = slotKey.split('_');
+                      if (parts.length > 1) {
+                        const dayName = parts[0].toLowerCase().trim();
+                        if (dayMap.hasOwnProperty(dayName) && weekKey.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                          const monDate = new Date(weekKey + 'T00:00:00');
+                          const offset = dayMap[dayName];
+                          monDate.setDate(monDate.getDate() + offset);
+                          
+                          const yyyy = monDate.getFullYear();
+                          const mm = String(monDate.getMonth() + 1).padStart(2, '0');
+                          const dd = String(monDate.getDate()).padStart(2, '0');
+                          actualDate = `${yyyy}-${mm}-${dd}`;
+                        }
                       }
+                      
+                      fetchedList.push({ date: actualDate, time: slotKey });
                     }
-                    
-                    fetchedList.push({ date: actualDate, time: slotKey });
-                  }
-                });
-              }
-            });
+                  });
+                }
+              });
+            }
+          } catch (e2) {
+            console.warn("Calendar_State tab sync notice:", e2);
           }
-        } catch (e2) {
-          console.warn("Calendar_State tab sync notice:", e2);
-        }
 
-        bookedSlots = fetchedList;
-        renderTimeSlots();
-      } catch (err) {
-        console.warn("Could not fetch real-time slots:", err);
+          bookedSlots = fetchedList;
+          renderTimeSlots();
+        } catch (err) {
+          console.warn("Could not fetch real-time slots:", err);
+        }
+      };
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => executeBookedFetch(), { timeout: 3000 });
+      } else {
+        setTimeout(executeBookedFetch, 800);
       }
     }
 
@@ -3429,8 +3423,8 @@
       setAllTextEditable(false);
 
       populateTimezoneDropdowns();
-      fetchCloudCMSState();
 
+      // Instant Synchronous UI Frame 1 Render
       renderAnkiCard();
       renderStruggles();
       renderSubjects();
@@ -3439,6 +3433,9 @@
       renderPackages();
       renderDatePills();
       renderBookingChecklist();
+
+      // Defer API background syncs so they never block page rendering
+      fetchCloudCMSState();
       fetchBookedSlots();
 
       checkDirectBookingUrlTrigger();

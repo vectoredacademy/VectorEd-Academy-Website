@@ -3405,19 +3405,42 @@
       }
     }
 
-    function checkDirectBookingUrlTrigger() {
-      const currentHash = window.location.hash.toLowerCase();
-      const currentSearch = window.location.search.toLowerCase();
-      if (currentHash === '#book-trial' || currentSearch.includes('open=formb') || currentHash === '#formb') {
-        revealFormB();
+    // ✅ UPDATED FUNCTION (REPLACE WITH THIS)
+function checkDirectBookingUrlTrigger() {
+  const currentHash = window.location.hash.toLowerCase();
+  const currentSearch = window.location.search.toLowerCase();
+  
+  if (
+    currentHash === '#book-trial' || 
+    currentHash === '#booking' || 
+    currentHash === '#formb' || 
+    currentSearch.includes('open=formb')
+  ) {
+    // 1. Instantly unhide Form B so layout height calculation is complete
+    revealFormB();
+
+    // 2. Double-RAF + Timeout ensures mobile browsers (Safari/Chrome Mobile) 
+    // finish recalculating DOM layout before executing the scroll action
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
         setTimeout(() => {
-          const bookingElem = document.getElementById('booking');
-          if (bookingElem) {
-            bookingElem.scrollIntoView({ behavior: 'smooth' });
+          const targetElem = document.getElementById('formBWrapper') || document.getElementById('booking');
+          if (targetElem) {
+            // Precise scroll calculation accounting for sticky navbar offset on mobile
+            const navHeight = document.querySelector('nav')?.offsetHeight || 80;
+            const elementPosition = targetElem.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - navHeight - 10;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
           }
         }, 300);
-      }
-    }
+      });
+    });
+  }
+}
 
     window.addEventListener('resize', () => {
       renderReviews();

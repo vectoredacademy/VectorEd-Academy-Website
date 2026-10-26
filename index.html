@@ -692,7 +692,7 @@
 
                   <div class="bg-brand-navy p-3 rounded-2xl border border-brand-borderDark space-y-2">
                     <div class="text-center pb-2 border-b border-brand-borderDark">
-                      <span class="text-[11px] font-bold text-brand-gold block">Evening</span>
+                      <span class="text-[11px] font-bold text-brand-gold block">Evening (Till 11:30 PM)</span>
                     </div>
                     <div class="space-y-1.5" id="slotsEvening"></div>
                   </div>
@@ -3064,7 +3064,11 @@
 
     const morningSlotsPST = ["08:00 AM", "08:30 AM", "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM"];
     const afternoonSlotsPST = ["01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM"];
-    const eveningSlotsPST = ["06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM"];
+    const eveningSlotsPST = [
+      "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM", 
+      "08:00 PM", "08:30 PM", "09:00 PM", "09:30 PM", 
+      "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM"
+    ];
 
     function fetchBookedSlots() {
       if (!WEB_APP_URL) return;
@@ -3405,42 +3409,37 @@
       }
     }
 
-    // ✅ UPDATED FUNCTION (REPLACE WITH THIS)
-function checkDirectBookingUrlTrigger() {
-  const currentHash = window.location.hash.toLowerCase();
-  const currentSearch = window.location.search.toLowerCase();
-  
-  if (
-    currentHash === '#book-trial' || 
-    currentHash === '#booking' || 
-    currentHash === '#formb' || 
-    currentSearch.includes('open=formb')
-  ) {
-    // 1. Instantly unhide Form B so layout height calculation is complete
-    revealFormB();
+    function checkDirectBookingUrlTrigger() {
+      const currentHash = window.location.hash.toLowerCase();
+      const currentSearch = window.location.search.toLowerCase();
+      
+      if (
+        currentHash === '#book-trial' || 
+        currentHash === '#booking' || 
+        currentHash === '#formb' || 
+        currentSearch.includes('open=formb')
+      ) {
+        revealFormB();
 
-    // 2. Double-RAF + Timeout ensures mobile browsers (Safari/Chrome Mobile) 
-    // finish recalculating DOM layout before executing the scroll action
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          const targetElem = document.getElementById('formBWrapper') || document.getElementById('booking');
-          if (targetElem) {
-            // Precise scroll calculation accounting for sticky navbar offset on mobile
-            const navHeight = document.querySelector('nav')?.offsetHeight || 80;
-            const elementPosition = targetElem.getBoundingClientRect().top + window.pageYOffset;
-            const offsetPosition = elementPosition - navHeight - 10;
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              const targetElem = document.getElementById('formBWrapper') || document.getElementById('booking');
+              if (targetElem) {
+                const navHeight = document.querySelector('nav')?.offsetHeight || 80;
+                const elementPosition = targetElem.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - navHeight - 10;
 
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          }
-        }, 300);
-      });
-    });
-  }
-}
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: 'smooth'
+                });
+              }
+            }, 300);
+          });
+        });
+      }
+    }
 
     window.addEventListener('resize', () => {
       renderReviews();
@@ -3457,7 +3456,6 @@ function checkDirectBookingUrlTrigger() {
 
       populateTimezoneDropdowns();
 
-      // Instant Synchronous UI Frame 1 Render
       renderAnkiCard();
       renderStruggles();
       renderSubjects();
@@ -3467,7 +3465,6 @@ function checkDirectBookingUrlTrigger() {
       renderDatePills();
       renderBookingChecklist();
 
-      // Defer API background syncs so they never block page rendering
       fetchCloudCMSState();
       fetchBookedSlots();
 

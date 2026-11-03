@@ -701,10 +701,10 @@
             </div>
 
             <!-- FORM B QUIZ DATA INJECTION STATUS BANNER -->
-            <div id="quizDataInjectionNotice" class="hidden p-3.5 bg-brand-navy/90 rounded-2xl border border-brand-gold/50 text-xs text-brand-gold flex items-center justify-between">
-              <div class="flex items-center gap-2">
+            <div id="quizDataInjectionNotice" class="hidden p-3.5 bg-brand-navy/90 rounded-2xl border border-brand-gold/50 text-xs text-brand-gold flex items-center justify-between shadow-xl">
+              <div class="flex items-center gap-2.5">
                 <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
-                <span>Quiz Result Injected: <strong id="injectedPkgName" class="text-white">Mastery Package</strong> (<span id="injectedAnswers">A, B, C, A, B</span>)</span>
+                <span>Matcher Result Attached: <strong id="injectedPkgName" class="text-white">Mastery Package</strong> (<span id="injectedAnswers">A, B, C, A, B</span>)</span>
               </div>
               <button type="button" onclick="clearQuizInjection()" class="text-slate-400 hover:text-white text-[11px] underline">Clear</button>
             </div>
@@ -1395,7 +1395,7 @@
     let schedulerWeekOffset = 0;
     let bookedSlots = [];
 
-    // Global Quiz Injection State for Form B
+    // Global Quiz / Matcher Injection State for Form B
     window.activeQuizPackage = "Direct Booking";
     window.activeQuizAnswers = "N/A";
 
@@ -1415,6 +1415,8 @@
     function clearQuizInjection() {
       window.activeQuizPackage = "Direct Booking";
       window.activeQuizAnswers = "N/A";
+      sessionStorage.removeItem('ve_recommended_pkg');
+      sessionStorage.removeItem('ve_quiz_answers');
 
       const notice = document.getElementById('quizDataInjectionNotice');
       if (notice) notice.classList.add('hidden');
@@ -3519,11 +3521,28 @@
       const currentHash = window.location.hash.toLowerCase();
       const currentSearch = window.location.search.toLowerCase();
       
+      // Parse Quiz / Matcher parameters from URL query string or hash
+      const searchStr = window.location.search || (window.location.hash.includes('?') ? '?' + window.location.hash.split('?')[1] : '');
+      const params = new URLSearchParams(searchStr);
+
+      const pkg = params.get('pkg') || params.get('package') || params.get('recommendedPackage') || 
+                  sessionStorage.getItem('ve_recommended_pkg') || localStorage.getItem('ve_recommended_pkg');
+      const answers = params.get('answers') || params.get('diagnosticAnswers') || params.get('quizAnswers') || 
+                      sessionStorage.getItem('ve_quiz_answers') || localStorage.getItem('ve_quiz_answers');
+
+      if (pkg || answers) {
+        injectQuizDataIntoFormB(
+          pkg ? decodeURIComponent(pkg).trim() : "Direct Booking", 
+          answers ? decodeURIComponent(answers).trim() : "N/A"
+        );
+      }
+      
       if (
-        currentHash === '#book-trial' || 
-        currentHash === '#booking' || 
-        currentHash === '#formb' || 
-        currentSearch.includes('open=formb')
+        currentHash.includes('book-trial') || 
+        currentHash.includes('booking') || 
+        currentHash.includes('formb') || 
+        currentSearch.includes('open=formb') ||
+        pkg || answers
       ) {
         revealFormB();
 

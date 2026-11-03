@@ -700,6 +700,15 @@
               </button>
             </div>
 
+            <!-- FORM B QUIZ DATA INJECTION STATUS BANNER -->
+            <div id="quizDataInjectionNotice" class="hidden p-3.5 bg-brand-navy/90 rounded-2xl border border-brand-gold/50 text-xs text-brand-gold flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
+                <span>Quiz Result Injected: <strong id="injectedPkgName" class="text-white">Mastery Package</strong> (<span id="injectedAnswers">A, B, C, A, B</span>)</span>
+              </div>
+              <button type="button" onclick="clearQuizInjection()" class="text-slate-400 hover:text-white text-[11px] underline">Clear</button>
+            </div>
+
             <form onsubmit="handleBookingSubmit(event)" class="space-y-5">
               <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Select Timezone *</label>
@@ -1385,6 +1394,49 @@
     let selectedBookTimePST = '';
     let schedulerWeekOffset = 0;
     let bookedSlots = [];
+
+    // Global Quiz Injection State for Form B
+    window.activeQuizPackage = "Direct Booking";
+    window.activeQuizAnswers = "N/A";
+
+    function injectQuizDataIntoFormB(pkgName, answersStr) {
+      window.activeQuizPackage = pkgName || "Direct Booking";
+      window.activeQuizAnswers = answersStr || "N/A";
+
+      const notice = document.getElementById('quizDataInjectionNotice');
+      const pkgNameElem = document.getElementById('injectedPkgName');
+      const answersElem = document.getElementById('injectedAnswers');
+
+      if (pkgNameElem) pkgNameElem.textContent = window.activeQuizPackage;
+      if (answersElem) answersElem.textContent = window.activeQuizAnswers;
+      if (notice) notice.classList.remove('hidden');
+    }
+
+    function clearQuizInjection() {
+      window.activeQuizPackage = "Direct Booking";
+      window.activeQuizAnswers = "N/A";
+
+      const notice = document.getElementById('quizDataInjectionNotice');
+      if (notice) notice.classList.add('hidden');
+    }
+
+    function triggerActionPathFreeTrial() {
+      const pkgTitle = (typeof currentRecommendedPackage !== 'undefined' && currentRecommendedPackage) ? currentRecommendedPackage.title : "Mastery Package";
+      const answersStr = (typeof userQuizAnswers !== 'undefined' && userQuizAnswers && userQuizAnswers.length > 0) ? userQuizAnswers.join(', ') : "A, B, C, A, B";
+      
+      injectQuizDataIntoFormB(pkgTitle, answersStr);
+      revealFormB();
+
+      const formBElem = document.getElementById('formBWrapper') || document.getElementById('booking');
+      if (formBElem) {
+        const navHeight = document.querySelector('nav')?.offsetHeight || 80;
+        const elementPosition = formBElem.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: elementPosition - navHeight - 10,
+          behavior: 'smooth'
+        });
+      }
+    }
 
     let subjectExpandedState = {
       'tab-math': false,
@@ -3432,7 +3484,9 @@
         phone: phone,
         subjects: selectedSubjectsText,
         notes: notesText,
-        timezone: document.getElementById('bookTimezone').value || 'PST (UTC+8) - Manila / Singapore'
+        timezone: document.getElementById('bookTimezone').value || 'PST (UTC+8) - Manila / Singapore',
+        recommendedPackage: window.activeQuizPackage || "Direct Booking",
+        diagnosticAnswers: window.activeQuizAnswers || "N/A"
       };
 
       bookedSlots.push({ date: selectedBookDate, time: selectedBookTimePST });
@@ -3441,6 +3495,7 @@
       showToast("✓ Class Slot Reserved! Synchronizing with Google Sheets...");
       e.target.reset();
       renderBookingChecklist();
+      clearQuizInjection();
       selectedBookTimeLocal = '';
       selectedBookTimePST = '';
       btn.innerHTML = origText;

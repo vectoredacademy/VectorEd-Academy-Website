@@ -205,6 +205,7 @@
         <a href="#proof" class="hover:text-brand-gold transition flex items-center gap-1.5"><i class="fa-solid fa-square-root-variable text-xs text-brand-gold"></i> Proof &amp; Vaults</a>
         <a href="#reviews" class="hover:text-brand-gold transition flex items-center gap-1.5"><i class="fa-solid fa-award text-xs text-brand-gold"></i> Verified Reviews</a>
         <a href="#pricing" class="hover:text-brand-gold transition flex items-center gap-1.5"><i class="fa-solid fa-graduation-cap text-xs text-brand-gold"></i> Packages</a>
+        <a href="https://students-we-served.netlify.app/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-gold transition flex items-center gap-1.5"><i class="fa-solid fa-users-viewfinder text-xs text-brand-gold"></i> Student Database</a>
         <a href="#booking" class="hover:text-brand-gold transition flex items-center gap-1.5"><i class="fa-solid fa-calendar-check text-xs text-brand-gold"></i> Schedule Class</a>
       </div>
 
@@ -230,8 +231,14 @@
       <a href="#services" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-brand-gold font-medium">Programs &amp; Subjects</a>
       <a href="#proof" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-brand-gold font-medium">Proof &amp; Derivation Vaults</a>
       <a href="#reviews" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-brand-gold font-medium">Verified Reviews</a>
+      <a href="https://students-we-served.netlify.app/" target="_blank" rel="noopener noreferrer" onclick="toggleMobileMenu()" class="block py-2.5 text-brand-gold hover:text-amber-300 font-bold flex items-center gap-2">
+        <i class="fa-solid fa-users-viewfinder"></i> Student Database
+      </a>
       <a href="#pricing" onclick="toggleMobileMenu()" class="block py-2.5 text-slate-200 hover:text-brand-gold font-medium">Packages &amp; Plans</a>
-      <button onclick="toggleMobileMenu(); openAdminAuthModal();" class="w-full text-left py-2.5 text-brand-gold font-bold flex items-center gap-2">
+      <a href="https://smart-package-matcher.netlify.app/" target="_blank" rel="noopener noreferrer" onclick="toggleMobileMenu()" class="block py-2.5 text-brand-gold hover:text-amber-300 font-bold flex items-center gap-2">
+        <i class="fa-solid fa-sliders"></i> Smart Program Matcher
+      </a>
+      <button onclick="toggleMobileMenu(); openAdminAuthModal();" class="w-full text-left py-2.5 text-slate-300 hover:text-white font-bold flex items-center gap-2">
         <i class="fa-solid fa-user-gear"></i> Admin Access
       </button>
       <a href="https://www.facebook.com/VectorEd.Academy" target="_blank" rel="noopener noreferrer" class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-xs transition min-h-[44px]">
@@ -287,7 +294,7 @@
             </div>
             <div>
               <span class="block font-heading font-black text-xl sm:text-3xl text-white">500+ Hours</span>
-              <span class="text-[11px] sm:text-xs text-slate-400 font-medium" id="stat2Lbl"><b>Teaching Hours</b></span>
+              <span class="text-[11px] sm:text-xs text-slate-400 font-medium" id="stat3Lbl"><b>Teaching Hours</b></span>
             </div>
           </div>
         </div>
@@ -441,6 +448,28 @@
 
       <div id="reviewsDynamicContainer" class="space-y-8 sm:space-y-12"></div>
 
+      <!-- LEAD GEN CTA 1: STUDENT DATABASE BUTTON -->
+      <div class="mt-12 p-6 sm:p-8 bg-gradient-to-r from-brand-navy via-brand-navyCard to-brand-navy rounded-3xl border border-brand-gold/40 shadow-2xl relative overflow-hidden text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6 group hover:border-brand-gold transition duration-300">
+        <div class="absolute -right-10 -bottom-10 w-52 h-52 bg-brand-gold/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="space-y-2 max-w-2xl z-10">
+          <div class="inline-flex items-center gap-2 bg-brand-gold/10 border border-brand-gold/30 px-3 py-1 rounded-full text-[11px] font-bold text-brand-gold">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>LIVE PUBLIC STUDENT DATABASE</span>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-heading font-black text-white">Curious About The Students We've Guided?</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Explore our complete public Student Database to see full backgrounds, universities, subject tracks, and verified academic outcomes of students we handled.
+          </p>
+        </div>
+        <div class="w-full sm:w-auto shrink-0 z-10">
+          <a href="https://students-we-served.netlify.app/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-gradient-to-r from-brand-gold via-amber-400 to-brand-goldHover hover:from-amber-400 hover:to-brand-gold text-brand-navyDark font-black px-7 py-4 rounded-2xl text-xs sm:text-sm transition-all duration-300 shadow-xl gold-glow flex items-center justify-center gap-2.5 min-h-[48px] active:scale-95">
+            <i class="fa-solid fa-users-viewfinder text-base"></i>
+            <span>Browse Full Student Database</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-80"></i>
+          </a>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -520,6 +549,28 @@
       </div>
 
       <div id="packagesDynamicContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch pt-4"></div>
+
+      <!-- LEAD GEN CTA 2: SMART PROGRAM MATCHER BUTTON -->
+      <div class="mt-12 p-6 sm:p-8 bg-gradient-to-r from-indigo-950/90 via-brand-navyCard to-indigo-950/90 rounded-3xl border border-indigo-500/40 shadow-2xl relative overflow-hidden text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6 group hover:border-brand-gold transition duration-300">
+        <div class="absolute -left-10 -top-10 w-52 h-52 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="space-y-2 max-w-2xl z-10">
+          <div class="inline-flex items-center gap-2 bg-indigo-500/20 border border-indigo-400/30 px-3 py-1 rounded-full text-[11px] font-bold text-indigo-300">
+            <i class="fa-solid fa-wand-magic-sparkles text-brand-gold"></i>
+            <span>60-SECOND MATCHING ENGINE</span>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-heading font-black text-white">Unsure Which Package Fits Your Needs?</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Not sure how many hours or which track you require? Launch our Smart Program Matcher to get an instant tailored recommendation based on your course, exam schedule, and target grade.
+          </p>
+        </div>
+        <div class="w-full sm:w-auto shrink-0 z-10">
+          <a href="https://smart-package-matcher.netlify.app/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-gradient-to-r from-brand-gold via-amber-400 to-brand-goldHover hover:from-amber-400 hover:to-brand-gold text-brand-navyDark font-black px-7 py-4 rounded-2xl text-xs sm:text-sm transition-all duration-300 shadow-xl gold-glow flex items-center justify-center gap-2.5 min-h-[48px] active:scale-95">
+            <i class="fa-solid fa-sliders text-base"></i>
+            <span>Launch Smart Program Matcher</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+      </div>
 
     </div>
   </section>

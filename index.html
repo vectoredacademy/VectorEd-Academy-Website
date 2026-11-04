@@ -277,9 +277,9 @@
               <span>Message Us on Facebook</span>
             </a>
             
-            <a href="https://smart-package-matcher.netlify.app/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-white border border-brand-borderDark hover:border-brand-gold px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl text-sm sm:text-base font-bold transition flex items-center justify-center gap-2.5 min-h-[48px]">
-              <i class="fa-solid fa-sliders text-brand-gold"></i>
-              <span>Launch Smart Matcher</span>
+            <a href="https://diagnostics-students-archetype.netlify.app" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-brand-navy hover:bg-slate-800 text-slate-200 hover:text-white border border-brand-borderDark hover:border-brand-gold px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl text-sm sm:text-base font-bold transition flex items-center justify-center gap-2.5 min-h-[48px]">
+              <i class="fa-solid fa-clipboard-check text-brand-gold"></i>
+              <span>Take 60-Sec Diagnostic Quiz</span>
             </a>
           </div>
 
@@ -681,23 +681,6 @@
                   <h3 class="text-base sm:text-lg font-bold text-white">Form B: Trial &amp; Consultation Scheduler</h3>
                   <p class="text-xs text-slate-400">Real-time availability sync via Google Web App</p>
                 </div>
-              </div>
-            </div>
-
-            <!-- SMART MATCHER REFERRAL BADGE CONTAINER -->
-            <div id="smartMatcherTrialBadge" class="hidden p-3.5 sm:p-4 bg-gradient-to-r from-amber-950/80 via-brand-navy to-amber-950/80 rounded-2xl border border-brand-gold/60 text-xs space-y-1.5 shadow-lg">
-              <div class="flex items-center justify-between">
-                <span class="font-extrabold text-brand-gold flex items-center gap-1.5">
-                  <i class="fa-solid fa-wand-magic-sparkles animate-pulse"></i>
-                  Smart Program Matcher Diagnostic Referral Active
-                </span>
-                <span class="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-full font-bold">
-                  Referral Linked
-                </span>
-              </div>
-              <div class="text-slate-200 text-[11px] grid grid-cols-1 sm:grid-cols-2 gap-1 pt-1 border-t border-brand-gold/20">
-                <div><span class="text-slate-400 font-medium">Recommended Package:</span> <strong id="smBadgePkg" class="text-white">Mastery Package</strong></div>
-                <div><span class="text-slate-400 font-medium">Diagnostic Answers:</span> <strong id="smBadgeAnswers" class="text-white font-mono">Q1: Engg, Q2: Finals</strong></div>
               </div>
             </div>
 
@@ -1426,58 +1409,6 @@
     let siteTimezones = JSON.parse(localStorage.getItem('ve_site_timezones')) || [...DEFAULT_TIMEZONES];
     let selectedSiteOffset = 8;
 
-    /**
-     * SMART PROGRAM MATCHER referral detection engine.
-     * Extracts url parameters and checks sessionStorage for trial mode data bridge.
-     */
-    function getSmartMatcherReferralData() {
-      const urlParams = new URLSearchParams(window.location.search);
-      let mode = urlParams.get('mode') || sessionStorage.getItem('ve_trial_mode');
-      let pkg = urlParams.get('pkg') || urlParams.get('package') || urlParams.get('recommendedPackage') || sessionStorage.getItem('ve_trial_pkg');
-      let answers = urlParams.get('answers') || urlParams.get('quizAnswers') || sessionStorage.getItem('ve_trial_answers');
-
-      // Also check hash parameters if passed via direct anchor like #booking?mode=trial&pkg=...
-      if (!mode && window.location.hash.includes('?')) {
-        const hashParams = new URLSearchParams(window.location.hash.split('?')[1]);
-        mode = hashParams.get('mode');
-        pkg = hashParams.get('pkg') || hashParams.get('package') || hashParams.get('recommendedPackage');
-        answers = hashParams.get('answers') || hashParams.get('quizAnswers');
-      }
-
-      if (mode === 'trial' || (pkg && pkg.toLowerCase() !== 'direct booking') || (answers && answers.toLowerCase() !== 'n/a')) {
-        if (mode) sessionStorage.setItem('ve_trial_mode', mode);
-        if (pkg) sessionStorage.setItem('ve_trial_pkg', pkg);
-        if (answers) sessionStorage.setItem('ve_trial_answers', answers);
-
-        return {
-          isTrial: true,
-          recommendedPackage: pkg || 'Smart Matcher Recommended Package',
-          quizAnswers: answers || 'Q1: STEM, Q2: Standard, Q3: Target Grade'
-        };
-      }
-
-      return {
-        isTrial: false,
-        recommendedPackage: 'Direct Booking',
-        quizAnswers: 'N/A'
-      };
-    }
-
-    function syncSmartMatcherBadgeUI() {
-      const refData = getSmartMatcherReferralData();
-      const badge = document.getElementById('smartMatcherTrialBadge');
-      const badgePkg = document.getElementById('smBadgePkg');
-      const badgeAnswers = document.getElementById('smBadgeAnswers');
-
-      if (badge && refData.isTrial) {
-        badge.classList.remove('hidden');
-        if (badgePkg) badgePkg.textContent = refData.recommendedPackage;
-        if (badgeAnswers) badgeAnswers.textContent = refData.quizAnswers;
-      } else if (badge) {
-        badge.classList.add('hidden');
-      }
-    }
-
     function getReviewPageSize() {
       return window.innerWidth < 768 ? 1 : 3;
     }
@@ -1755,11 +1686,7 @@
       return dStr;
     }
 
-    /**
-     * Extracts canonical start time in HH:MM AM/PM 12-hour format.
-     * Works seamlessly on range strings ("08:00 AM - 08:30 AM") or single slots ("08:00 AM").
-     */
-    function extractStart12Time(tStr) {
+    function normalizeTime(tStr) {
       if (!tStr) return '';
       tStr = String(tStr).trim();
 
@@ -3082,7 +3009,6 @@
       const wrapper = document.getElementById('formBWrapper');
       if (gate) gate.classList.add('hidden');
       if (wrapper) wrapper.classList.remove('hidden');
-      syncSmartMatcherBadgeUI();
       fetchBookedSlots();
     }
 
@@ -3195,10 +3121,6 @@
       "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM"
     ];
 
-    /**
-     * DUAL-SOURCE DATABASE SYNC (Bookings + Calendar_State)
-     * Fetches real-time booked slots and normalizes keys across timezones.
-     */
     function fetchBookedSlots() {
       if (!WEB_APP_URL) return;
       
@@ -3206,7 +3128,6 @@
         try {
           let fetchedList = [];
 
-          // 1. Fetch from Tab 3: Bookings
           try {
             const res1 = await fetch(`${WEB_APP_URL}?type=booked_slots`);
             const data1 = await res1.json();
@@ -3221,7 +3142,6 @@
             console.warn("Bookings tab sync notice:", e1);
           }
 
-          // 2. Fetch from Tab 1: Calendar_State
           try {
             const res2 = await fetch(WEB_APP_URL);
             const data2 = await res2.json();
@@ -3288,11 +3208,11 @@
       const targetMMDD = getMMDD(selectedBookDate);
 
       box.innerHTML = slotsArrayPST.map(pstTimeStr => {
-        const targetNormTimePST = extractStart12Time(pstTimeStr);
+        const targetNormTimePST = normalizeTime(pstTimeStr);
 
         const isBooked = bookedSlots.some(b => {
           const slotMMDD = getMMDD(b.date);
-          const slotNormTimePST = extractStart12Time(b.time);
+          const slotNormTimePST = normalizeTime(b.time);
           return (slotMMDD === targetMMDD) && (slotNormTimePST === targetNormTimePST);
         });
 
@@ -3501,9 +3421,6 @@
       const formattedTimeWindowPST = get30MinWindow(selectedBookTimePST);
       const calculatedSlotKeyPST = `${derivedDayName}_${formattedTimeWindowPST}`;
 
-      // Extract Smart Matcher referral diagnostic data (if user passed through Smart Matcher tool)
-      const referralData = getSmartMatcherReferralData();
-
       const payload = {
         formType: 'booking',
         appointmentDate: selectedBookDate,
@@ -3515,9 +3432,7 @@
         phone: phone,
         subjects: selectedSubjectsText,
         notes: notesText,
-        timezone: document.getElementById('bookTimezone').value || 'PST (UTC+8) - Manila / Singapore',
-        recommendedPackage: referralData.recommendedPackage,
-        quizAnswers: referralData.quizAnswers
+        timezone: document.getElementById('bookTimezone').value || 'PST (UTC+8) - Manila / Singapore'
       };
 
       bookedSlots.push({ date: selectedBookDate, time: selectedBookTimePST });
@@ -3549,14 +3464,11 @@
       const currentHash = window.location.hash.toLowerCase();
       const currentSearch = window.location.search.toLowerCase();
       
-      syncSmartMatcherBadgeUI();
-
       if (
         currentHash === '#book-trial' || 
         currentHash === '#booking' || 
         currentHash === '#formb' || 
-        currentSearch.includes('open=formb') ||
-        currentSearch.includes('mode=trial')
+        currentSearch.includes('open=formb')
       ) {
         revealFormB();
 

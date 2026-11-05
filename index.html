@@ -3421,6 +3421,10 @@
       const formattedTimeWindowPST = get30MinWindow(selectedBookTimePST);
       const calculatedSlotKeyPST = `${derivedDayName}_${formattedTimeWindowPST}`;
 
+      // STAGE 2: Read Smart Program Matcher context from the current URL.
+      // Direct website bookings receive empty values; no persistent storage is used.
+      const matcherContext = getMatcherBookingContext();
+
       const payload = {
         formType: 'booking',
         appointmentDate: selectedBookDate,
@@ -3432,7 +3436,9 @@
         phone: phone,
         subjects: selectedSubjectsText,
         notes: notesText,
-        timezone: document.getElementById('bookTimezone').value || 'PST (UTC+8) - Manila / Singapore'
+        timezone: document.getElementById('bookTimezone').value || 'PST (UTC+8) - Manila / Singapore',
+        recommendedPackage: matcherContext.recommendedPackage,
+        diagnosticAnswers: matcherContext.diagnosticAnswers
       };
 
       bookedSlots.push({ date: selectedBookDate, time: selectedBookTimePST });
@@ -3458,6 +3464,27 @@
           console.warn("Booking background dispatch notice:", err);
         });
       }
+    }
+
+    // Returns Matcher metadata only when BOTH URL parameters are valid.
+    // Expected URL parameters: ?package=...&answers=A%2C%20B%2C%20C%2C%20A%2C%20D
+    function getMatcherBookingContext() {
+      const params = new URLSearchParams(window.location.search);
+      const rawPackage = (params.get('package') || '').trim();
+      const rawAnswers = (params.get('answers') || '').trim();
+      const answers = rawAnswers.split(',').map(answer => answer.trim().toUpperCase());
+
+      const validPackage = rawPackage.length > 0 && rawPackage.length <= 120;
+      const validAnswers = answers.length === 5 && answers.every(answer => /^[A-D]$/.test(answer));
+
+      if (!validPackage || !validAnswers) {
+        return { recommendedPackage: '', diagnosticAnswers: '' };
+      }
+
+      return {
+        recommendedPackage: rawPackage,
+        diagnosticAnswers: answers.join(', ')
+      };
     }
 
     function checkDirectBookingUrlTrigger() {
